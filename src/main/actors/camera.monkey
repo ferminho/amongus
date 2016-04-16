@@ -9,8 +9,8 @@ Import time
 Class Camera Extends Actor
 Public 
 
-	Const ShiftX:Float = CanvasHeight / 3.0
-	Const ShiftY:Float = CanvasWidth / 3.0
+	Const ShiftX:Float = CanvasHeight / 3.5
+	Const ShiftY:Float = CanvasWidth / 3.5
 	Const Speed:Float = 64.0
 	
 	Field x0:Int	' screen origin
@@ -45,12 +45,14 @@ Public
 			Local vel:Float = (Speed * Time.instance.lastFrame) / 1000.0
 			Local dist:Float = Sqrt(Pow(destX - x, 2) + Pow(destY - y, 2))
 			Local angle:Float = ATan2(destY - y, destX - x)
+			Print((destX - x) + " " + (destY - y))
+			Print (angle)
 			If (dist < vel)
 				x = destX
 				y = destY
 			Else
-				Local velX:Float = Sgn(destX - x) * (vel * Cos(angle))
-				Local velY:Float = Sgn(destY - y) * (vel * Sin(angle))
+				Local velX:Float = vel * Cos(angle)
+				Local velY:Float = vel * Sin(angle)
 				x = x + velX
 				y = y + velY
 			End If
