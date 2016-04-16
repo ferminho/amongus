@@ -28,14 +28,14 @@ Public
 		Local vel:Float = (32.0 * Time.instance.realLastFrame) / 1000.0
 		If (KeyDown(KEY_SHIFT)) Then vel *= 2.0
 		If (KeyDown(KEY_CONTROL)) Then vel *= 4.0
-		If (KeyDown(KEY_UP))
+		If (KeyDown(KEY_W))
 			y -= vel
-		Else If (KeyDown(KEY_DOWN))
+		Else If (KeyDown(KEY_S))
 			y += vel
 		End If
-		If (KeyDown(KEY_LEFT))
+		If (KeyDown(KEY_A))
 			x -= vel
-		Else If (KeyDown(KEY_RIGHT))
+		Else If (KeyDown(KEY_D))
 			x += vel
 		End If
 		
