@@ -2579,134 +2579,6 @@ function _glUniformMatrix4fv( location, count, transpose, value ){
 	}
 }
 
-
-function BBAsyncImageLoaderThread(){
-	this._running=false;
-}
-
-BBAsyncImageLoaderThread.prototype.Start=function(){
-
-	var thread=this;
-
-	thread._surface=null;
-	thread._result=false;
-	thread._running=true;
-
-	var image=new Image();
-
-	image.onload=function( e ){
-		image.meta_width=image.width;
-		image.meta_height=image.height;
-		thread._surface=new gxtkSurface( image,thread._device )
-		thread._result=true;
-		thread._running=false;
-	}
-	
-	image.onerror=function( e ){
-		thread._running=false;
-	}
-	
-	image.src=BBGame.Game().PathToUrl( thread._path );
-}
-
-BBAsyncImageLoaderThread.prototype.IsRunning=function(){
-	return this._running;
-}
-
-
-
-function BBAsyncSoundLoaderThread(){
-	this._running=false;
-}
-  
-if( CFG_HTML5_WEBAUDIO_ENABLED=="1" && (window.AudioContext || window.webkitAudioContext) ){
-
-BBAsyncSoundLoaderThread.prototype.Start=function(){
-
-	this._sample=null;
-	if( !this._device.okay ) return;
-	
-	var thread=this;
-	
-	thread._sample=null;
-	thread._result=false;
-	thread._running=true;
-
-	var req=new XMLHttpRequest();
-	req.open( "get",BBGame.Game().PathToUrl( this._path ),true );
-	req.responseType="arraybuffer";
-	
-	req.onload=function(){
-		//load success!
-		wa.decodeAudioData( req.response,function( buffer ){
-			//decode success!
-			thread._sample=new gxtkSample();
-			thread._sample.waBuffer=buffer;
-			thread._sample.state=1;
-			thread._result=true;
-			thread._running=false;
-		},function(){	
-			//decode fail!
-			thread._running=false;
-		} );
-	}
-	
-	req.onerror=function(){
-		//load fail!
-		thread._running=false;
-	}
-	
-	req.send();
-}
-	
-}else{
- 
-BBAsyncSoundLoaderThread.prototype.Start=function(){
-
-	this._sample=null;
-	if( !this._device.okay ) return;
-	
-	var audio=new Audio();
-	if( !audio ) return;
-	
-	var thread=this;
-	
-	thread._sample=null;
-	thread._result=false;
-	thread._running=true;
-
-	audio.src=BBGame.Game().PathToUrl( this._path );
-	audio.preload='auto';	
-	
-	var success=function( e ){
-		thread._sample=new gxtkSample( audio );
-		thread._result=true;
-		thread._running=false;
-		audio.removeEventListener( 'canplaythrough',success,false );
-		audio.removeEventListener( 'error',error,false );
-	}
-	
-	var error=function( e ){
-		thread._running=false;
-		audio.removeEventListener( 'canplaythrough',success,false );
-		audio.removeEventListener( 'error',error,false );
-	}
-	
-	audio.addEventListener( 'canplaythrough',success,false );
-	audio.addEventListener( 'error',error,false );
-	
-	//voodoo fix for Chrome!
-	var timer=setInterval( function(){ if( !thread._running ) clearInterval( timer ); },200 );
-	
-	audio.load();
-}
-
-}
-  
-BBAsyncSoundLoaderThread.prototype.IsRunning=function(){
-	return this._running;
-}
-
 function c_App(){
 	Object.call(this);
 }
@@ -2752,6 +2624,7 @@ function c_AmongUs(){
 	c_App.call(this);
 	this.m_canvas=null;
 	this.m_scenes=new_object_array(2);
+	this.m_nextExpectedFrame=0;
 	this.m_currentScene=0;
 }
 c_AmongUs.prototype=extend_class(c_App);
@@ -2766,21 +2639,26 @@ c_AmongUs.prototype.p_OnCreate=function(){
 	this.m_scenes[0]=(c_Menu.m_new.call(new c_Menu));
 	this.m_scenes[1]=(c_Game.m_new.call(new c_Game));
 	this.m_scenes[0].p_Start();
+	this.m_nextExpectedFrame=bb_app_Millisecs()+20;
 	return 0;
 }
 c_AmongUs.prototype.p_OnUpdate=function(){
-	c_Time.m_instance.p_Update();
-	var t_status=this.m_scenes[this.m_currentScene].p_Update();
-	if(t_status==2){
-		this.m_currentScene+=1;
-		this.m_scenes[this.m_currentScene].p_Start();
-	}else{
-		if(t_status==1){
-			this.m_currentScene-=1;
-			if(this.m_currentScene<0){
-				bb_app_EndApp();
-			}
+	var t_time=bb_app_Millisecs();
+	if(t_time>=this.m_nextExpectedFrame){
+		this.m_nextExpectedFrame=t_time+20;
+		c_Time.m_instance.p_Update();
+		var t_status=this.m_scenes[this.m_currentScene].p_Update();
+		if(t_status==2){
+			this.m_currentScene+=1;
 			this.m_scenes[this.m_currentScene].p_Start();
+		}else{
+			if(t_status==1){
+				this.m_currentScene-=1;
+				if(this.m_currentScene<0){
+					bb_app_EndApp();
+				}
+				this.m_scenes[this.m_currentScene].p_Start();
+			}
 		}
 	}
 	return 0;
@@ -3566,6 +3444,9 @@ function c_Time(){
 	this.m_timeDistortion=1.0;
 	this.m_lastFrame=0.0;
 	this.m_actTime=0.0;
+	this.m_lastFpsTime=-1;
+	this.m_frames=0;
+	this.m_fps=0.0;
 }
 c_Time.m_new=function(){
 	this.m_initialTime=bb_app_Millisecs();
@@ -3579,6 +3460,17 @@ c_Time.prototype.p_Update=function(){
 	this.m_lastFrame=this.m_realLastFrame*this.m_timeDistortion;
 	this.m_actTime=this.m_actTime+this.m_lastFrame;
 	this.m_realActTime=t_temp;
+	if((this.m_lastFpsTime)==-1.0){
+		this.m_lastFpsTime=t_temp;
+	}else{
+		if(t_temp-this.m_lastFpsTime>=3000){
+			this.m_lastFpsTime=t_temp;
+			this.m_fps=(((this.m_frames+1)/3)|0);
+			this.m_frames=0;
+		}else{
+			this.m_frames+=1;
+		}
+	}
 }
 function bb_app_Millisecs(){
 	return bb_app__game.Millisecs();
@@ -6888,7 +6780,7 @@ c_Character.m_new=function(){
 }
 c_Character.prototype.p_Update=function(){
 	var t_delta=c_Time.m_instance.m_lastFrame;
-	var t_vel=32.0*t_delta/1000.0;
+	var t_vel=30.0*t_delta/1000.0;
 	if((bb_input2_KeyDown(16))!=0){
 		t_vel*=2.0;
 	}
@@ -6913,11 +6805,13 @@ c_Character.prototype.p_Update=function(){
 			this.m_x+=t_vel;
 		}
 	}
+	this.m_x=((Math.floor(this.m_x+0.5))|0);
+	this.m_y=((Math.floor(this.m_y+0.5))|0);
 }
 c_Character.prototype.p_Draw2=function(t_canvas,t_camera){
 	t_canvas.p_SetBlendMode(1);
 	t_canvas.p_SetColor2(1.0,1.0,1.0,1.0);
-	t_canvas.p_DrawImage4(this.m_atlas[0],this.m_x-(t_camera.m_x0)+0.5,this.m_y-(t_camera.m_y0)+0.5);
+	t_canvas.p_DrawImage4(this.m_atlas[0],this.m_x-(t_camera.m_x0),this.m_y-(t_camera.m_y0));
 }
 function c_Camera(){
 	c_Actor.call(this);
@@ -6940,20 +6834,20 @@ c_Camera.m_new2=function(){
 c_Camera.prototype.p_Update=function(){
 	var t_1=this.m_owner.m_direction;
 	if(t_1==1){
-		this.m_destX=((this.m_owner.m_x)|0);
-		this.m_destY=((this.m_owner.m_y-18.285714285714285)|0);
+		this.m_destX=((this.m_owner.m_x+0.5)|0);
+		this.m_destY=((this.m_owner.m_y-18.285714285714285+0.5)|0);
 	}else{
 		if(t_1==0){
-			this.m_destX=((this.m_owner.m_x)|0);
-			this.m_destY=((this.m_owner.m_y+18.285714285714285)|0);
+			this.m_destX=((this.m_owner.m_x+0.5)|0);
+			this.m_destY=((this.m_owner.m_y+18.285714285714285+0.5)|0);
 		}else{
 			if(t_1==2){
-				this.m_destX=((this.m_owner.m_x-18.285714285714285)|0);
-				this.m_destY=((this.m_owner.m_y)|0);
+				this.m_destX=((this.m_owner.m_x-18.285714285714285+0.5)|0);
+				this.m_destY=((this.m_owner.m_y+0.5)|0);
 			}else{
 				if(t_1==3){
-					this.m_destX=((this.m_owner.m_x+18.285714285714285)|0);
-					this.m_destY=((this.m_owner.m_y)|0);
+					this.m_destX=((this.m_owner.m_x+18.285714285714285+0.5)|0);
+					this.m_destY=((this.m_owner.m_y+0.5)|0);
 				}
 			}
 		}
@@ -6962,8 +6856,6 @@ c_Camera.prototype.p_Update=function(){
 		var t_vel=64.0*c_Time.m_instance.m_lastFrame/1000.0;
 		var t_dist=Math.sqrt(Math.pow((this.m_destX)-this.m_x,2.0)+Math.pow((this.m_destY)-this.m_y,2.0));
 		var t_angle=(Math.atan2((this.m_destY)-this.m_y,(this.m_destX)-this.m_x)*R2D);
-		print(String((this.m_destX)-this.m_x)+" "+String((this.m_destY)-this.m_y));
-		print(String(t_angle));
 		if(t_dist<t_vel){
 			this.m_x=(this.m_destX);
 			this.m_y=(this.m_destY);
@@ -6974,8 +6866,10 @@ c_Camera.prototype.p_Update=function(){
 			this.m_y=this.m_y+t_velY;
 		}
 	}
-	this.m_x0=((this.m_x-32.0+0.5)|0);
-	this.m_y0=((this.m_y-32.0+0.5)|0);
+	this.m_x=((Math.floor(this.m_x+0.5))|0);
+	this.m_y=((Math.floor(this.m_y+0.5))|0);
+	this.m_x0=((Math.floor(this.m_x-32.0+0.5))|0);
+	this.m_y0=((Math.floor(this.m_y-32.0+0.5))|0);
 }
 function c_CameraEditor(){
 	c_Camera.call(this);

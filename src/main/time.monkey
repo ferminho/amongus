@@ -2,7 +2,7 @@ Strict
 
 Private
 
-Import mojo
+Import mojo2
 
 Public 
 
@@ -15,6 +15,10 @@ Public
 	Field realActTime:Int = 0
 	Field lastFrame:Float = 0.0
 	Field realLastFrame:Float = 0.0
+	
+	Field lastFpsTime:Int = -1.0
+	Field frames:Int = 0
+	Field fps:Float = 0.0
 	
 	Global instance:Time = New Time()
 	
@@ -30,6 +34,16 @@ Public
 		lastFrame = realLastFrame * timeDistortion
 		actTime = actTime + lastFrame
 		realActTime = temp
+		
+		If (lastFpsTime = -1.0)
+			lastFpsTime = temp
+		Else If ((temp - lastFpsTime) >= 3000)
+			lastFpsTime = temp
+			fps = (frames + 1) / 3
+			frames = 0
+		Else
+			frames += 1
+		End If
 	End Method
 	
 End Class

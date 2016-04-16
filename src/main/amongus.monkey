@@ -11,9 +11,14 @@ Import time
 
 Class AmongUs Extends App
 Private
+	Const DesiredFps:Float = 50.0
+	Const FrameTime:Int = 1000.0 / DesiredFps
+
 	Field canvas:Canvas
 	Field scenes:Scene[] = New Scene[2]
 	Field currentScene:Int = 0
+	
+	Field nextExpectedFrame:Int 
 
 	Method OnCreate:Int()
 		Time.instance.Update()
@@ -25,20 +30,26 @@ Private
 		scenes[1] = New Game()
 		
 		scenes[0].Start()
+		
+		nextExpectedFrame = Millisecs() + FrameTime
 		Return 0
 	End Method
 	
 	Method OnUpdate:Int()
-		Time.instance.Update()
+		Local time:Int = Millisecs()
 
-		Local status:Int = scenes[currentScene].Update()
-		If (status = Scene.SkipToNextScene)
-			currentScene+= 1
-			scenes[currentScene].Start()
-		Else If (status = Scene.Abort)
-			currentScene-= 1
-			If (currentScene < 0) Then EndApp()
-			scenes[currentScene].Start()
+		If (time >= nextExpectedFrame)
+			nextExpectedFrame = time + FrameTime
+			Time.instance.Update()
+			Local status:Int = scenes[currentScene].Update()
+			If (status = Scene.SkipToNextScene)
+				currentScene+= 1
+				scenes[currentScene].Start()
+			Else If (status = Scene.Abort)
+				currentScene-= 1
+				If (currentScene < 0) Then EndApp()
+				scenes[currentScene].Start()
+			End If
 		End If
 		Return 0
 	End Method

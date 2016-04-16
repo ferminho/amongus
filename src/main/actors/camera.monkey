@@ -28,25 +28,23 @@ Public
 	Method Update:Void()
 		Select (owner.direction)
 			Case DirectionUp
-				destX = owner.x
-				destY = owner.y - ShiftY
+				destX = Int(Floor(owner.x + 0.5))
+				destY = Int(Floor(owner.y - ShiftY + 0.5))
 			Case DirectionDown 
-				destX = owner.x
-				destY = owner.y + ShiftY
+				destX = Int(Floor(owner.x + 0.5))
+				destY = Int(Floor(owner.y + ShiftY + 0.5))
 			Case DirectionLeft
-				destX = owner.x - ShiftX
-				destY = owner.y
+				destX = Int(Floor(owner.x - ShiftX + 0.5))
+				destY = Int(Floor(owner.y + 0.5))
 			Case DirectionRight
-				destX = owner.x + ShiftX
-				destY = owner.y
+				destX = Int(Floor(owner.x + ShiftX + 0.5))
+				destY = Int(Floor(owner.y + 0.5))
 		End Select
 		
 		If (x <> destX Or y <> destY)
 			Local vel:Float = (Speed * Time.instance.lastFrame) / 1000.0
 			Local dist:Float = Sqrt(Pow(destX - x, 2) + Pow(destY - y, 2))
 			Local angle:Float = ATan2(destY - y, destX - x)
-			Print((destX - x) + " " + (destY - y))
-			Print (angle)
 			If (dist < vel)
 				x = destX
 				y = destY
@@ -57,8 +55,10 @@ Public
 				y = y + velY
 			End If
 		End If
-		x0 = Int(x - CanvasHalfWidth + 0.5)
-		y0 = Int(y - CanvasHalfHeight + 0.5)
+		x = Int(Floor(x + 0.5))
+		y = Int(Floor(y + 0.5))
+		x0 = Int(Floor(x - CanvasHalfWidth + 0.5))
+		y0 = Int(Floor(y - CanvasHalfHeight + 0.5))
 	End Method
 
 End Class

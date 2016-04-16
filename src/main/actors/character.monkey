@@ -18,7 +18,7 @@ Public
 	
 	Method Update:Void()
 		Local delta:Float = Time.instance.lastFrame
-		Local vel:Float = (32.0 * delta) / 1000.0
+		Local vel:Float = (30.0 * delta) / 1000.0
 		If (KeyDown(KEY_SHIFT)) Then vel *= 2.0
 		If (KeyDown(KEY_CONTROL)) Then vel *= 4.0
 		If (KeyDown(KEY_UP))
@@ -36,12 +36,15 @@ Public
 			x += vel
 		End If		
 		
+		x = Int(Floor(x + 0.5))
+		y = Int(Floor(y + 0.5))
+		
 	End Method
 
 	Method Draw:Void(canvas:Canvas, camera:Camera)
 		canvas.SetBlendMode(BlendMode.Alpha)
 		canvas.SetColor(1.0, 1.0, 1.0, 1.0)
-		canvas.DrawImage(atlas[0], (x - camera.x0 + 0.5), (y - camera.y0 + 0.5))
+		canvas.DrawImage(atlas[0], x - camera.x0, y - camera.y0)
 	End Method
 	
 End Class
