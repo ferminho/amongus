@@ -15,10 +15,10 @@ Class Game Implements Scene
 	Field currentLevel:Int = 0
 	
 	Method New()
+		AssetBox.Initialize()
+		Tileset.Initialize()
 		levels = New Scene[1]
 		levels[0] = New Level(New TestMap)
-		Tileset.Initialize()
-		AssetBox.Initialize()
 	End Method
 	
 	Method Start:Void()

@@ -25,7 +25,7 @@ Public
 	End Method
 	
 	Method Update:Void()
-		Local vel:Float = (64.0 * Time.instance.realLastFrame) / 1000.0
+		Local vel:Float = (32.0 * Time.instance.realLastFrame) / 1000.0
 		If (KeyDown(KEY_SHIFT)) Then vel *= 2.0
 		If (KeyDown(KEY_CONTROL)) Then vel *= 4.0
 		If (KeyDown(KEY_UP))
@@ -38,8 +38,6 @@ Public
 		Else If (KeyDown(KEY_RIGHT))
 			x += vel
 		End If
-		x = Int(x + 0.5)
-		y = Int(y + 0.5)
 		
 		Local mx:Float = TMouseX()
 		Local my:Float = TMouseY()
@@ -80,8 +78,8 @@ Public
 			End For
 		End If
 		
-		x0 = Int(x - CanvasHalfWidth)
-		y0 = Int(y - CanvasHalfHeight)	
+		x0 = Int(x - CanvasHalfWidth + 0.5)
+		y0 = Int(y - CanvasHalfHeight + 0.5)
 	End Method
 	
 	Method Draw:Void(canvas:Canvas, camera:Camera)

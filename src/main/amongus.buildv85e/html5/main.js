@@ -6746,10 +6746,10 @@ function c_Game(){
 	this.implments={c_Scene:1};
 }
 c_Game.m_new=function(){
+	c_AssetBox.m_Initialize();
+	c_Tileset.m_Initialize();
 	this.m_levels=new_object_array(1);
 	this.m_levels[0]=(c_Level.m_new.call(new c_Level,(c_TestMap.m_new.call(new c_TestMap))));
-	c_Tileset.m_Initialize();
-	c_AssetBox.m_Initialize();
 	return this;
 }
 c_Game.prototype.p_Start=function(){
@@ -6770,33 +6770,54 @@ c_Game.prototype.p_Update=function(){
 c_Game.prototype.p_Draw=function(t_canvas){
 	this.m_levels[this.m_currentLevel].p_Draw(t_canvas);
 }
+function c_AssetBox(){
+	Object.call(this);
+}
+c_AssetBox.m_GfxCharacter=[];
+c_AssetBox.m_Initialize=function(){
+	c_AssetBox.m_GfxCharacter=c_Image2.m_LoadFrames("monkey://data/character.png",64,false,.5,1.0,0,null);
+}
+function c_Tileset(){
+	Object.call(this);
+}
+c_Tileset.m_Tiles=[];
+c_Tileset.m_Initialize=function(){
+	c_Tileset.m_Tiles=c_Image2.m_LoadFrames("monkey://data/tileset.png",64,false,.0,.0,0,null);
+}
 function c_Level(){
 	Object.call(this);
 	this.m_map=null;
+	this.m_chr=null;
 	this.m_camera=null;
 	this.implments={c_Scene:1};
 }
 c_Level.m_new=function(t_map){
 	this.m_map=t_map;
+	this.m_chr=c_Character.m_new.call(new c_Character);
+	this.m_chr.m_x=4.0;
+	this.m_chr.m_y=7.0;
 	if(true){
-		this.m_camera=(c_CameraEditor.m_new.call(new c_CameraEditor,t_map));
+		this.m_camera=c_Camera.m_new.call(new c_Camera,(this.m_chr));
 	}
 	return this;
 }
 c_Level.m_new2=function(){
 	return this;
 }
-c_Level.prototype.p_Start=function(){
-}
 c_Level.prototype.p_Update=function(){
+	this.m_chr.p_Update();
 	this.m_camera.p_Update();
 	return 0;
+}
+c_Level.prototype.p_Start=function(){
+	this.p_Update();
 }
 c_Level.prototype.p_Draw=function(t_canvas){
 	t_canvas.p_Clear(0.0,0.0,0.0,1.0);
 	t_canvas.p_SetBlendMode(1);
 	t_canvas.p_SetColor2(1.0,1.0,1.0,1.0);
 	this.m_map.p_Draw2(t_canvas,this.m_camera);
+	this.m_chr.p_Draw2(t_canvas,this.m_camera);
 	this.m_camera.p_Draw2(t_canvas,this.m_camera);
 	t_canvas.p_Flush();
 }
@@ -6855,6 +6876,24 @@ c_Actor.prototype.p_Update=function(){
 }
 c_Actor.prototype.p_Draw2=function(t_canvas,t_camera){
 }
+function c_Character(){
+	c_Actor.call(this);
+	this.m_atlas=[];
+}
+c_Character.prototype=extend_class(c_Actor);
+c_Character.m_new=function(){
+	c_Actor.m_new.call(this);
+	this.m_atlas=c_AssetBox.m_GfxCharacter;
+	return this;
+}
+c_Character.prototype.p_Update=function(){
+	var t_delta=c_Time.m_instance.m_lastFrame;
+}
+c_Character.prototype.p_Draw2=function(t_canvas,t_camera){
+	t_canvas.p_SetBlendMode(1);
+	t_canvas.p_SetColor2(1.0,1.0,1.0,1.0);
+	t_canvas.p_DrawImage4(this.m_atlas[0],this.m_x-(t_camera.m_x0)+0.5,this.m_y-(t_camera.m_y0)+0.5);
+}
 function c_Camera(){
 	c_Actor.call(this);
 	this.m_owner=null;
@@ -6876,40 +6915,40 @@ c_Camera.m_new2=function(){
 c_Camera.prototype.p_Update=function(){
 	var t_1=this.m_owner.m_direction;
 	if(t_1==1){
-		this.m_destX=((this.m_x)|0);
-		this.m_destY=((this.m_y-21.333333333333332)|0);
+		this.m_destX=((this.m_owner.m_x)|0);
+		this.m_destY=((this.m_owner.m_y-21.333333333333332)|0);
 	}else{
 		if(t_1==0){
-			this.m_destX=((this.m_x)|0);
-			this.m_destY=((this.m_y+21.333333333333332)|0);
+			this.m_destX=((this.m_owner.m_x)|0);
+			this.m_destY=((this.m_owner.m_y+21.333333333333332)|0);
 		}else{
 			if(t_1==2){
-				this.m_destX=((this.m_x-21.333333333333332)|0);
-				this.m_destY=((this.m_y)|0);
+				this.m_destX=((this.m_owner.m_x-21.333333333333332)|0);
+				this.m_destY=((this.m_owner.m_y)|0);
 			}else{
 				if(t_1==3){
-					this.m_destX=((this.m_x+21.333333333333332)|0);
-					this.m_destY=((this.m_y)|0);
+					this.m_destX=((this.m_owner.m_x+21.333333333333332)|0);
+					this.m_destY=((this.m_owner.m_y)|0);
 				}
 			}
 		}
 	}
 	if(this.m_x!=(this.m_destX) || this.m_y!=(this.m_destY)){
-		var t_vel=32.0*c_Time.m_instance.m_lastFrame/1000.0;
+		var t_vel=64.0*c_Time.m_instance.m_lastFrame/1000.0;
 		var t_dist=Math.sqrt(Math.pow((this.m_destX)-this.m_x,2.0)+Math.pow((this.m_destY)-this.m_y,2.0));
-		var t_angle=(Math.atan2((this.m_destX)-this.m_x,(this.m_destY)-this.m_y)*R2D);
+		var t_angle=(Math.atan2((this.m_destY)-this.m_y,(this.m_destX)-this.m_x)*R2D);
 		if(t_dist<t_vel){
-			this.m_x=(((this.m_destX)+0.5)|0);
-			this.m_y=(((this.m_destY)+0.5)|0);
+			this.m_x=(this.m_destX);
+			this.m_y=(this.m_destY);
 		}else{
 			var t_velX=bb_math_Sgn2((this.m_destX)-this.m_x)*(t_vel*Math.cos((t_angle)*D2R));
 			var t_velY=bb_math_Sgn2((this.m_destY)-this.m_y)*(t_vel*Math.sin((t_angle)*D2R));
-			this.m_x=((this.m_x+t_velX+0.5)|0);
-			this.m_y=((this.m_y+t_velY+0.5)|0);
+			this.m_x=this.m_x+t_velX;
+			this.m_y=this.m_y+t_velY;
 		}
 	}
-	this.m_x0=((((this.m_x)|0)-32.0)|0);
-	this.m_y0=((((this.m_y)|0)-32.0)|0);
+	this.m_x0=((this.m_x-32.0+0.5)|0);
+	this.m_y0=((this.m_y-32.0+0.5)|0);
 }
 function c_CameraEditor(){
 	c_Camera.call(this);
@@ -6929,7 +6968,7 @@ c_CameraEditor.m_new2=function(){
 	return this;
 }
 c_CameraEditor.prototype.p_Update=function(){
-	var t_vel=64.0*c_Time.m_instance.m_realLastFrame/1000.0;
+	var t_vel=32.0*c_Time.m_instance.m_realLastFrame/1000.0;
 	if((bb_input2_KeyDown(16))!=0){
 		t_vel*=2.0;
 	}
@@ -6950,8 +6989,6 @@ c_CameraEditor.prototype.p_Update=function(){
 			this.m_x+=t_vel;
 		}
 	}
-	this.m_x=((this.m_x+0.5)|0);
-	this.m_y=((this.m_y+0.5)|0);
 	var t_mx=bb_input_TMouseX();
 	var t_my=bb_input_TMouseY();
 	if(t_my>=54.0){
@@ -6994,8 +7031,8 @@ c_CameraEditor.prototype.p_Update=function(){
 			print(t_line);
 		}
 	}
-	this.m_x0=((this.m_x-32.0)|0);
-	this.m_y0=((this.m_y-32.0)|0);
+	this.m_x0=((this.m_x-32.0+0.5)|0);
+	this.m_y0=((this.m_y-32.0+0.5)|0);
 }
 c_CameraEditor.prototype.p_Draw2=function(t_canvas,t_camera){
 	t_canvas.p_SetColor2(0.1,0.1,0.1,1.0);
@@ -7013,20 +7050,6 @@ c_CameraEditor.prototype.p_Draw2=function(t_canvas,t_camera){
 		t_tile+=1;
 		t_x=(((t_x)+9.0)|0);
 	}
-}
-function c_Tileset(){
-	Object.call(this);
-}
-c_Tileset.m_Tiles=[];
-c_Tileset.m_Initialize=function(){
-	c_Tileset.m_Tiles=c_Image2.m_LoadFrames("monkey://data/tileset.png",64,false,.0,.0,0,null);
-}
-function c_AssetBox(){
-	Object.call(this);
-}
-c_AssetBox.m_GfxCharacter=[];
-c_AssetBox.m_Initialize=function(){
-	c_AssetBox.m_GfxCharacter=c_Image2.m_LoadFrames("monkey://data/character.png",64,false,.5,1.0,0,null);
 }
 function bb_filepath_ExtractExt(t_path){
 	var t_i=t_path.lastIndexOf(".");
@@ -7154,8 +7177,8 @@ function bbInit(){
 	c_Stack4.m_NIL=null;
 	c_Stack5.m_NIL=0;
 	bb_graphics2_rs_projMatrix=bb_math3d_Mat4New();
-	c_Tileset.m_Tiles=[];
 	c_AssetBox.m_GfxCharacter=[];
+	c_Tileset.m_Tiles=[];
 	c_Texture.m__black=null;
 	c_Texture.m__flat=null;
 }
