@@ -16,8 +16,8 @@ Class Game Implements Scene
 	Method New()
 		levels = New Scene[1]
 		levels[0] = New Level(New TestMap)
-		
 		Tileset.Initialize()
+		AssetBox.Initialize()
 	End Method
 	
 	Method Start:Void()
