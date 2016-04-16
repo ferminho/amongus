@@ -13,6 +13,9 @@ Public
 	Const ShiftY:Float = CanvasWidth / 3.0
 	Const Speed:Float = 32.0
 	
+	Field x0:Int	' screen origin
+	Field y0:Int
+	
 	Field owner:Actor
 	
 	Field destX:Int
@@ -53,6 +56,8 @@ Public
 			End If
 		End If
 		
+		x0 = Int(x) - CanvasHalfWidth
+		y0 = Int(y) - CanvasHalfHeight
 	End Method
 
 End Class

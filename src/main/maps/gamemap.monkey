@@ -16,14 +16,12 @@ Public
 	Field tiles:Int[]
 
 	Method Draw:Void(canvas:Canvas, camera:Camera)
-		Local canvasX0:Int = camera.x - CanvasHalfWidth
-		Local canvasY0:Int = camera.y - CanvasHalfHeight
-		Local x0:Int = -(canvasX0 Mod TileSize)
-		Local y:Int = -(canvasY0 Mod TileSize)
+		Local x0:Int = -(camera.x0 Mod TileSize)
+		Local y:Int = -(camera.y0 Mod TileSize)
 
-		Local tileI0:Int = canvasY0 / TileSize
+		Local tileI0:Int = camera.y0 / TileSize
 		Local tileI1:Int = tileI0 + (CanvasHeight / TileSize)
-		Local tileJ0:Int = canvasX0 / TileSize
+		Local tileJ0:Int = camera.x0 / TileSize
 		Local tileJ1:Int = tileJ0 + (CanvasWidth / TileSize)
 		
 		For Local i:Int = tileI0 to tileI1

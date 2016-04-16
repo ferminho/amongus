@@ -80,9 +80,11 @@ Public
 			End For
 		End If
 		
+		x0 = Int(x - CanvasHalfWidth)
+		y0 = Int(y - CanvasHalfHeight)	
 	End Method
 	
-	Method Draw:Void(canvas:Canvas)
+	Method Draw:Void(canvas:Canvas, camera:Camera)
 		canvas.SetColor(0.1, 0.1, 0.1, 1.0)
 		canvas.DrawRect(0.0, MarginStart, CanvasWidth, Margin)
 		canvas.SetColor(1.0, 0.1, 0.1, 1.0)

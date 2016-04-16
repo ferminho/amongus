@@ -3,6 +3,7 @@ Strict
 Public
 
 Import mojo2
+Import actors.camera
 
 Class Actor
 Public
@@ -18,7 +19,7 @@ Public
 	Method Update:Void()
 	End Method
 
-	Method Draw:Void(canvas:Canvas)
+	Method Draw:Void(canvas:Canvas, camera:Camera)
 	End Method
 		
 End Class

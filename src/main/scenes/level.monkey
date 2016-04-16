@@ -40,8 +40,7 @@ Class Level Implements Scene
 		canvas.SetColor(1.0, 1.0, 1.0, 1.0)
 		
 		map.Draw(canvas, camera)
-		
-		camera.Draw(canvas) ' usually doesn't draw but who knows?
+		camera.Draw(canvas, camera) ' usually doesn't draw but who knows?
 		canvas.Flush()
 	End Method
 		

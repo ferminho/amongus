@@ -4,6 +4,7 @@ Public
 
 Import mojo2
 
+Import assetbox
 Import maps.testmap
 Import scenes.level
 Import scenes.scene
