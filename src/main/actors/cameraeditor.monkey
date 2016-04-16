@@ -38,8 +38,8 @@ Public
 		Else If (KeyDown(KEY_RIGHT))
 			x += vel
 		End If
-		x = Int(x)
-		y = Int(y)
+		x = Int(x + 0.5)
+		y = Int(y + 0.5)
 		
 		Local mx:Float = TMouseX()
 		Local my:Float = TMouseY()

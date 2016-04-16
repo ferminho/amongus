@@ -46,13 +46,13 @@ Public
 			Local dist:Float = Sqrt(Pow(destX - x, 2) + Pow(destY - y, 2))
 			Local angle:Float = ATan2(destX - x, destY - y)
 			If (dist < vel)
-				x = Int(destX)
-				y = Int(destY)
+				x = Int(destX + 0.5)
+				y = Int(destY + 0.5)
 			Else
 				Local velX:Float = Sgn(destX - x) * (vel * Cos(angle))
 				Local velY:Float = Sgn(destY - y) * (vel * Sin(angle))
-				x = Int(x + velX)
-				y = Int(y + velY)
+				x = Int(x + velX + 0.5)
+				y = Int(y + velY + 0.5)
 			End If
 		End If
 		
