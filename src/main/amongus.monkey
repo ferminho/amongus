@@ -2,6 +2,7 @@ Strict
 
 Import mojo2
 
+Import consts
 Import scenes.menu
 Import scenes.game
 
@@ -14,7 +15,7 @@ Private
 
 	Method OnCreate:Int()
 		canvas = New Canvas()
-		canvas.SetProjection2d(0.0, 64.0, 0.0, 64.0)
+		canvas.SetProjection2d(0.0, CanvasWidth, 0.0, CanvasHeight)
 		
 		scenes[0] = New Menu()
 		scenes[1] = New Game()
