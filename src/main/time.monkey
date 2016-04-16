@@ -1,8 +1,10 @@
 Strict
 
-Public 
+Private
 
 Import mojo
+
+Public 
 
 Class Time
 Public
