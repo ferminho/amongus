@@ -24,7 +24,7 @@ Private
 	End Method
 	
 	Method OnUpdate:Int()
-		Local status:Int = scenes[currentScene].Run()
+		Local status:Int = scenes[currentScene].Update()
 		If (status = Scene.SkipToNextScene)
 			currentScene+= 1
 			scenes[currentScene].Start()

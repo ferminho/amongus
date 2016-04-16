@@ -2640,7 +2640,7 @@ c_AmongUs.prototype.p_OnCreate=function(){
 	return 0;
 }
 c_AmongUs.prototype.p_OnUpdate=function(){
-	var t_status=this.m_scenes[this.m_currentScene].p_Run();
+	var t_status=this.m_scenes[this.m_currentScene].p_Update();
 	if(t_status==2){
 		this.m_currentScene+=1;
 		this.m_scenes[this.m_currentScene].p_Start();
@@ -6323,7 +6323,7 @@ c_Menu.m_new=function(){
 }
 c_Menu.prototype.p_Start=function(){
 }
-c_Menu.prototype.p_Run=function(){
+c_Menu.prototype.p_Update=function(){
 	return 2;
 }
 c_Menu.prototype.p_Draw=function(t_canvas){
@@ -6336,15 +6336,15 @@ function c_Game(){
 }
 c_Game.m_new=function(){
 	this.m_levels=new_object_array(1);
-	this.m_levels[0]=(c_Level.m_new.call(new c_Level,null));
+	this.m_levels[0]=(c_Level.m_new.call(new c_Level,(c_TestMap.m_new.call(new c_TestMap))));
 	c_Tileset.m_Initialize();
 	return this;
 }
 c_Game.prototype.p_Start=function(){
 	this.m_currentLevel=0;
 }
-c_Game.prototype.p_Run=function(){
-	var t_status=this.m_levels[this.m_currentLevel].p_Run();
+c_Game.prototype.p_Update=function(){
+	var t_status=this.m_levels[this.m_currentLevel].p_Update();
 	if(t_status==2){
 		this.m_currentLevel+=1;
 		this.m_levels[this.m_currentLevel].p_Start();
@@ -6374,7 +6374,8 @@ c_Level.m_new2=function(){
 }
 c_Level.prototype.p_Start=function(){
 }
-c_Level.prototype.p_Run=function(){
+c_Level.prototype.p_Update=function(){
+	this.m_camera.p_Update();
 	return 0;
 }
 c_Level.prototype.p_Draw=function(t_canvas){
@@ -6386,13 +6387,40 @@ c_Level.prototype.p_Draw=function(t_canvas){
 }
 function c_GameMap(){
 	Object.call(this);
+	this.m_width=0;
+	this.m_height=0;
+	this.m_tiles=[];
+}
+c_GameMap.m_new=function(){
+	return this;
 }
 c_GameMap.prototype.p_Draw2=function(t_canvas,t_camera){
 }
-function c_Camera(){
+function c_TestMap(){
+	c_GameMap.call(this);
+}
+c_TestMap.prototype=extend_class(c_GameMap);
+c_TestMap.m_new=function(){
+	c_GameMap.m_new.call(this);
+	this.m_width=16;
+	this.m_height=16;
+	this.m_tiles=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+	return this;
+}
+function c_Actor(){
 	Object.call(this);
 }
+c_Actor.m_new=function(){
+	return this;
+}
+c_Actor.prototype.p_Update=function(){
+}
+function c_Camera(){
+	c_Actor.call(this);
+}
+c_Camera.prototype=extend_class(c_Actor);
 c_Camera.m_new=function(){
+	c_Actor.m_new.call(this);
 	return this;
 }
 function c_Tileset(){

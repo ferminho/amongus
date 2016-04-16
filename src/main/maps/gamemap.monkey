@@ -5,7 +5,7 @@ Public
 Import mojo2
 
 Import actors.camera
-Import tileset
+Import maps.tileset
 
 Class GameMap
 Public

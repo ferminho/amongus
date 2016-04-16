@@ -9,7 +9,7 @@ Class Menu Implements Scene
 	Method Start:Void()
 	End Method
 
-	Method Run:Int()
+	Method Update:Int()
 		Return Scene.SkipToNextScene
 	End Method
 	

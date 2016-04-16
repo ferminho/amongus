@@ -14,7 +14,7 @@ Public
 	Method Start:Void()
 
 	' Returns status (KeepRunning, Abort, SkipToNextScene...)
-	Method Run:Int()
+	Method Update:Int()
 	
 	Method Draw:Void(canvas:Canvas)	
 

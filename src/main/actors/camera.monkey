@@ -2,6 +2,8 @@ Strict
 
 Public
 
-Class Camera
+Import actors.actor
+
+Class Camera Extends Actor
 	
 End Class

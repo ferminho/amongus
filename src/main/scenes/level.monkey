@@ -22,7 +22,9 @@ Class Level Implements Scene
 	Method Start:Void()
 	End Method
 
-	Method Run:Int()
+	Method Update:Int()
+	
+		camera.Update()
 		Return Scene.KeepRunning
 	End Method
 	

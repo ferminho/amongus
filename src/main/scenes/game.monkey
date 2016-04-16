@@ -4,6 +4,7 @@ Public
 
 Import mojo2
 
+Import maps.testmap
 Import scenes.level
 Import scenes.scene
 
@@ -14,7 +15,7 @@ Class Game Implements Scene
 	
 	Method New()
 		levels = New Scene[1]
-		levels[0] = New Level(Null)
+		levels[0] = New Level(New TestMap)
 		
 		Tileset.Initialize()
 	End Method
@@ -23,8 +24,8 @@ Class Game Implements Scene
 		currentLevel = 0
 	End Method
 
-	Method Run:Int()
-		Local status:Int = levels[currentLevel].Run()
+	Method Update:Int()
+		Local status:Int = levels[currentLevel].Update()
 		If (status = Scene.SkipToNextScene)
 			currentLevel+= 1
 			levels[currentLevel].Start()
