@@ -2807,7 +2807,7 @@ c_GameDelegate.prototype.StartGame=function(){
 	this.m__audio=(new gxtkAudio);
 	bb_audio_SetAudioDevice(this.m__audio);
 	this.m__input=c_InputDevice.m_new.call(new c_InputDevice);
-	bb_input_SetInputDevice(this.m__input);
+	bb_input2_SetInputDevice(this.m__input);
 	bb_app_ValidateDeviceWindow(false);
 	bb_app_EnumDisplayModes();
 	bb_app__app.p_OnCreate();
@@ -3206,6 +3206,18 @@ c_InputDevice.prototype.p_KeyDown=function(t_key){
 	}
 	return false;
 }
+c_InputDevice.prototype.p_MouseX=function(){
+	return this.m__mouseX;
+}
+c_InputDevice.prototype.p_MouseY=function(){
+	return this.m__mouseY;
+}
+c_InputDevice.prototype.p_KeyHit=function(t_key){
+	if(t_key>0 && t_key<512){
+		return this.m__keyHit[t_key];
+	}
+	return 0;
+}
 function c_JoyState(){
 	Object.call(this);
 	this.m_joyx=new_number_array(2);
@@ -3216,9 +3228,9 @@ function c_JoyState(){
 c_JoyState.m_new=function(){
 	return this;
 }
-var bb_input_device=null;
-function bb_input_SetInputDevice(t_dev){
-	bb_input_device=t_dev;
+var bb_input2_device=null;
+function bb_input2_SetInputDevice(t_dev){
+	bb_input2_device=t_dev;
 	return 0;
 }
 var bb_app__devWidth=0;
@@ -3909,6 +3921,29 @@ c_DrawList.prototype.p_DrawImage4=function(t_image,t_tx,t_ty){
 	this.p_Translate(t_tx,t_ty);
 	this.p_DrawImage(t_image);
 	this.p_PopMatrix();
+}
+c_DrawList.prototype.p_DrawRect=function(t_x0,t_y0,t_width,t_height,t_material,t_s0,t_t0,t_s1,t_t1){
+	var t_x1=t_x0+t_width;
+	var t_y1=t_y0+t_height;
+	this.p_BeginPrim(t_material,4);
+	this.p_PrimVert(t_x0,t_y0,t_s0,t_t0);
+	this.p_PrimVert(t_x1,t_y0,t_s1,t_t0);
+	this.p_PrimVert(t_x1,t_y1,t_s1,t_t1);
+	this.p_PrimVert(t_x0,t_y1,t_s0,t_t1);
+}
+c_DrawList.prototype.p_DrawRect2=function(t_x0,t_y0,t_width,t_height,t_image,t_sourceX,t_sourceY,t_sourceWidth,t_sourceHeight){
+	var t_material=t_image.m__material;
+	var t_s0=(t_image.m__x+t_sourceX)/(t_material.p_Width());
+	var t_t0=(t_image.m__y+t_sourceY)/(t_material.p_Height());
+	var t_s1=(t_image.m__x+t_sourceX+t_sourceWidth)/(t_material.p_Width());
+	var t_t1=(t_image.m__y+t_sourceY+t_sourceHeight)/(t_material.p_Height());
+	this.p_DrawRect(t_x0,t_y0,t_width,t_height,t_material,t_s0,t_t0,t_s1,t_t1);
+}
+c_DrawList.prototype.p_DrawRect3=function(t_x,t_y,t_image,t_sourceX,t_sourceY,t_sourceWidth,t_sourceHeight){
+	this.p_DrawRect2(t_x,t_y,(t_sourceWidth),(t_sourceHeight),t_image,t_sourceX,t_sourceY,t_sourceWidth,t_sourceHeight);
+}
+c_DrawList.prototype.p_DrawRect4=function(t_x0,t_y0,t_width,t_height,t_image){
+	this.p_DrawRect(t_x0,t_y0,t_width,t_height,t_image.m__material,t_image.m__s0,t_image.m__t0,t_image.m__s1,t_image.m__t1);
 }
 function c_Canvas(){
 	c_DrawList.call(this);
@@ -6743,7 +6778,7 @@ function c_Level(){
 c_Level.m_new=function(t_map){
 	this.m_map=t_map;
 	if(true){
-		this.m_camera=(c_CameraEditor.m_new.call(new c_CameraEditor));
+		this.m_camera=(c_CameraEditor.m_new.call(new c_CameraEditor,t_map));
 	}
 	return this;
 }
@@ -6761,6 +6796,7 @@ c_Level.prototype.p_Draw=function(t_canvas){
 	t_canvas.p_SetBlendMode(1);
 	t_canvas.p_SetColor2(1.0,1.0,1.0,1.0);
 	this.m_map.p_Draw2(t_canvas,this.m_camera);
+	this.m_camera.p_Draw(t_canvas);
 	t_canvas.p_Flush();
 }
 function c_GameMap(){
@@ -6829,33 +6865,103 @@ c_Camera.prototype.p_Update=function(){
 }
 function c_CameraEditor(){
 	c_Camera.call(this);
+	this.m_map=null;
+	this.m_currentTile=0;
 }
 c_CameraEditor.prototype=extend_class(c_Camera);
-c_CameraEditor.m_new=function(){
-	c_Camera.m_new.call(this);
+c_CameraEditor.m_new=function(t_map){
+	c_Camera.m_new2.call(this);
+	this.m_map=t_map;
+	this.m_x=(((t_map.m_width)*8.0/2.0)|0);
+	this.m_y=(((t_map.m_height)*8.0/2.0)|0);
+	return this;
+}
+c_CameraEditor.m_new2=function(){
+	c_Camera.m_new2.call(this);
 	return this;
 }
 c_CameraEditor.prototype.p_Update=function(){
 	var t_vel=64.0*c_Time.m_instance.m_realLastFrame/1000.0;
-	if((bb_input_KeyDown(16))!=0){
+	if((bb_input2_KeyDown(16))!=0){
 		t_vel*=2.0;
 	}
-	if((bb_input_KeyDown(17))!=0){
+	if((bb_input2_KeyDown(17))!=0){
 		t_vel*=4.0;
 	}
-	if((bb_input_KeyDown(38))!=0){
+	if((bb_input2_KeyDown(38))!=0){
 		this.m_y-=t_vel;
 	}else{
-		if((bb_input_KeyDown(40))!=0){
+		if((bb_input2_KeyDown(40))!=0){
 			this.m_y+=t_vel;
 		}
 	}
-	if((bb_input_KeyDown(37))!=0){
+	if((bb_input2_KeyDown(37))!=0){
 		this.m_x-=t_vel;
 	}else{
-		if((bb_input_KeyDown(39))!=0){
+		if((bb_input2_KeyDown(39))!=0){
 			this.m_x+=t_vel;
 		}
+	}
+	this.m_x=((this.m_x)|0);
+	this.m_y=((this.m_y)|0);
+	var t_mx=bb_input_TMouseX();
+	var t_my=bb_input_TMouseY();
+	if(t_my>=54.0){
+		if(((bb_input2_MouseHit(0))!=0) || ((bb_input2_MouseHit(1))!=0)){
+			var t_offset=((Math.floor((t_mx-28.0)/9.0))|0);
+			this.m_currentTile+=t_offset;
+			if(this.m_currentTile<0){
+				this.m_currentTile=0;
+			}
+			if(this.m_currentTile>c_Tileset.m_Tiles.length){
+				this.m_currentTile=c_Tileset.m_Tiles.length-1;
+			}
+		}
+	}else{
+		var t_screenX0=this.m_x-32.0;
+		var t_screenY0=this.m_y-32.0;
+		var t_i=((Math.floor((t_my+t_screenY0)/8.0))|0);
+		var t_j=((Math.floor((t_mx+t_screenX0)/8.0))|0);
+		if(t_i>=0 && t_j>=0 && t_i<this.m_map.m_height && t_j<this.m_map.m_width){
+			if((bb_input2_MouseDown(0))!=0){
+				this.m_map.m_tiles[t_i*this.m_map.m_width+t_j]=this.m_currentTile;
+			}else{
+				if((bb_input2_MouseDown(1))!=0){
+					this.m_currentTile=this.m_map.m_tiles[t_i*this.m_map.m_width+t_j];
+				}
+			}
+		}
+	}
+	if((bb_input2_KeyHit(80))!=0){
+		for(var t_i2=1;t_i2<=100;t_i2=t_i2+1){
+			print("");
+		}
+		for(var t_i3=0;t_i3<=this.m_map.m_height-1;t_i3=t_i3+1){
+			var t_line="";
+			var t_offset2=t_i3*this.m_map.m_width;
+			for(var t_j2=0;t_j2<=this.m_map.m_width-1;t_j2=t_j2+1){
+				t_line=t_line+(String(this.m_map.m_tiles[t_offset2])+",");
+				t_offset2+=1;
+			}
+			print(t_line);
+		}
+	}
+}
+c_CameraEditor.prototype.p_Draw=function(t_canvas){
+	t_canvas.p_SetColor2(0.1,0.1,0.1,1.0);
+	t_canvas.p_DrawRect(0.0,54.0,64.0,10.0,null,0.0,0.0,1.0,1.0);
+	t_canvas.p_SetColor2(1.0,0.1,0.1,1.0);
+	t_canvas.p_DrawRect(27.0,54.0,10.0,10.0,null,0.0,0.0,1.0,1.0);
+	t_canvas.p_SetColor2(1.0,1.0,1.0,1.0);
+	var t_y=55;
+	var t_tile=this.m_currentTile-4;
+	var t_x=-8;
+	while((t_x)<64.0){
+		if(t_tile>=0 && t_tile<c_Tileset.m_Tiles.length){
+			t_canvas.p_DrawImage4(c_Tileset.m_Tiles[t_tile],(t_x),(t_y));
+		}
+		t_tile+=1;
+		t_x=(((t_x)+9.0)|0);
 	}
 }
 function c_Tileset(){
@@ -6898,8 +7004,44 @@ c_NodeEnumerator.prototype.p_NextObject=function(){
 	this.m_node=this.m_node.p_NextNode();
 	return t_t;
 }
-function bb_input_KeyDown(t_key){
-	return ((bb_input_device.p_KeyDown(t_key))?1:0);
+function bb_math_Sgn(t_x){
+	if(t_x<0){
+		return -1;
+	}
+	return ((t_x>0)?1:0);
+}
+function bb_math_Sgn2(t_x){
+	if(t_x<0.0){
+		return -1.0;
+	}
+	if(t_x>0.0){
+		return 1.0;
+	}
+	return 0.0;
+}
+function bb_input2_KeyDown(t_key){
+	return ((bb_input2_device.p_KeyDown(t_key))?1:0);
+}
+function bb_input2_MouseX(){
+	return bb_input2_device.p_MouseX();
+}
+function bb_input_TMouseX(){
+	return bb_input2_MouseX()*64.0/640.0;
+}
+function bb_input2_MouseY(){
+	return bb_input2_device.p_MouseY();
+}
+function bb_input_TMouseY(){
+	return bb_input2_MouseY()*64.0/640.0;
+}
+function bb_input2_MouseHit(t_button){
+	return bb_input2_device.p_KeyHit(1+t_button);
+}
+function bb_input2_MouseDown(t_button){
+	return ((bb_input2_device.p_KeyDown(1+t_button))?1:0);
+}
+function bb_input2_KeyHit(t_key){
+	return bb_input2_device.p_KeyHit(t_key);
 }
 function bbInit(){
 	bb_app__app=null;
@@ -6909,7 +7051,7 @@ function bbInit(){
 	bb_graphics_context=c_GraphicsContext.m_new.call(new c_GraphicsContext);
 	c_Image.m_DefaultFlags=0;
 	bb_audio_device=null;
-	bb_input_device=null;
+	bb_input2_device=null;
 	bb_app__devWidth=0;
 	bb_app__devHeight=0;
 	bb_app__displayModes=[];

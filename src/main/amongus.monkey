@@ -2,6 +2,7 @@ Strict
 
 Import mojo2
 
+Import assetbox
 Import consts
 Import scenes.menu
 Import scenes.game

@@ -4,6 +4,7 @@ Public
 
 Import mojo2 
 
+Import actors.actor
 Import actors.camera
 Import actors.cameraeditor
 Import maps.gamemap
@@ -18,7 +19,7 @@ Class Level Implements Scene
 	Method New(map:GameMap)
 		Self.map = map
 		If (Editing)
-			camera = New CameraEditor
+			camera = New CameraEditor(map)
 		Else
 			camera = New Camera()
 		End If
@@ -40,6 +41,7 @@ Class Level Implements Scene
 		
 		map.Draw(canvas, camera)
 		
+		camera.Draw(canvas) ' usually doesn't draw but who knows?
 		canvas.Flush()
 	End Method
 		
