@@ -23,7 +23,7 @@ CFG_TEXT_FILES="*.glsl;*.txt|*.xml|*.json";
 //${CONFIG_END}
 
 //${METADATA_BEGIN}
-var META_DATA="[mojo_font.png];type=image/png;width=864;height=13;\n[mojo2_font.png];type=image/png;width=960;height=16;\n";
+var META_DATA="[test.png];type=image/png;width=8;height=8;\n[mojo_font.png];type=image/png;width=864;height=13;\n[mojo2_font.png];type=image/png;width=960;height=16;\n";
 //${METADATA_END}
 
 //${TRANSCODE_BEGIN}
@@ -2620,18 +2620,18 @@ c_App.prototype.p_OnBack=function(){
 	this.p_OnClose();
 	return 0;
 }
-function c_MainClass(){
+function c_AmongUs(){
 	c_App.call(this);
 	this.m_canvas=null;
 	this.m_scenes=new_object_array(2);
 	this.m_currentScene=0;
 }
-c_MainClass.prototype=extend_class(c_App);
-c_MainClass.m_new=function(){
+c_AmongUs.prototype=extend_class(c_App);
+c_AmongUs.m_new=function(){
 	c_App.m_new.call(this);
 	return this;
 }
-c_MainClass.prototype.p_OnCreate=function(){
+c_AmongUs.prototype.p_OnCreate=function(){
 	this.m_canvas=c_Canvas.m_new.call(new c_Canvas,null);
 	this.m_canvas.p_SetProjection2d(0.0,64.0,0.0,64.0,-1.0,1.0);
 	this.m_scenes[0]=(c_Menu.m_new.call(new c_Menu));
@@ -2639,13 +2639,13 @@ c_MainClass.prototype.p_OnCreate=function(){
 	this.m_scenes[0].p_Start();
 	return 0;
 }
-c_MainClass.prototype.p_OnUpdate=function(){
-	var t_result=this.m_scenes[this.m_currentScene].p_Run();
-	if(t_result==2){
+c_AmongUs.prototype.p_OnUpdate=function(){
+	var t_status=this.m_scenes[this.m_currentScene].p_Run();
+	if(t_status==2){
 		this.m_currentScene+=1;
 		this.m_scenes[this.m_currentScene].p_Start();
 	}else{
-		if(t_result==1){
+		if(t_status==1){
 			this.m_currentScene-=1;
 			if(this.m_currentScene<0){
 				bb_app_EndApp();
@@ -2655,7 +2655,7 @@ c_MainClass.prototype.p_OnUpdate=function(){
 	}
 	return 0;
 }
-c_MainClass.prototype.p_OnRender=function(){
+c_AmongUs.prototype.p_OnRender=function(){
 	this.m_scenes[this.m_currentScene].p_Draw(this.m_canvas);
 	return 0;
 }
@@ -2741,7 +2741,7 @@ c_GameDelegate.prototype.DiscardGraphics=function(){
 var bb_app__delegate=null;
 var bb_app__game=null;
 function bbMain(){
-	c_MainClass.m_new.call(new c_MainClass);
+	c_AmongUs.m_new.call(new c_AmongUs);
 	return 0;
 }
 var bb_graphics_device=null;
@@ -3420,16 +3420,6 @@ function c_DrawList(){
 	this.m__op=bb_graphics2_nullOp;
 	this.m__casters=c_Stack4.m_new.call(new c_Stack4);
 	this.m__casterVerts=c_FloatStack.m_new2.call(new c_FloatStack);
-	this.m__color=[1.0,1.0,1.0,1.0];
-	this.m__alpha=255.0;
-	this.m__pmcolor=-1;
-	this.m__blend=1;
-	this.m__ix=1.0;
-	this.m__iy=.0;
-	this.m__jx=.0;
-	this.m__jy=1.0;
-	this.m__tx=.0;
-	this.m__ty=.0;
 }
 c_DrawList.prototype.p_SetFont=function(t_font){
 	if(!((t_font)!=null)){
@@ -3569,104 +3559,14 @@ c_DrawList.prototype.p_Reset=function(){
 		t_data[t_i].m_material=null;
 		bb_graphics2_freeOps.p_Push7(t_data[t_i]);
 	}
-	this.m__ops.p_Clear2();
+	this.m__ops.p_Clear();
 	this.m__op=bb_graphics2_nullOp;
-	this.m__casters.p_Clear2();
-	this.m__casterVerts.p_Clear2();
+	this.m__casters.p_Clear();
+	this.m__casterVerts.p_Clear();
 }
 c_DrawList.prototype.p_Flush=function(){
 	this.p_Render2();
 	this.p_Reset();
-}
-c_DrawList.prototype.p_SetColor=function(t_r,t_g,t_b){
-	this.m__color[0]=t_r;
-	this.m__color[1]=t_g;
-	this.m__color[2]=t_b;
-	this.m__pmcolor=((this.m__alpha)|0)<<24|((this.m__color[2]*this.m__alpha)|0)<<16|((this.m__color[1]*this.m__alpha)|0)<<8|((this.m__color[0]*this.m__alpha)|0);
-}
-c_DrawList.prototype.p_SetColor2=function(t_r,t_g,t_b,t_a){
-	this.m__color[0]=t_r;
-	this.m__color[1]=t_g;
-	this.m__color[2]=t_b;
-	this.m__color[3]=t_a;
-	this.m__alpha=t_a*255.0;
-	this.m__pmcolor=((this.m__alpha)|0)<<24|((this.m__color[2]*this.m__alpha)|0)<<16|((this.m__color[1]*this.m__alpha)|0)<<8|((this.m__color[0]*this.m__alpha)|0);
-}
-c_DrawList.prototype.p_SetBlendMode=function(t_blend){
-	this.m__blend=t_blend;
-}
-c_DrawList.prototype.p_SetAlpha=function(t_a){
-	this.m__color[3]=t_a;
-	this.m__alpha=t_a*255.0;
-	this.m__pmcolor=((this.m__alpha)|0)<<24|((this.m__color[2]*this.m__alpha)|0)<<16|((this.m__color[1]*this.m__alpha)|0)<<8|((this.m__color[0]*this.m__alpha)|0);
-}
-c_DrawList.prototype.p_BeginPrim=function(t_material,t_order){
-	if(!((t_material)!=null)){
-		t_material=this.m__defaultMaterial;
-	}
-	if(this.m__next+t_order*28>this.m__data.Length()){
-		var t_newsize=bb_math_Max(this.m__data.Length()+((this.m__data.Length()/2)|0),this.m__next+t_order*28);
-		var t_data=c_DataBuffer.m_new.call(new c_DataBuffer,t_newsize,true);
-		this.m__data.p_CopyBytes(0,t_data,0,this.m__next);
-		this.m__data.Discard();
-		this.m__data=t_data;
-	}
-	if(t_material==this.m__op.m_material && this.m__blend==this.m__op.m_blend && t_order==this.m__op.m_order){
-		this.m__op.m_count+=t_order;
-		return;
-	}
-	if((bb_graphics2_freeOps.p_Length2())!=0){
-		this.m__op=bb_graphics2_freeOps.p_Pop();
-	}else{
-		this.m__op=c_DrawOp.m_new.call(new c_DrawOp);
-	}
-	this.m__ops.p_Push7(this.m__op);
-	this.m__op.m_material=t_material;
-	this.m__op.m_blend=this.m__blend;
-	this.m__op.m_order=t_order;
-	this.m__op.m_count=t_order;
-}
-c_DrawList.prototype.p_PrimVert=function(t_x0,t_y0,t_s0,t_t0){
-	this.m__data.PokeFloat(this.m__next+0,t_x0*this.m__ix+t_y0*this.m__jx+this.m__tx);
-	this.m__data.PokeFloat(this.m__next+4,t_x0*this.m__iy+t_y0*this.m__jy+this.m__ty);
-	this.m__data.PokeFloat(this.m__next+8,t_s0);
-	this.m__data.PokeFloat(this.m__next+12,t_t0);
-	this.m__data.PokeFloat(this.m__next+16,this.m__ix);
-	this.m__data.PokeFloat(this.m__next+20,this.m__iy);
-	this.m__data.PokeInt(this.m__next+24,this.m__pmcolor);
-	this.m__next+=28;
-}
-c_DrawList.prototype.p_DrawOval=function(t_x,t_y,t_width,t_height,t_material){
-	var t_xr=t_width/2.0;
-	var t_yr=t_height/2.0;
-	var t_dx_x=t_xr*this.m__ix;
-	var t_dx_y=t_xr*this.m__iy;
-	var t_dy_x=t_yr*this.m__jx;
-	var t_dy_y=t_yr*this.m__jy;
-	var t_dx=Math.sqrt(t_dx_x*t_dx_x+t_dx_y*t_dx_y);
-	var t_dy=Math.sqrt(t_dy_x*t_dy_x+t_dy_y*t_dy_y);
-	var t_n=((t_dx+t_dy)|0);
-	if(t_n<12){
-		t_n=12;
-	}else{
-		if(t_n>2340){
-			t_n=2340;
-		}else{
-			t_n&=-4;
-		}
-	}
-	var t_x0=t_x+t_xr;
-	var t_y0=t_y+t_yr;
-	this.p_BeginPrim(t_material,t_n);
-	for(var t_i=0;t_i<t_n;t_i=t_i+1){
-		var t_th=(t_i)*360.0/(t_n);
-		var t_px=t_x0+Math.cos((t_th)*D2R)*t_xr;
-		var t_py=t_y0+Math.sin((t_th)*D2R)*t_yr;
-		this.p_PrimVert(t_px,t_py,0.0,0.0);
-	}
-}
-c_DrawList.prototype.p_DrawCircle=function(t_x,t_y,t_r,t_material){
-	this.p_DrawOval(t_x-t_r,t_y-t_r,t_r*2.0,t_r*2.0,t_material);
 }
 function c_Canvas(){
 	c_DrawList.call(this);
@@ -3931,19 +3831,6 @@ c_Canvas.m_new=function(t_target){
 	this.p_SetProjection2d(0.0,(this.m__width),0.0,(this.m__height),-1.0,1.0);
 	return this;
 }
-c_Canvas.prototype.p_Clear=function(t_r,t_g,t_b,t_a){
-	this.p_FlushPrims();
-	this.p_Validate();
-	if(this.m__clsScissor){
-		gl.enable(3089);
-		gl.scissor(this.m__vpx,this.m__vpy,this.m__vpw,this.m__vph);
-	}
-	gl.clearColor(t_r,t_g,t_b,t_a);
-	gl.clear(16384);
-	if(this.m__clsScissor){
-		gl.disable(3089);
-	}
-}
 var bb_graphics2_inited=false;
 var bb_graphics2_vbosSeq=0;
 var bb_graphics2_rs_vbo=0;
@@ -3959,23 +3846,6 @@ c_DataBuffer.m_new=function(t_length,t_direct){
 }
 c_DataBuffer.m_new2=function(){
 	return this;
-}
-c_DataBuffer.prototype.p_CopyBytes=function(t_address,t_dst,t_dstaddress,t_count){
-	if(t_address+t_count>this.Length()){
-		t_count=this.Length()-t_address;
-	}
-	if(t_dstaddress+t_count>t_dst.Length()){
-		t_count=t_dst.Length()-t_dstaddress;
-	}
-	if(t_dstaddress<=t_address){
-		for(var t_i=0;t_i<t_count;t_i=t_i+1){
-			t_dst.PokeByte(t_dstaddress+t_i,this.PeekByte(t_address+t_i));
-		}
-	}else{
-		for(var t_i2=t_count-1;t_i2>=0;t_i2=t_i2+-1){
-			t_dst.PokeByte(t_dstaddress+t_i2,this.PeekByte(t_address+t_i2));
-		}
-	}
 }
 var bb_graphics2_rs_ibo=0;
 function bb_graphics2_InitVbos(){
@@ -6227,17 +6097,11 @@ c_Stack3.prototype.p_Push8=function(t_values,t_offset,t_count){
 c_Stack3.prototype.p_Push9=function(t_values,t_offset){
 	this.p_Push8(t_values,t_offset,t_values.length-t_offset);
 }
-c_Stack3.prototype.p_Clear2=function(){
+c_Stack3.prototype.p_Clear=function(){
 	for(var t_i=0;t_i<this.m_length;t_i=t_i+1){
 		this.m_data[t_i]=c_Stack3.m_NIL;
 	}
 	this.m_length=0;
-}
-c_Stack3.prototype.p_Pop=function(){
-	this.m_length-=1;
-	var t_v=this.m_data[this.m_length];
-	this.m_data[this.m_length]=c_Stack3.m_NIL;
-	return t_v;
 }
 function bb_math_Max(t_x,t_y){
 	if(t_x>t_y){
@@ -6270,7 +6134,7 @@ c_Stack4.m_new2=function(t_data){
 	return this;
 }
 c_Stack4.m_NIL=null;
-c_Stack4.prototype.p_Clear2=function(){
+c_Stack4.prototype.p_Clear=function(){
 	for(var t_i=0;t_i<this.m_length;t_i=t_i+1){
 		this.m_data[t_i]=c_Stack4.m_NIL;
 	}
@@ -6290,7 +6154,7 @@ c_Stack5.m_new2=function(t_data){
 	return this;
 }
 c_Stack5.m_NIL=0;
-c_Stack5.prototype.p_Clear2=function(){
+c_Stack5.prototype.p_Clear=function(){
 	for(var t_i=0;t_i<this.m_length;t_i=t_i+1){
 		this.m_data[t_i]=c_Stack5.m_NIL;
 	}
@@ -6412,23 +6276,54 @@ c_Menu.prototype.p_Draw=function(t_canvas){
 }
 function c_Game(){
 	Object.call(this);
+	this.m_levels=[];
+	this.m_currentLevel=0;
 	this.implments={c_Scene:1};
 }
 c_Game.m_new=function(){
+	this.m_levels=new_object_array(1);
+	this.m_levels[0]=(c_Level.m_new2.call(new c_Level));
 	return this;
 }
 c_Game.prototype.p_Start=function(){
+	this.m_currentLevel=0;
 }
 c_Game.prototype.p_Run=function(){
+	var t_status=this.m_levels[this.m_currentLevel].p_Run();
+	if(t_status==2){
+		this.m_currentLevel+=1;
+		this.m_levels[this.m_currentLevel].p_Start();
+	}else{
+		if(t_status==1){
+			return 1;
+		}
+	}
 	return 0;
 }
 c_Game.prototype.p_Draw=function(t_canvas){
-	t_canvas.p_Clear(0.0,0.0,0.0,1.0);
-	t_canvas.p_SetColor(255.0,0.0,0.0);
-	t_canvas.p_SetBlendMode(1);
-	t_canvas.p_SetAlpha(0.5);
-	t_canvas.p_DrawCircle(32.0,32.0,32.0,null);
-	t_canvas.p_Flush();
+	this.m_levels[this.m_currentLevel].p_Draw(t_canvas);
+}
+function c_Level(){
+	Object.call(this);
+	this.m_map=null;
+	this.implments={c_Scene:1};
+}
+c_Level.m_new=function(t_map){
+	this.m_map=t_map;
+	return this;
+}
+c_Level.m_new2=function(){
+	return this;
+}
+c_Level.prototype.p_Start=function(){
+}
+c_Level.prototype.p_Run=function(){
+	return 0;
+}
+c_Level.prototype.p_Draw=function(t_canvas){
+}
+function c_GameMap(){
+	Object.call(this);
 }
 function bb_filepath_ExtractExt(t_path){
 	var t_i=t_path.lastIndexOf(".");

@@ -6,8 +6,7 @@ Import scenes.menu
 Import scenes.game
 
 
-
-Class MainClass Extends App
+Class AmongUs Extends App
 Private
 	Field canvas:Canvas
 	Field scenes:Scene[] = New Scene[2]
@@ -25,11 +24,11 @@ Private
 	End Method
 	
 	Method OnUpdate:Int()
-		Local result:Int = scenes[currentScene].Run()
-		If (result = Scene.SkipToNextScene)
+		Local status:Int = scenes[currentScene].Run()
+		If (status = Scene.SkipToNextScene)
 			currentScene+= 1
 			scenes[currentScene].Start()
-		Else If (result = Scene.Abort)
+		Else If (status = Scene.Abort)
 			currentScene-= 1
 			If (currentScene < 0) Then EndApp()
 			scenes[currentScene].Start()
@@ -45,6 +44,6 @@ Private
 End Class
 
 Function Main:Int()
-	New MainClass()
+	New AmongUs()
 	Return 0
 End
