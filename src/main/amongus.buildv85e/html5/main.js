@@ -6858,8 +6858,8 @@ c_Actor.prototype.p_Draw2=function(t_canvas,t_camera){
 function c_Camera(){
 	c_Actor.call(this);
 	this.m_owner=null;
-	this.m_destX=.0;
-	this.m_destY=.0;
+	this.m_destX=0;
+	this.m_destY=0;
 	this.m_x0=0;
 	this.m_y0=0;
 }
@@ -6876,36 +6876,36 @@ c_Camera.m_new2=function(){
 c_Camera.prototype.p_Update=function(){
 	var t_1=this.m_owner.m_direction;
 	if(t_1==1){
-		this.m_destX=this.m_x;
-		this.m_destY=this.m_y-21.333333333333332;
+		this.m_destX=((this.m_x)|0);
+		this.m_destY=((this.m_y-21.333333333333332)|0);
 	}else{
 		if(t_1==0){
-			this.m_destX=this.m_x;
-			this.m_destY=this.m_y+21.333333333333332;
+			this.m_destX=((this.m_x)|0);
+			this.m_destY=((this.m_y+21.333333333333332)|0);
 		}else{
 			if(t_1==2){
-				this.m_destX=this.m_x-21.333333333333332;
-				this.m_destY=this.m_y;
+				this.m_destX=((this.m_x-21.333333333333332)|0);
+				this.m_destY=((this.m_y)|0);
 			}else{
 				if(t_1==3){
-					this.m_destX=this.m_x+21.333333333333332;
-					this.m_destY=this.m_y;
+					this.m_destX=((this.m_x+21.333333333333332)|0);
+					this.m_destY=((this.m_y)|0);
 				}
 			}
 		}
 	}
-	if(this.m_x!=this.m_destX || this.m_y!=this.m_destY){
+	if(this.m_x!=(this.m_destX) || this.m_y!=(this.m_destY)){
 		var t_vel=32.0*c_Time.m_instance.m_lastFrame/1000.0;
-		var t_dist=Math.sqrt(Math.pow(this.m_destX-this.m_x,2.0)+Math.pow(this.m_destY-this.m_y,2.0));
-		var t_angle=(Math.atan2(this.m_destX-this.m_x,this.m_destY-this.m_y)*R2D);
+		var t_dist=Math.sqrt(Math.pow((this.m_destX)-this.m_x,2.0)+Math.pow((this.m_destY)-this.m_y,2.0));
+		var t_angle=(Math.atan2((this.m_destX)-this.m_x,(this.m_destY)-this.m_y)*R2D);
 		if(t_dist<t_vel){
-			this.m_x=this.m_destX;
-			this.m_y=this.m_destY;
+			this.m_x=(((this.m_destX)+0.5)|0);
+			this.m_y=(((this.m_destY)+0.5)|0);
 		}else{
-			var t_velX=bb_math_Sgn2(this.m_destX-this.m_x)*(t_vel*Math.cos((t_angle)*D2R));
-			var t_velY=bb_math_Sgn2(this.m_destY-this.m_y)*(t_vel*Math.sin((t_angle)*D2R));
-			this.m_x=this.m_x+t_velX;
-			this.m_y=this.m_y+t_velY;
+			var t_velX=bb_math_Sgn2((this.m_destX)-this.m_x)*(t_vel*Math.cos((t_angle)*D2R));
+			var t_velY=bb_math_Sgn2((this.m_destY)-this.m_y)*(t_vel*Math.sin((t_angle)*D2R));
+			this.m_x=((this.m_x+t_velX+0.5)|0);
+			this.m_y=((this.m_y+t_velY+0.5)|0);
 		}
 	}
 	this.m_x0=((((this.m_x)|0)-32.0)|0);
@@ -6920,8 +6920,8 @@ c_CameraEditor.prototype=extend_class(c_Camera);
 c_CameraEditor.m_new=function(t_map){
 	c_Camera.m_new2.call(this);
 	this.m_map=t_map;
-	this.m_x=(t_map.m_width)*8.0/2.0;
-	this.m_y=(t_map.m_height)*8.0/2.0;
+	this.m_x=(((t_map.m_width)*8.0/2.0)|0);
+	this.m_y=(((t_map.m_height)*8.0/2.0)|0);
 	return this;
 }
 c_CameraEditor.m_new2=function(){
@@ -6948,10 +6948,10 @@ c_CameraEditor.prototype.p_Update=function(){
 	}else{
 		if((bb_input2_KeyDown(39))!=0){
 			this.m_x+=t_vel;
-			this.m_x0=((this.m_x-32.0)|0);
-			print(String(this.m_x)+" ... "+String(this.m_x0));
 		}
 	}
+	this.m_x=((this.m_x+0.5)|0);
+	this.m_y=((this.m_y+0.5)|0);
 	var t_mx=bb_input_TMouseX();
 	var t_my=bb_input_TMouseY();
 	if(t_my>=54.0){
@@ -6994,8 +6994,8 @@ c_CameraEditor.prototype.p_Update=function(){
 			print(t_line);
 		}
 	}
-	this.m_x0=((Math.floor(this.m_x+0.5-32.0))|0);
-	this.m_y0=((Math.floor(this.m_y+0.5-32.0))|0);
+	this.m_x0=((this.m_x-32.0)|0);
+	this.m_y0=((this.m_y-32.0)|0);
 }
 c_CameraEditor.prototype.p_Draw2=function(t_canvas,t_camera){
 	t_canvas.p_SetColor2(0.1,0.1,0.1,1.0);
