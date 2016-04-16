@@ -6742,7 +6742,9 @@ function c_Level(){
 }
 c_Level.m_new=function(t_map){
 	this.m_map=t_map;
-	this.m_camera=c_Camera.m_new.call(new c_Camera);
+	if(true){
+		this.m_camera=(c_CameraEditor.m_new.call(new c_CameraEditor));
+	}
 	return this;
 }
 c_Level.m_new2=function(){
@@ -6807,8 +6809,8 @@ c_TestMap.m_new=function(){
 }
 function c_Actor(){
 	Object.call(this);
-	this.m_y=.0;
 	this.m_x=.0;
+	this.m_y=.0;
 }
 c_Actor.m_new=function(){
 	return this;
@@ -6824,6 +6826,37 @@ c_Camera.m_new=function(){
 	return this;
 }
 c_Camera.prototype.p_Update=function(){
+}
+function c_CameraEditor(){
+	c_Camera.call(this);
+}
+c_CameraEditor.prototype=extend_class(c_Camera);
+c_CameraEditor.m_new=function(){
+	c_Camera.m_new.call(this);
+	return this;
+}
+c_CameraEditor.prototype.p_Update=function(){
+	var t_vel=64.0*c_Time.m_instance.m_realLastFrame/1000.0;
+	if((bb_input_KeyDown(16))!=0){
+		t_vel*=2.0;
+	}
+	if((bb_input_KeyDown(17))!=0){
+		t_vel*=4.0;
+	}
+	if((bb_input_KeyDown(38))!=0){
+		this.m_y-=t_vel;
+	}else{
+		if((bb_input_KeyDown(40))!=0){
+			this.m_y+=t_vel;
+		}
+	}
+	if((bb_input_KeyDown(37))!=0){
+		this.m_x-=t_vel;
+	}else{
+		if((bb_input_KeyDown(39))!=0){
+			this.m_x+=t_vel;
+		}
+	}
 }
 function c_Tileset(){
 	Object.call(this);

@@ -5,6 +5,7 @@ Public
 Import mojo2 
 
 Import actors.camera
+Import actors.cameraeditor
 Import maps.gamemap
 Import maps.testmap
 Import scenes.scene
@@ -16,7 +17,11 @@ Class Level Implements Scene
 	
 	Method New(map:GameMap)
 		Self.map = map
-		camera = New Camera()
+		If (Editing)
+			camera = New CameraEditor
+		Else
+			camera = New Camera()
+		End If
 	End Method
 	
 	Method Start:Void()
