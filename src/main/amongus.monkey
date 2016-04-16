@@ -5,6 +5,7 @@ Import mojo2
 Import consts
 Import scenes.menu
 Import scenes.game
+Import time
 
 
 Class AmongUs Extends App
@@ -14,6 +15,8 @@ Private
 	Field currentScene:Int = 0
 
 	Method OnCreate:Int()
+		Time.instance.Update()
+	
 		canvas = New Canvas()
 		canvas.SetProjection2d(0.0, CanvasWidth, 0.0, CanvasHeight)
 		
@@ -25,6 +28,8 @@ Private
 	End Method
 	
 	Method OnUpdate:Int()
+		Time.instance.Update()
+
 		Local status:Int = scenes[currentScene].Update()
 		If (status = Scene.SkipToNextScene)
 			currentScene+= 1

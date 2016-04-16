@@ -2579,6 +2579,134 @@ function _glUniformMatrix4fv( location, count, transpose, value ){
 	}
 }
 
+
+function BBAsyncImageLoaderThread(){
+	this._running=false;
+}
+
+BBAsyncImageLoaderThread.prototype.Start=function(){
+
+	var thread=this;
+
+	thread._surface=null;
+	thread._result=false;
+	thread._running=true;
+
+	var image=new Image();
+
+	image.onload=function( e ){
+		image.meta_width=image.width;
+		image.meta_height=image.height;
+		thread._surface=new gxtkSurface( image,thread._device )
+		thread._result=true;
+		thread._running=false;
+	}
+	
+	image.onerror=function( e ){
+		thread._running=false;
+	}
+	
+	image.src=BBGame.Game().PathToUrl( thread._path );
+}
+
+BBAsyncImageLoaderThread.prototype.IsRunning=function(){
+	return this._running;
+}
+
+
+
+function BBAsyncSoundLoaderThread(){
+	this._running=false;
+}
+  
+if( CFG_HTML5_WEBAUDIO_ENABLED=="1" && (window.AudioContext || window.webkitAudioContext) ){
+
+BBAsyncSoundLoaderThread.prototype.Start=function(){
+
+	this._sample=null;
+	if( !this._device.okay ) return;
+	
+	var thread=this;
+	
+	thread._sample=null;
+	thread._result=false;
+	thread._running=true;
+
+	var req=new XMLHttpRequest();
+	req.open( "get",BBGame.Game().PathToUrl( this._path ),true );
+	req.responseType="arraybuffer";
+	
+	req.onload=function(){
+		//load success!
+		wa.decodeAudioData( req.response,function( buffer ){
+			//decode success!
+			thread._sample=new gxtkSample();
+			thread._sample.waBuffer=buffer;
+			thread._sample.state=1;
+			thread._result=true;
+			thread._running=false;
+		},function(){	
+			//decode fail!
+			thread._running=false;
+		} );
+	}
+	
+	req.onerror=function(){
+		//load fail!
+		thread._running=false;
+	}
+	
+	req.send();
+}
+	
+}else{
+ 
+BBAsyncSoundLoaderThread.prototype.Start=function(){
+
+	this._sample=null;
+	if( !this._device.okay ) return;
+	
+	var audio=new Audio();
+	if( !audio ) return;
+	
+	var thread=this;
+	
+	thread._sample=null;
+	thread._result=false;
+	thread._running=true;
+
+	audio.src=BBGame.Game().PathToUrl( this._path );
+	audio.preload='auto';	
+	
+	var success=function( e ){
+		thread._sample=new gxtkSample( audio );
+		thread._result=true;
+		thread._running=false;
+		audio.removeEventListener( 'canplaythrough',success,false );
+		audio.removeEventListener( 'error',error,false );
+	}
+	
+	var error=function( e ){
+		thread._running=false;
+		audio.removeEventListener( 'canplaythrough',success,false );
+		audio.removeEventListener( 'error',error,false );
+	}
+	
+	audio.addEventListener( 'canplaythrough',success,false );
+	audio.addEventListener( 'error',error,false );
+	
+	//voodoo fix for Chrome!
+	var timer=setInterval( function(){ if( !thread._running ) clearInterval( timer ); },200 );
+	
+	audio.load();
+}
+
+}
+  
+BBAsyncSoundLoaderThread.prototype.IsRunning=function(){
+	return this._running;
+}
+
 function c_App(){
 	Object.call(this);
 }
@@ -2632,6 +2760,7 @@ c_AmongUs.m_new=function(){
 	return this;
 }
 c_AmongUs.prototype.p_OnCreate=function(){
+	c_Time.m_instance.p_Update();
 	this.m_canvas=c_Canvas.m_new.call(new c_Canvas,null);
 	this.m_canvas.p_SetProjection2d(0.0,64.0,0.0,64.0,-1.0,1.0);
 	this.m_scenes[0]=(c_Menu.m_new.call(new c_Menu));
@@ -2640,6 +2769,7 @@ c_AmongUs.prototype.p_OnCreate=function(){
 	return 0;
 }
 c_AmongUs.prototype.p_OnUpdate=function(){
+	c_Time.m_instance.p_Update();
 	var t_status=this.m_scenes[this.m_currentScene].p_Update();
 	if(t_status==2){
 		this.m_currentScene+=1;
@@ -3415,6 +3545,31 @@ function c_BBGameEvent(){
 }
 function bb_app_EndApp(){
 	error("");
+}
+function c_Time(){
+	Object.call(this);
+	this.m_initialTime=0;
+	this.m_realActTime=0;
+	this.m_realLastFrame=0.0;
+	this.m_timeDistortion=1.0;
+	this.m_lastFrame=0.0;
+	this.m_actTime=0.0;
+}
+c_Time.m_new=function(){
+	this.m_initialTime=bb_app_Millisecs();
+	this.m_realActTime=0;
+	return this;
+}
+c_Time.m_instance=null;
+c_Time.prototype.p_Update=function(){
+	var t_temp=bb_app_Millisecs()-this.m_initialTime;
+	this.m_realLastFrame=(t_temp-this.m_realActTime);
+	this.m_lastFrame=this.m_realLastFrame*this.m_timeDistortion;
+	this.m_actTime=this.m_actTime+this.m_lastFrame;
+	this.m_realActTime=t_temp;
+}
+function bb_app_Millisecs(){
+	return bb_app__game.Millisecs();
 }
 function c_DrawList(){
 	Object.call(this);
@@ -6727,6 +6882,7 @@ function bbInit(){
 	bb_app__displayModes=[];
 	bb_app__desktopMode=null;
 	bb_graphics_renderDevice=null;
+	c_Time.m_instance=c_Time.m_new.call(new c_Time);
 	bb_graphics2_inited=false;
 	bb_graphics2_vbosSeq=0;
 	bb_graphics2_rs_vbo=0;

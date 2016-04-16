@@ -8,9 +8,7 @@ Import consts
 Class Camera Extends Actor
 
 	Method Update:Void()
-	
 		If (Editing)
-	
 			If (KeyDown(KEY_UP))
 				y -= 1
 			End If
