@@ -6759,7 +6759,8 @@ function c_Actor(){
 	Object.call(this);
 	this.m_x=.0;
 	this.m_y=.0;
-	this.m_direction=0;
+	this.m_directionX=.0;
+	this.m_directionY=.0;
 }
 c_Actor.m_new=function(){
 	return this;
@@ -6787,22 +6788,26 @@ c_Character.prototype.p_Update=function(){
 	if((bb_input2_KeyDown(17))!=0){
 		t_vel*=4.0;
 	}
-	if((bb_input2_KeyDown(38))!=0){
-		this.m_direction=1;
-		this.m_y-=t_vel;
-	}else{
-		if((bb_input2_KeyDown(40))!=0){
-			this.m_direction=0;
-			this.m_y+=t_vel;
+	if(((bb_input2_KeyDown(38))!=0) || ((bb_input2_KeyDown(40))!=0) || ((bb_input2_KeyDown(37))!=0) || ((bb_input2_KeyDown(39))!=0)){
+		this.m_directionX=0.0;
+		this.m_directionY=0.0;
+		if((bb_input2_KeyDown(38))!=0){
+			this.m_y-=t_vel;
+			this.m_directionY=-1.0;
+		}else{
+			if((bb_input2_KeyDown(40))!=0){
+				this.m_y+=t_vel;
+				this.m_directionY=1.0;
+			}
 		}
-	}
-	if((bb_input2_KeyDown(37))!=0){
-		this.m_direction=2;
-		this.m_x-=t_vel;
-	}else{
-		if((bb_input2_KeyDown(39))!=0){
-			this.m_direction=3;
-			this.m_x+=t_vel;
+		if((bb_input2_KeyDown(37))!=0){
+			this.m_x-=t_vel;
+			this.m_directionX=-1.0;
+		}else{
+			if((bb_input2_KeyDown(39))!=0){
+				this.m_x+=t_vel;
+				this.m_directionX=1.0;
+			}
 		}
 	}
 	this.m_x=((Math.floor(this.m_x+0.5))|0);
@@ -6832,26 +6837,8 @@ c_Camera.m_new2=function(){
 	return this;
 }
 c_Camera.prototype.p_Update=function(){
-	var t_1=this.m_owner.m_direction;
-	if(t_1==1){
-		this.m_destX=((this.m_owner.m_x+0.5)|0);
-		this.m_destY=((this.m_owner.m_y-18.285714285714285+0.5)|0);
-	}else{
-		if(t_1==0){
-			this.m_destX=((this.m_owner.m_x+0.5)|0);
-			this.m_destY=((this.m_owner.m_y+18.285714285714285+0.5)|0);
-		}else{
-			if(t_1==2){
-				this.m_destX=((this.m_owner.m_x-18.285714285714285+0.5)|0);
-				this.m_destY=((this.m_owner.m_y+0.5)|0);
-			}else{
-				if(t_1==3){
-					this.m_destX=((this.m_owner.m_x+18.285714285714285+0.5)|0);
-					this.m_destY=((this.m_owner.m_y+0.5)|0);
-				}
-			}
-		}
-	}
+	this.m_destX=((Math.floor(this.m_owner.m_x+18.285714285714285*this.m_owner.m_directionX+0.5))|0);
+	this.m_destY=((Math.floor(this.m_owner.m_y+18.285714285714285*this.m_owner.m_directionY+0.5))|0);
 	if(this.m_x!=(this.m_destX) || this.m_y!=(this.m_destY)){
 		var t_vel=64.0*c_Time.m_instance.m_lastFrame/1000.0;
 		var t_dist=Math.sqrt(Math.pow((this.m_destX)-this.m_x,2.0)+Math.pow((this.m_destY)-this.m_y,2.0));

@@ -8,13 +8,9 @@ Import actors.camera
 Class Actor
 Public
 
-	Const DirectionDown:Int = 0
-	Const DirectionUp:Int = 1
-	Const DirectionLeft:Int = 2
-	Const DirectionRight:Int = 3	
-
 	Field x:Float, y:Float
-	Field direction:Int = DirectionDown
+	Field directionX:Float
+	Field directionY:Float
 	
 	Method Update:Void()
 	End Method

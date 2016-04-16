@@ -26,20 +26,8 @@ Public
 	End Method
 	
 	Method Update:Void()
-		Select (owner.direction)
-			Case DirectionUp
-				destX = Int(Floor(owner.x + 0.5))
-				destY = Int(Floor(owner.y - ShiftY + 0.5))
-			Case DirectionDown 
-				destX = Int(Floor(owner.x + 0.5))
-				destY = Int(Floor(owner.y + ShiftY + 0.5))
-			Case DirectionLeft
-				destX = Int(Floor(owner.x - ShiftX + 0.5))
-				destY = Int(Floor(owner.y + 0.5))
-			Case DirectionRight
-				destX = Int(Floor(owner.x + ShiftX + 0.5))
-				destY = Int(Floor(owner.y + 0.5))
-		End Select
+		destX = Int(Floor(owner.x + (ShiftX * owner.directionX) + 0.5))
+		destY = Int(Floor(owner.y + (ShiftY * owner.directionY) + 0.5))
 		
 		If (x <> destX Or y <> destY)
 			Local vel:Float = (Speed * Time.instance.lastFrame) / 1000.0

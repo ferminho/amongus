@@ -21,20 +21,24 @@ Public
 		Local vel:Float = (30.0 * delta) / 1000.0
 		If (KeyDown(KEY_SHIFT)) Then vel *= 2.0
 		If (KeyDown(KEY_CONTROL)) Then vel *= 4.0
-		If (KeyDown(KEY_UP))
-			direction = DirectionUp			
-			y -= vel
-		Else If (KeyDown(KEY_DOWN))
-			direction = DirectionDown
-			y += vel
+		If (KeyDown(KEY_UP) Or KeyDown(KEY_DOWN) Or KeyDown(KEY_LEFT) Or KeyDown(KEY_RIGHT))
+			directionX = 0.0
+			directionY = 0.0
+			If (KeyDown(KEY_UP))
+				y -= vel
+				directionY = -1.0
+			Else If (KeyDown(KEY_DOWN))
+				y += vel
+				directionY = 1.0
+			End If
+			If (KeyDown(KEY_LEFT))
+				x -= vel
+				directionX = -1.0
+			Else If (KeyDown(KEY_RIGHT))
+				x += vel
+				directionX = 1.0
+			End If		
 		End If
-		If (KeyDown(KEY_LEFT))
-			direction = DirectionLeft
-			x -= vel
-		Else If (KeyDown(KEY_RIGHT))
-			direction = DirectionRight
-			x += vel
-		End If		
 		
 		x = Int(Floor(x + 0.5))
 		y = Int(Floor(y + 0.5))
