@@ -6669,18 +6669,6 @@ c_Camera.m_new=function(){
 	return this;
 }
 c_Camera.prototype.p_Update=function(){
-	if((bb_input_KeyDown(38))!=0){
-		this.m_y=this.m_y-1.0;
-	}
-	if((bb_input_KeyDown(40))!=0){
-		this.m_y=this.m_y+1.0;
-	}
-	if((bb_input_KeyDown(37))!=0){
-		this.m_x=this.m_x-1.0;
-	}
-	if((bb_input_KeyDown(39))!=0){
-		this.m_x=this.m_x+1.0;
-	}
 }
 function c_Tileset(){
 	Object.call(this);
