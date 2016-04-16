@@ -23,7 +23,7 @@ CFG_TEXT_FILES="*.glsl;*.txt|*.xml|*.json";
 //${CONFIG_END}
 
 //${METADATA_BEGIN}
-var META_DATA="[test.png];type=image/png;width=8;height=8;\n[mojo_font.png];type=image/png;width=864;height=13;\n[mojo2_font.png];type=image/png;width=960;height=16;\n";
+var META_DATA="[test.png];type=image/png;width=8;height=8;\n[tileset.png];type=image/png;width=512;height=8;\n[mojo_font.png];type=image/png;width=864;height=13;\n[mojo2_font.png];type=image/png;width=960;height=16;\n";
 //${METADATA_END}
 
 //${TRANSCODE_BEGIN}
@@ -3420,6 +3420,10 @@ function c_DrawList(){
 	this.m__op=bb_graphics2_nullOp;
 	this.m__casters=c_Stack4.m_new.call(new c_Stack4);
 	this.m__casterVerts=c_FloatStack.m_new2.call(new c_FloatStack);
+	this.m__blend=1;
+	this.m__color=[1.0,1.0,1.0,1.0];
+	this.m__alpha=255.0;
+	this.m__pmcolor=-1;
 }
 c_DrawList.prototype.p_SetFont=function(t_font){
 	if(!((t_font)!=null)){
@@ -3559,14 +3563,31 @@ c_DrawList.prototype.p_Reset=function(){
 		t_data[t_i].m_material=null;
 		bb_graphics2_freeOps.p_Push7(t_data[t_i]);
 	}
-	this.m__ops.p_Clear();
+	this.m__ops.p_Clear2();
 	this.m__op=bb_graphics2_nullOp;
-	this.m__casters.p_Clear();
-	this.m__casterVerts.p_Clear();
+	this.m__casters.p_Clear2();
+	this.m__casterVerts.p_Clear2();
 }
 c_DrawList.prototype.p_Flush=function(){
 	this.p_Render2();
 	this.p_Reset();
+}
+c_DrawList.prototype.p_SetBlendMode=function(t_blend){
+	this.m__blend=t_blend;
+}
+c_DrawList.prototype.p_SetColor=function(t_r,t_g,t_b){
+	this.m__color[0]=t_r;
+	this.m__color[1]=t_g;
+	this.m__color[2]=t_b;
+	this.m__pmcolor=((this.m__alpha)|0)<<24|((this.m__color[2]*this.m__alpha)|0)<<16|((this.m__color[1]*this.m__alpha)|0)<<8|((this.m__color[0]*this.m__alpha)|0);
+}
+c_DrawList.prototype.p_SetColor2=function(t_r,t_g,t_b,t_a){
+	this.m__color[0]=t_r;
+	this.m__color[1]=t_g;
+	this.m__color[2]=t_b;
+	this.m__color[3]=t_a;
+	this.m__alpha=t_a*255.0;
+	this.m__pmcolor=((this.m__alpha)|0)<<24|((this.m__color[2]*this.m__alpha)|0)<<16|((this.m__color[1]*this.m__alpha)|0)<<8|((this.m__color[0]*this.m__alpha)|0);
 }
 function c_Canvas(){
 	c_DrawList.call(this);
@@ -3830,6 +3851,19 @@ c_Canvas.m_new=function(t_target){
 	this.p_SetViewport(0,0,this.m__width,this.m__height);
 	this.p_SetProjection2d(0.0,(this.m__width),0.0,(this.m__height),-1.0,1.0);
 	return this;
+}
+c_Canvas.prototype.p_Clear=function(t_r,t_g,t_b,t_a){
+	this.p_FlushPrims();
+	this.p_Validate();
+	if(this.m__clsScissor){
+		gl.enable(3089);
+		gl.scissor(this.m__vpx,this.m__vpy,this.m__vpw,this.m__vph);
+	}
+	gl.clearColor(t_r,t_g,t_b,t_a);
+	gl.clear(16384);
+	if(this.m__clsScissor){
+		gl.disable(3089);
+	}
 }
 var bb_graphics2_inited=false;
 var bb_graphics2_vbosSeq=0;
@@ -4848,6 +4882,26 @@ c_Image2.prototype.p_Height=function(){
 }
 c_Image2.prototype.p_Material=function(){
 	return this.m__material;
+}
+c_Image2.m_LoadFrames=function(t_path,t_numFrames,t_padded,t_xhandle,t_yhandle,t_flags,t_shader){
+	t_flags&=c_Image2.m__flagsMask;
+	var t_material=c_Material.m_Load(t_path,t_flags|12,t_shader);
+	if(!((t_material)!=null)){
+		return [];
+	}
+	var t_cellWidth=((t_material.p_Width()/t_numFrames)|0);
+	var t_cellHeight=t_material.p_Height();
+	var t_x=0;
+	var t_width=t_cellWidth;
+	if(t_padded){
+		t_x+=1;
+		t_width-=2;
+	}
+	var t_frames=new_object_array(t_numFrames);
+	for(var t_i=0;t_i<t_numFrames;t_i=t_i+1){
+		t_frames[t_i]=c_Image2.m_new4.call(new c_Image2,t_material,t_i*t_cellWidth+t_x,0,t_width,t_cellHeight,t_xhandle,t_yhandle);
+	}
+	return t_frames;
 }
 function c_RefCounted(){
 	Object.call(this);
@@ -6097,7 +6151,7 @@ c_Stack3.prototype.p_Push8=function(t_values,t_offset,t_count){
 c_Stack3.prototype.p_Push9=function(t_values,t_offset){
 	this.p_Push8(t_values,t_offset,t_values.length-t_offset);
 }
-c_Stack3.prototype.p_Clear=function(){
+c_Stack3.prototype.p_Clear2=function(){
 	for(var t_i=0;t_i<this.m_length;t_i=t_i+1){
 		this.m_data[t_i]=c_Stack3.m_NIL;
 	}
@@ -6134,7 +6188,7 @@ c_Stack4.m_new2=function(t_data){
 	return this;
 }
 c_Stack4.m_NIL=null;
-c_Stack4.prototype.p_Clear=function(){
+c_Stack4.prototype.p_Clear2=function(){
 	for(var t_i=0;t_i<this.m_length;t_i=t_i+1){
 		this.m_data[t_i]=c_Stack4.m_NIL;
 	}
@@ -6154,7 +6208,7 @@ c_Stack5.m_new2=function(t_data){
 	return this;
 }
 c_Stack5.m_NIL=0;
-c_Stack5.prototype.p_Clear=function(){
+c_Stack5.prototype.p_Clear2=function(){
 	for(var t_i=0;t_i<this.m_length;t_i=t_i+1){
 		this.m_data[t_i]=c_Stack5.m_NIL;
 	}
@@ -6282,7 +6336,8 @@ function c_Game(){
 }
 c_Game.m_new=function(){
 	this.m_levels=new_object_array(1);
-	this.m_levels[0]=(c_Level.m_new2.call(new c_Level));
+	this.m_levels[0]=(c_Level.m_new.call(new c_Level,null));
+	c_Tileset.m_Initialize();
 	return this;
 }
 c_Game.prototype.p_Start=function(){
@@ -6306,10 +6361,12 @@ c_Game.prototype.p_Draw=function(t_canvas){
 function c_Level(){
 	Object.call(this);
 	this.m_map=null;
+	this.m_camera=null;
 	this.implments={c_Scene:1};
 }
 c_Level.m_new=function(t_map){
 	this.m_map=t_map;
+	this.m_camera=c_Camera.m_new.call(new c_Camera);
 	return this;
 }
 c_Level.m_new2=function(){
@@ -6321,9 +6378,29 @@ c_Level.prototype.p_Run=function(){
 	return 0;
 }
 c_Level.prototype.p_Draw=function(t_canvas){
+	t_canvas.p_Clear(0.0,0.0,0.0,1.0);
+	t_canvas.p_SetBlendMode(1);
+	t_canvas.p_SetColor2(1.0,1.0,1.0,1.0);
+	this.m_map.p_Draw2(t_canvas,this.m_camera);
+	t_canvas.p_Flush();
 }
 function c_GameMap(){
 	Object.call(this);
+}
+c_GameMap.prototype.p_Draw2=function(t_canvas,t_camera){
+}
+function c_Camera(){
+	Object.call(this);
+}
+c_Camera.m_new=function(){
+	return this;
+}
+function c_Tileset(){
+	Object.call(this);
+}
+c_Tileset.m_Tiles=[];
+c_Tileset.m_Initialize=function(){
+	c_Tileset.m_Tiles=c_Image2.m_LoadFrames("monkey://data/tileset.png",64,false,.0,.0,0,null);
 }
 function bb_filepath_ExtractExt(t_path){
 	var t_i=t_path.lastIndexOf(".");
@@ -6411,6 +6488,7 @@ function bbInit(){
 	c_Stack4.m_NIL=null;
 	c_Stack5.m_NIL=0;
 	bb_graphics2_rs_projMatrix=bb_math3d_Mat4New();
+	c_Tileset.m_Tiles=[];
 	c_Texture.m__black=null;
 	c_Texture.m__flat=null;
 }
