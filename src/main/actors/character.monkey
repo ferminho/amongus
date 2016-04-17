@@ -104,7 +104,7 @@ Public
 				Else
 					status = Idle
 				End If
-		End Select		
+		End Select	
 		
 		x = Int(Floor(x + 0.5))
 		y = Int(Floor(y + 0.5))
