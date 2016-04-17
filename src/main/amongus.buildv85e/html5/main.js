@@ -9860,6 +9860,7 @@ function c_Actor(){
 	this.m_y=.0;
 	this.m_directionX=0;
 	this.m_directionY=0;
+	this.m_z=.0;
 }
 c_Actor.m_new=function(){
 	push_err();
@@ -9900,92 +9901,92 @@ function c_Character(){
 c_Character.prototype=extend_class(c_Actor);
 c_Character.m_new=function(t_level){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<55>";
-	c_Actor.m_new.call(this);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<56>";
-	dbg_object(this).m_level=t_level;
+	c_Actor.m_new.call(this);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<57>";
-	this.m_atlas=c_AssetBox.m_GfxCharacter;
+	dbg_object(this).m_level=t_level;
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<58>";
-	this.m_animator.p_Animate(0,0,1);
+	this.m_atlas=c_AssetBox.m_GfxCharacter;
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<59>";
+	this.m_animator.p_Animate(0,0,1);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<60>";
 	this.m_map=dbg_object(t_level).m_map;
 	pop_err();
 	return this;
 }
 c_Character.m_new2=function(){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<13>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<14>";
 	c_Actor.m_new.call(this);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<13>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<14>";
 	pop_err();
 	return this;
 }
 c_Character.prototype.p_IA=function(){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<145>";
-	this.m_inputMoveDown=false;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<146>";
-	this.m_inputMoveLeft=false;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<147>";
-	this.m_inputMoveRight=false;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<148>";
-	this.m_inputMoveUp=false;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<149>";
-	this.m_inputDrift=false;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<150>";
-	this.m_inputShoot=false;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<151>";
-	this.m_inputJump=false;
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<152>";
+	this.m_inputMoveDown=false;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<153>";
+	this.m_inputMoveLeft=false;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<154>";
+	this.m_inputMoveRight=false;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<155>";
+	this.m_inputMoveUp=false;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<156>";
+	this.m_inputDrift=false;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<157>";
+	this.m_inputShoot=false;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<158>";
+	this.m_inputJump=false;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<159>";
 	if(((bb_input2_KeyDown(32))!=0) && (this.m_status==0 || this.m_status==1) && this.m_timeToShoot==-1){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<153>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<160>";
 		this.m_timeToShoot=dbg_object(c_Time.m_instance).m_realActTime+400;
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<154>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<161>";
 		this.m_inputDrift=true;
 	}else{
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<155>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<162>";
 		if(((bb_input2_KeyDown(32))!=0) && this.m_status==2){
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<156>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<163>";
 			if(dbg_object(c_Time.m_instance).m_realActTime>=this.m_timeToShoot){
-				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<157>";
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<164>";
 				this.m_inputShoot=true;
 			}else{
-				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<159>";
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<166>";
 				this.m_inputDrift=true;
 			}
 		}else{
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<162>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<169>";
 			if(this.m_timeToShoot!=-1 && this.m_status==2){
-				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<163>";
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<170>";
 				this.m_inputJump=true;
-				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<164>";
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<171>";
 				this.m_timeToShoot=-1;
 			}else{
-				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<166>";
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<173>";
 				if(!((bb_input2_KeyDown(32))!=0)){
-					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<166>";
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<173>";
 					this.m_timeToShoot=-1;
 				}
-				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<167>";
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<174>";
 				if((bb_input2_KeyDown(38))!=0){
-					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<168>";
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<175>";
 					this.m_inputMoveUp=true;
 				}else{
-					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<169>";
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<176>";
 					if((bb_input2_KeyDown(40))!=0){
-						err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<170>";
+						err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<177>";
 						this.m_inputMoveDown=true;
 					}
 				}
-				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<172>";
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<179>";
 				if((bb_input2_KeyDown(37))!=0){
-					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<173>";
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<180>";
 					this.m_inputMoveLeft=true;
 				}else{
-					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<174>";
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<181>";
 					if((bb_input2_KeyDown(39))!=0){
-						err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<175>";
+						err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<182>";
 						this.m_inputMoveRight=true;
 					}
 				}
@@ -9996,388 +9997,400 @@ c_Character.prototype.p_IA=function(){
 }
 c_Character.prototype.p_GetCurrentTile=function(t_dispX,t_dispY){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<125>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<132>";
 	var t_i=((Math.floor((this.m_y+t_dispY-0.5)/8.0))|0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<126>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<133>";
 	var t_j=((Math.floor((this.m_x+t_dispX+0.5)/8.0))|0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<127>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<134>";
 	var t_=dbg_array(dbg_object(this.m_map).m_tiles,t_i*dbg_object(this.m_map).m_width+t_j)[dbg_index];
 	pop_err();
 	return t_;
 }
 c_Character.prototype.p_DoDrift=function(t_delta){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<235>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<242>";
 	var t_decel=t_delta*0.002;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<236>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<243>";
 	var t_tile=0;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<237>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<244>";
 	var t_increase=.0;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<238>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<245>";
 	if(bb_math_Abs2(this.m_velx)<t_decel){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<239>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<246>";
 		this.m_velx=0.0;
 	}else{
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<241>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<248>";
 		this.m_velx-=t_decel*bb_math_Sgn2(this.m_velx);
 	}
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<243>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<250>";
 	if(bb_math_Abs2(this.m_vely)<t_decel){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<244>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<251>";
 		this.m_vely=0.0;
 	}else{
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<246>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<253>";
 		this.m_vely-=t_decel*bb_math_Sgn2(this.m_vely);
 	}
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<250>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<257>";
 	this.m_x+=this.m_velx*t_delta/1000.0;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<251>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<258>";
 	t_increase=bb_math_Sgn2(this.m_velx);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<252>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<259>";
 	t_tile=this.p_GetCurrentTile(t_increase*2.0,0.0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<253>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<260>";
 	while(dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==2 || dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==4){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<254>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<261>";
 		this.m_x-=t_increase;
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<255>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<262>";
 		t_tile=this.p_GetCurrentTile(t_increase*2.0,0.0);
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<256>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<263>";
 		this.m_collisionX=((t_increase)|0);
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<257>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<264>";
 		this.m_status=0;
 	}
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<259>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<266>";
 	this.m_y+=this.m_vely*t_delta/1000.0;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<260>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<267>";
 	t_increase=bb_math_Sgn2(this.m_vely);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<261>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<268>";
 	t_tile=this.p_GetCurrentTile(0.0,t_increase*2.0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<262>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<269>";
 	while(dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==2 || dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==4){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<263>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<270>";
 		this.m_y-=t_increase;
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<264>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<271>";
 		t_tile=this.p_GetCurrentTile(0.0,t_increase*2.0);
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<265>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<272>";
 		this.m_collisionY=((t_increase)|0);
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<266>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<273>";
 		this.m_status=0;
 	}
 	pop_err();
 }
 c_Character.prototype.p_DoRun=function(t_delta){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<182>";
-	var t_tile=0;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<183>";
-	var t_increase=.0;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<184>";
-	var t_vel=.0;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<185>";
-	this.m_status=1;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<186>";
-	this.m_directionX=0;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<187>";
-	this.m_directionY=0;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<188>";
-	this.m_velx=0.0;
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<189>";
-	this.m_vely=0.0;
+	var t_tile=0;
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<190>";
+	var t_increase=.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<191>";
+	var t_vel=.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<192>";
+	this.m_status=1;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<193>";
+	this.m_directionX=0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<194>";
+	this.m_directionY=0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<195>";
+	this.m_velx=0.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<196>";
+	this.m_vely=0.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<197>";
 	if(this.m_inputMoveUp){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<191>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<198>";
 		t_vel=45.0;
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<192>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<199>";
 		this.m_vely=-1.0;
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<193>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<200>";
 		this.m_directionY=-1;
 	}else{
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<194>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<201>";
 		if(this.m_inputMoveDown){
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<195>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<202>";
 			t_vel=45.0;
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<196>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<203>";
 			this.m_vely=1.0;
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<197>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<204>";
 			this.m_directionY=1;
 		}
 	}
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<199>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<206>";
 	if(this.m_inputMoveLeft){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<200>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<207>";
 		if(t_vel>0.0){
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<200>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<207>";
 			t_vel=31.82;
 		}else{
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<200>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<207>";
 			t_vel=45.0;
 		}
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<201>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<208>";
 		this.m_velx=-1.0;
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<202>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<209>";
 		this.m_directionX=-1;
 	}else{
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<203>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<210>";
 		if(this.m_inputMoveRight){
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<204>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<211>";
 			if(t_vel>0.0){
-				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<204>";
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<211>";
 				t_vel=31.82;
 			}else{
-				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<204>";
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<211>";
 				t_vel=45.0;
 			}
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<205>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<212>";
 			this.m_velx=1.0;
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<206>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<213>";
 			this.m_directionX=1;
 		}
 	}
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<208>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<215>";
 	this.m_velx*=t_vel;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<209>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<216>";
 	this.m_vely*=t_vel;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<211>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<218>";
 	this.m_x+=this.m_velx*t_delta/1000.0;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<212>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<219>";
 	t_increase=bb_math_Sgn2(this.m_velx);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<213>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<220>";
 	t_tile=this.p_GetCurrentTile(t_increase*2.0,0.0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<214>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<221>";
 	while(dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==2 || dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==4){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<215>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<222>";
 		this.m_x-=t_increase;
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<216>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<223>";
 		t_tile=this.p_GetCurrentTile(t_increase*2.0,0.0);
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<217>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<224>";
 		this.m_collisionX=((t_increase)|0);
 	}
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<219>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<226>";
 	this.m_y+=this.m_vely*t_delta/1000.0;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<220>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<227>";
 	t_increase=bb_math_Sgn2(this.m_vely);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<221>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<228>";
 	t_tile=this.p_GetCurrentTile(0.0,t_increase*2.0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<222>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<229>";
 	while(dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==2 || dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==4){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<223>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<230>";
 		this.m_y-=t_increase;
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<224>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<231>";
 		t_tile=this.p_GetCurrentTile(0.0,t_increase*2.0);
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<225>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<232>";
 		this.m_collisionY=((t_increase)|0);
 	}
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<229>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<236>";
 	if(this.m_velx!=0.0 && this.m_vely!=0.0 && ((this.m_collisionX)!=0) && ((this.m_collisionY)!=0) || this.m_velx!=0.0 && this.m_vely==0.0 && ((this.m_collisionX)!=0) || this.m_velx==0.0 && this.m_vely!=0.0 && ((this.m_collisionY)!=0)){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<230>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<237>";
 		this.m_status=0;
 	}
 	pop_err();
 }
 c_Character.prototype.p_StopJump=function(){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<302>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<309>";
 	if(dbg_array(c_Tileset.m_TileType,this.p_GetCurrentTile(0.0,0.0))[dbg_index]==4){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<303>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<310>";
 		if(this.m_velx!=0.0 && this.m_vely!=0.0){
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<304>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<311>";
 			this.m_velx=bb_math_Sgn2(this.m_velx)*7.07;
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<305>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<312>";
 			this.m_vely=bb_math_Sgn2(this.m_vely)*7.07;
 		}else{
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<307>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<314>";
 			this.m_velx=bb_math_Sgn2(this.m_velx)*10.0;
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<308>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<315>";
 			this.m_vely=bb_math_Sgn2(this.m_vely)*10.0;
 		}
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<310>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<317>";
 		this.m_status=5;
 	}else{
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<312>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<319>";
 		this.m_status=0;
 	}
 	pop_err();
 }
 c_Character.prototype.p_DoJump=function(t_delta){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<271>";
-	var t_tile=0;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<272>";
-	var t_increase=.0;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<275>";
-	this.m_x+=this.m_velx*t_delta/1000.0;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<276>";
-	t_increase=bb_math_Sgn2(this.m_velx);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<277>";
-	t_tile=this.p_GetCurrentTile(t_increase*2.0,0.0);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<278>";
-	while(dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==2){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<279>";
-		this.m_x-=t_increase;
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<280>";
-		t_tile=this.p_GetCurrentTile(t_increase*2.0,0.0);
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<281>";
-		this.m_collisionX=((t_increase)|0);
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<282>";
-		this.m_status=0;
-	}
+	var t_tile=0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<279>";
+	var t_increase=.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<282>";
+	this.m_x+=this.m_velx*t_delta/1000.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<283>";
+	t_increase=bb_math_Sgn2(this.m_velx);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<284>";
-	this.m_y+=this.m_vely*t_delta/1000.0;
+	t_tile=this.p_GetCurrentTile(t_increase*2.0,0.0);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<285>";
-	t_increase=bb_math_Sgn2(this.m_vely);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<286>";
-	t_tile=this.p_GetCurrentTile(0.0,t_increase*2.0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<287>";
 	while(dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==2){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<286>";
+		this.m_x-=t_increase;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<287>";
+		t_tile=this.p_GetCurrentTile(t_increase*2.0,0.0);
 		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<288>";
-		this.m_y-=t_increase;
+		this.m_collisionX=((t_increase)|0);
 		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<289>";
-		t_tile=this.p_GetCurrentTile(0.0,t_increase*2.0);
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<290>";
-		this.m_collisionY=((t_increase)|0);
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<291>";
 		this.m_status=0;
 	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<291>";
+	this.m_y+=this.m_vely*t_delta/1000.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<292>";
+	t_increase=bb_math_Sgn2(this.m_vely);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<293>";
+	t_tile=this.p_GetCurrentTile(0.0,t_increase*2.0);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<294>";
-	var t_xi=((Math.floor(this.m_velx*t_delta/1000.0+0.5))|0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<295>";
-	var t_yi=((Math.floor(this.m_vely*t_delta/1000.0+0.5))|0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<296>";
-	this.m_jumpDistanceAcum=this.m_jumpDistanceAcum+((Math.floor(Math.sqrt(t_xi*t_xi+t_yi*t_yi)+0.5))|0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<297>";
-	if(((this.m_collisionX)!=0) || ((this.m_collisionY)!=0) || this.m_jumpDistanceAcum>=21.0){
+	while(dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==2){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<295>";
+		this.m_y-=t_increase;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<296>";
+		t_tile=this.p_GetCurrentTile(0.0,t_increase*2.0);
 		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<297>";
+		this.m_collisionY=((t_increase)|0);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<298>";
+		this.m_status=0;
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<301>";
+	var t_xi=((Math.floor(this.m_velx*t_delta/1000.0+0.5))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<302>";
+	var t_yi=((Math.floor(this.m_vely*t_delta/1000.0+0.5))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<303>";
+	this.m_jumpDistanceAcum=this.m_jumpDistanceAcum+((Math.floor(Math.sqrt(t_xi*t_xi+t_yi*t_yi)+0.5))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<304>";
+	if(((this.m_collisionX)!=0) || ((this.m_collisionY)!=0) || this.m_jumpDistanceAcum>=21.0){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<304>";
 		this.p_StopJump();
 	}
 	pop_err();
 }
 c_Character.prototype.p_Update=function(){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<63>";
-	var t_delta=dbg_object(c_Time.m_instance).m_lastFrame;
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<64>";
+	var t_delta=dbg_object(c_Time.m_instance).m_lastFrame;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<65>";
 	var t_animResult=null;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<67>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<68>";
 	if((bb_input2_KeyDown(82))!=0){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<68>";
-		this.m_status=0;
 		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<69>";
-		this.m_x=(dbg_object(this.m_map).m_width)*8.0/2.0;
+		this.m_status=0;
 		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<70>";
+		this.m_x=(dbg_object(this.m_map).m_width)*8.0/2.0;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<71>";
 		this.m_y=(dbg_object(this.m_map).m_height)*8.0/2.0;
 	}
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<74>";
-	this.p_IA();
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<75>";
-	this.m_collisionX=0;
+	this.p_IA();
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<76>";
-	this.m_collisionY=0;
+	this.m_collisionX=0;
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<77>";
-	var t_1=this.m_status;
+	this.m_collisionY=0;
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<78>";
+	var t_1=this.m_status;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<79>";
 	if(t_1==0 || t_1==1){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<79>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<80>";
 		if(this.m_inputDrift){
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<80>";
-			this.m_status=2;
 			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<81>";
+			this.m_status=2;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<82>";
 			this.p_DoDrift(t_delta);
 		}else{
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<82>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<83>";
 			if(this.m_inputMoveDown || this.m_inputMoveLeft || this.m_inputMoveRight || this.m_inputMoveUp){
-				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<83>";
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<84>";
 				this.p_DoRun(t_delta);
 			}else{
-				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<85>";
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<86>";
 				this.m_status=0;
 			}
 		}
 	}else{
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<87>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<88>";
 		if(t_1==2){
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<88>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<89>";
 			if(this.m_inputJump){
-				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<89>";
-				this.m_jumpDistanceAcum=0.0;
 				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<90>";
-				this.m_status=3;
+				dbg_object(this.m_level).m_camera.p_Shake(3.0);
 				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<91>";
+				this.m_jumpDistanceAcum=0.0;
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<92>";
+				this.m_status=3;
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<93>";
 				if(this.m_velx!=0.0 && this.m_vely!=0.0){
-					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<92>";
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<94>";
 					this.m_velx=bb_math_Sgn2(this.m_velx)*15.0;
-					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<93>";
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<95>";
 					this.m_vely=bb_math_Sgn2(this.m_vely)*15.0;
 				}else{
-					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<95>";
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<97>";
 					this.m_velx=bb_math_Sgn2(this.m_velx)*20.0;
-					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<96>";
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<98>";
 					this.m_vely=bb_math_Sgn2(this.m_vely)*20.0;
 				}
-				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<98>";
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<100>";
 				this.p_DoJump(t_delta);
 			}else{
-				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<99>";
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<101>";
 				if(this.m_inputShoot){
-					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<100>";
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<102>";
 					this.m_status=4;
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<103>";
+					var t_shine=c_Shine.m_new.call(new c_Shine,this.m_level);
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<104>";
+					dbg_object(t_shine).m_x=this.m_x+((this.m_directionX)*6.0+(this.m_directionY)*2.0);
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<105>";
+					dbg_object(t_shine).m_y=this.m_y-5.0+(this.m_directionY)*6.0;
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<106>";
+					this.m_level.p_AddActor(t_shine);
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<107>";
+					dbg_object(this.m_level).m_camera.p_Shake(4.0);
 				}else{
-					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<101>";
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<108>";
 					if(this.m_inputDrift){
-						err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<102>";
+						err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<109>";
 						this.p_DoDrift(t_delta);
 					}else{
-						err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<104>";
+						err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<111>";
 						this.m_status=0;
 					}
 				}
 			}
 		}else{
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<106>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<113>";
 			if(t_1==3){
-				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<107>";
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<114>";
 				this.p_DoJump(t_delta);
 			}
 		}
 	}
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<110>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<117>";
 	this.m_x=((Math.floor(this.m_x+0.5))|0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<111>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<118>";
 	this.m_y=((Math.floor(this.m_y+0.5))|0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<113>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<120>";
 	t_animResult=this.m_animator.p_Animate(this.m_status,this.m_directionX,this.m_directionY);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<114>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<121>";
 	if(dbg_object(t_animResult).m_ended){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<115>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<122>";
 		var t_2=this.m_status;
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<116>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<123>";
 		if(t_2==4){
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<117>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<124>";
 			this.m_status=0;
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<118>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<125>";
 			t_animResult=this.m_animator.p_Animate(this.m_status,this.m_directionX,this.m_directionY);
 		}
 	}
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<121>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<128>";
 	this.m_img=dbg_object(t_animResult).m_graph;
 	pop_err();
 }
 c_Character.prototype.p_Draw2=function(t_canvas,t_camera){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<131>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<138>";
 	t_canvas.p_SetColor2(1.0,1.0,1.0,1.0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<133>";
-	var t_i=((Math.floor((this.m_y+0.5)/8.0))|0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<134>";
-	var t_j=((Math.floor((this.m_x+0.5)/8.0))|0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<135>";
-	t_canvas.p_SetBlendMode(3);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<136>";
-	var t_tile=dbg_array(dbg_object(this.m_map).m_tiles,t_i*dbg_object(this.m_map).m_width+t_j)[dbg_index];
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<137>";
-	t_canvas.p_DrawImage4(dbg_array(c_Tileset.m_Tiles,t_tile)[dbg_index],(t_j)*8.0-(dbg_object(t_camera).m_x0),(t_i)*8.0-(dbg_object(t_camera).m_y0));
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<140>";
-	t_canvas.p_SetBlendMode(1);
+	var t_i=((Math.floor((this.m_y+0.5)/8.0))|0);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<141>";
+	var t_j=((Math.floor((this.m_x+0.5)/8.0))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<142>";
+	t_canvas.p_SetBlendMode(3);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<143>";
+	var t_tile=dbg_array(dbg_object(this.m_map).m_tiles,t_i*dbg_object(this.m_map).m_width+t_j)[dbg_index];
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<144>";
+	t_canvas.p_DrawImage4(dbg_array(c_Tileset.m_Tiles,t_tile)[dbg_index],(t_j)*8.0-(dbg_object(t_camera).m_x0),(t_i)*8.0-(dbg_object(t_camera).m_y0));
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<147>";
+	t_canvas.p_SetBlendMode(1);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<148>";
 	t_canvas.p_DrawImage4(dbg_array(this.m_atlas,this.m_img)[dbg_index],this.m_x-(dbg_object(t_camera).m_x0),this.m_y-(dbg_object(t_camera).m_y0));
 	pop_err();
 }
@@ -10386,36 +10399,36 @@ function c_Level(){
 	this.m_map=null;
 	this.m_camera=null;
 	this.m_chr=null;
-	this.m_world=c_List.m_new.call(new c_List);
+	this.m_world=c_ActorList.m_new.call(new c_ActorList);
 	this.implments={c_Scene:1};
 }
 c_Level.m_new=function(t_map){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<24>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<25>";
 	dbg_object(this).m_map=t_map;
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<26>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<27>";
 	if(true){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<30>";
-		this.m_chr=c_Character.m_new.call(new c_Character,this);
 		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<31>";
+		this.m_chr=c_Character.m_new.call(new c_Character,this);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<32>";
 		this.m_camera=c_Camera.m_new.call(new c_Camera,(this.m_chr));
 	}
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<33>";
-	this.m_world.p_AddFirst(this.m_chr);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<34>";
-	dbg_object(this.m_chr).m_x=(((dbg_object(t_map).m_width)*8.0/2.0+0.5)|0);
+	this.m_world.p_AddFirst(this.m_chr);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<35>";
-	dbg_object(this.m_chr).m_y=(((dbg_object(t_map).m_height)*8.0/2.0+0.5)|0);
+	dbg_object(this.m_chr).m_x=(((dbg_object(t_map).m_width)*8.0/2.0+0.5)|0);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<36>";
-	dbg_object(this.m_camera).m_x=dbg_object(this.m_chr).m_x;
+	dbg_object(this.m_chr).m_y=(((dbg_object(t_map).m_height)*8.0/2.0+0.5)|0);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<37>";
+	dbg_object(this.m_camera).m_x=dbg_object(this.m_chr).m_x;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<38>";
 	dbg_object(this.m_camera).m_y=dbg_object(this.m_chr).m_y;
 	pop_err();
 	return this;
 }
 c_Level.m_new2=function(){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<16>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<17>";
 	pop_err();
 	return this;
 }
@@ -10425,44 +10438,56 @@ c_Level.prototype.p_Start=function(){
 }
 c_Level.prototype.p_Update=function(){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<44>";
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<44>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<45>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<45>";
 	var t_=this.m_world.p_ObjectEnumerator();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<44>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<45>";
 	while(t_.p_HasNext()){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<44>";
-		var t_actor=t_.p_NextObject();
 		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<45>";
+		var t_actor=t_.p_NextObject();
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<46>";
 		t_actor.p_Update();
 	}
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<47>";
-	this.m_camera.p_Update();
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<48>";
+	this.m_camera.p_Update();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<49>";
 	pop_err();
 	return 0;
 }
 c_Level.prototype.p_Draw=function(t_canvas){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<52>";
-	t_canvas.p_SetBlendMode(1);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<53>";
+	t_canvas.p_SetBlendMode(1);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<54>";
 	t_canvas.p_SetColor2(1.0,1.0,1.0,1.0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<55>";
-	this.m_map.p_Draw2(t_canvas,this.m_camera);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<56>";
-	this.m_world.p_Sort(1);
+	this.m_map.p_Draw2(t_canvas,this.m_camera);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<57>";
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<57>";
+	this.m_world.p_Sort(0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<58>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<58>";
 	var t_=this.m_world.p_ObjectEnumerator();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<57>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<58>";
 	while(t_.p_HasNext()){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<57>";
-		var t_actor=t_.p_NextObject();
 		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<58>";
+		var t_actor=t_.p_NextObject();
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<59>";
 		t_actor.p_Draw2(t_canvas,this.m_camera);
 	}
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<60>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<61>";
 	this.m_camera.p_Draw2(t_canvas,this.m_camera);
+	pop_err();
+}
+c_Level.prototype.p_AddActor=function(t_actor){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<65>";
+	this.m_world.p_AddLast(t_actor);
+	pop_err();
+}
+c_Level.prototype.p_RemoveActor=function(t_actor){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<69>";
+	this.m_world.p_Remove(t_actor);
 	pop_err();
 }
 function c_GameMap(){
@@ -10539,15 +10564,16 @@ function c_Camera(){
 	this.m_owner=null;
 	this.m_destX=0;
 	this.m_destY=0;
+	this.m_shaking=.0;
 	this.m_x0=0;
 	this.m_y0=0;
 }
 c_Camera.prototype=extend_class(c_Actor);
 c_Camera.m_new=function(t_cameraOwner){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<24>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<26>";
 	c_Actor.m_new.call(this);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<25>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<27>";
 	this.m_owner=t_cameraOwner;
 	pop_err();
 	return this;
@@ -10562,43 +10588,62 @@ c_Camera.m_new2=function(){
 }
 c_Camera.prototype.p_Update=function(){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<29>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<31>";
 	this.m_destX=((Math.floor(dbg_object(this.m_owner).m_x+18.285714285714285*(dbg_object(this.m_owner).m_directionX)+0.5))|0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<30>";
-	this.m_destY=((Math.floor(dbg_object(this.m_owner).m_y+18.285714285714285*(dbg_object(this.m_owner).m_directionY)+0.5))|0);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<32>";
+	this.m_destY=((Math.floor(dbg_object(this.m_owner).m_y+18.285714285714285*(dbg_object(this.m_owner).m_directionY)+0.5))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<34>";
 	if(this.m_x!=(this.m_destX) || this.m_y!=(this.m_destY)){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<33>";
-		var t_vel=80.0*dbg_object(c_Time.m_instance).m_lastFrame/1000.0;
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<34>";
-		var t_dist=Math.sqrt(Math.pow((this.m_destX)-this.m_x,2.0)+Math.pow((this.m_destY)-this.m_y,2.0));
 		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<35>";
-		var t_angle=(Math.atan2((this.m_destY)-this.m_y,(this.m_destX)-this.m_x)*R2D);
+		var t_vel=80.0*dbg_object(c_Time.m_instance).m_lastFrame/1000.0;
 		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<36>";
+		var t_dist=Math.sqrt(Math.pow((this.m_destX)-this.m_x,2.0)+Math.pow((this.m_destY)-this.m_y,2.0));
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<37>";
+		var t_angle=(Math.atan2((this.m_destY)-this.m_y,(this.m_destX)-this.m_x)*R2D);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<38>";
 		if(t_dist<t_vel){
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<37>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<39>";
 			this.m_x=(this.m_destX);
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<38>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<40>";
 			this.m_y=(this.m_destY);
 		}else{
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<40>";
-			var t_velX=t_vel*Math.cos((t_angle)*D2R);
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<41>";
-			var t_velY=t_vel*Math.sin((t_angle)*D2R);
 			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<42>";
-			this.m_x=this.m_x+t_velX;
+			var t_velX=t_vel*Math.cos((t_angle)*D2R);
 			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<43>";
+			var t_velY=t_vel*Math.sin((t_angle)*D2R);
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<44>";
+			this.m_x=this.m_x+t_velX;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<45>";
 			this.m_y=this.m_y+t_velY;
 		}
 	}
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<46>";
-	this.m_x=((Math.floor(this.m_x+0.5))|0);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<47>";
-	this.m_y=((Math.floor(this.m_y+0.5))|0);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<48>";
-	this.m_x0=((Math.floor(this.m_x-32.0+0.5))|0);
+	var t_shiftX=.0;
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<49>";
+	var t_shiftY=.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<50>";
+	if(this.m_shaking>0.0){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<51>";
+		t_shiftX=bb_random_Rnd2(-this.m_shaking,this.m_shaking);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<52>";
+		t_shiftY=bb_random_Rnd2(-this.m_shaking,this.m_shaking);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<53>";
+		this.m_shaking-=1.0;
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<55>";
+	this.m_x=((Math.floor(this.m_x+t_shiftX+0.5))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<56>";
+	this.m_y=((Math.floor(this.m_y+t_shiftY+0.5))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<57>";
+	this.m_x0=((Math.floor(this.m_x-32.0+0.5))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<58>";
 	this.m_y0=((Math.floor(this.m_y-32.0+0.5))|0);
+	pop_err();
+}
+c_Camera.prototype.p_Shake=function(t_magnitude){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<62>";
+	this.m_shaking=t_magnitude;
 	pop_err();
 }
 function c_CameraEditor(){
@@ -11019,6 +11064,80 @@ c_List.prototype.p_Sort=function(t_ascending){
 		t_insize*=2;
 	}while(!(false));
 }
+c_List.prototype.p_Equals=function(t_lhs,t_rhs){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/list.monkey<28>";
+	var t_=t_lhs==t_rhs;
+	pop_err();
+	return t_;
+}
+c_List.prototype.p_RemoveEach=function(t_value){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/list.monkey<151>";
+	var t_node=dbg_object(this.m__head).m__succ;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/list.monkey<152>";
+	while(t_node!=this.m__head){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/list.monkey<153>";
+		var t_succ=dbg_object(t_node).m__succ;
+		err_info="F:/progs/gamedev/monkey/modules/monkey/list.monkey<154>";
+		if(this.p_Equals(dbg_object(t_node).m__data,t_value)){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/list.monkey<154>";
+			t_node.p_Remove2();
+		}
+		err_info="F:/progs/gamedev/monkey/modules/monkey/list.monkey<155>";
+		t_node=t_succ;
+	}
+	pop_err();
+	return 0;
+}
+c_List.prototype.p_Remove=function(t_value){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/list.monkey<137>";
+	this.p_RemoveEach(t_value);
+	pop_err();
+}
+function c_ActorList(){
+	c_List.call(this);
+}
+c_ActorList.prototype=extend_class(c_List);
+c_ActorList.m_new=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/actorlist.monkey<7>";
+	c_List.m_new.call(this);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/actorlist.monkey<7>";
+	pop_err();
+	return this;
+}
+c_ActorList.prototype.p_Compare3=function(t_a,t_b){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/actorlist.monkey<10>";
+	if(dbg_object(t_a).m_z<dbg_object(t_b).m_z){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/actorlist.monkey<10>";
+		pop_err();
+		return -1;
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/actorlist.monkey<11>";
+	if(dbg_object(t_a).m_z>dbg_object(t_b).m_z){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/actorlist.monkey<11>";
+		pop_err();
+		return 1;
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/actorlist.monkey<12>";
+	if(dbg_object(t_a).m_y<dbg_object(t_b).m_y){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/actorlist.monkey<12>";
+		pop_err();
+		return -1;
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/actorlist.monkey<13>";
+	if(dbg_object(t_a).m_y>dbg_object(t_b).m_y){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/actorlist.monkey<13>";
+		pop_err();
+		return 1;
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/actorlist.monkey<14>";
+	pop_err();
+	return 0;
+}
 function c_Node7(){
 	Object.call(this);
 	this.m__succ=null;
@@ -11045,6 +11164,20 @@ c_Node7.m_new2=function(){
 	err_info="F:/progs/gamedev/monkey/modules/monkey/list.monkey<258>";
 	pop_err();
 	return this;
+}
+c_Node7.prototype.p_Remove2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/list.monkey<274>";
+	if(dbg_object(this.m__succ).m__pred!=this){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/list.monkey<274>";
+		error("Illegal operation on removed node");
+	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/list.monkey<276>";
+	dbg_object(this.m__succ).m__pred=this.m__pred;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/list.monkey<277>";
+	dbg_object(this.m__pred).m__succ=this.m__succ;
+	pop_err();
+	return 0;
 }
 function c_HeadNode(){
 	c_Node7.call(this);
@@ -11330,6 +11463,68 @@ function bb_math_Sgn2(t_x){
 	err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<69>";
 	pop_err();
 	return 0.0;
+}
+function c_Shine(){
+	c_Actor.call(this);
+	this.m_atlas=[];
+	this.m_nextTime=0;
+	this.m_level=null;
+	this.m_img=0;
+}
+c_Shine.prototype=extend_class(c_Actor);
+c_Shine.m_new=function(t_level){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<20>";
+	c_Actor.m_new.call(this);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<21>";
+	this.m_atlas=c_AssetBox.m_GfxMisc;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<22>";
+	this.m_nextTime=((dbg_object(c_Time.m_instance).m_actTime+45.0)|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<23>";
+	dbg_object(this).m_level=t_level;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<24>";
+	this.m_z=-5.0;
+	pop_err();
+	return this;
+}
+c_Shine.m_new2=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<10>";
+	c_Actor.m_new.call(this);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<10>";
+	pop_err();
+	return this;
+}
+c_Shine.prototype.p_Update=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<28>";
+	if(dbg_object(c_Time.m_instance).m_actTime>=(this.m_nextTime)){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<29>";
+		this.m_img+=1;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<30>";
+		if(this.m_img>3){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<31>";
+			this.m_level.p_RemoveActor(this);
+		}else{
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<33>";
+			this.m_nextTime=((dbg_object(c_Time.m_instance).m_actTime+45.0)|0);
+		}
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<36>";
+	this.m_x=Math.floor(this.m_x+0.5);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<37>";
+	this.m_y=Math.floor(this.m_y+0.5);
+	pop_err();
+}
+c_Shine.prototype.p_Draw2=function(t_canvas,t_camera){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<41>";
+	t_canvas.p_SetColor2(1.0,1.0,1.0,0.75);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<42>";
+	t_canvas.p_SetBlendMode(2);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<43>";
+	t_canvas.p_DrawImage4(dbg_array(this.m_atlas,this.m_img)[dbg_index],this.m_x-(dbg_object(t_camera).m_x0),this.m_y-(dbg_object(t_camera).m_y0));
+	pop_err();
 }
 function bbInit(){
 	bb_app__app=null;

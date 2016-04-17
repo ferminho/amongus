@@ -20,6 +20,8 @@ Public
 	
 	Field destX:Int
 	Field destY:Int
+	
+	Field shaking:Float
 
 	Method New(cameraOwner:Actor)
 		owner = cameraOwner
@@ -43,10 +45,20 @@ Public
 				y = y + velY
 			End If
 		End If
-		x = Int(Floor(x + 0.5))
-		y = Int(Floor(y + 0.5))
+		Local shiftX:Float
+		Local shiftY:Float 
+		If (shaking > 0.0)
+			shiftX = Rnd(-shaking, shaking)
+			shiftY = Rnd(-shaking, shaking)
+			shaking -= 1.0
+		End If
+		x = Int(Floor(x + shiftX + 0.5))
+		y = Int(Floor(y + shiftY + 0.5))
 		x0 = Int(Floor(x - CanvasHalfWidth + 0.5))
 		y0 = Int(Floor(y - CanvasHalfHeight + 0.5))
 	End Method
 
+	Method Shake:Void(magnitude:Float)
+		shaking = magnitude
+	End Method
 End Class

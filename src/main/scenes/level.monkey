@@ -5,6 +5,7 @@ Public
 Import mojo2 
 
 Import actors.actor
+Import actors.actorlist
 Import actors.camera
 Import actors.cameraeditor
 Import actors.character
@@ -18,7 +19,7 @@ Class Level Implements Scene
 	Field camera:Camera
 	Field map:GameMap
 	Field chr:Character
-	Field world:List<Actor> = New List<Actor>()
+	Field world:ActorList = New ActorList()
 	
 	Method New(map:GameMap)
 		Self.map = map
@@ -53,7 +54,7 @@ Class Level Implements Scene
 		canvas.SetColor(1.0, 1.0, 1.0, 1.0)
 		
 		map.Draw(canvas, camera)
-		world.Sort()
+		world.Sort(False)
 		For Local actor:Actor = EachIn world
 			actor.Draw(canvas, camera)
 		End For
@@ -62,5 +63,9 @@ Class Level Implements Scene
 		
 	Method AddActor:Void(actor:Actor)
 		world.AddLast(actor)
+	End Method
+	
+	Method RemoveActor:Void(actor:Actor)
+		world.Remove(actor)
 	End Method
 End Class

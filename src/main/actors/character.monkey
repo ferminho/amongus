@@ -5,6 +5,7 @@ Public
 Import mojo2
 Import actors.actor
 Import actors.animator
+Import actors.shine
 Import assetbox
 Import maps.gamemap
 Import scenes.level
@@ -98,6 +99,11 @@ Public
 					DoJump(delta)
 				Else If (inputShoot)
 					status = Shooting
+					Local shine:Shine = New Shine(level)
+					shine.x = x + (directionX * 6.0 + directionY * 2.0)
+					shine.y = y - 5.0 + (directionY * 6.0)
+					level.AddActor(shine)
+					level.camera.Shake(4.0)
 				Else If (inputDrift)
 					DoDrift(delta)
 				Else
