@@ -71,6 +71,9 @@ Public
 	End Method
 	
 	Method Explode:Void()
+		PlaySound(AssetBox.SfxExplo1, 1)
+		PlaySound(AssetBox.SfxExplo2, 2)
+		PlaySound(AssetBox.SfxExplo3, 3)
 		level.RemoveActor(Self)
 		Local explosions:Int = Rnd(5, 8)
 		For Local i:Int = 1 To explosions

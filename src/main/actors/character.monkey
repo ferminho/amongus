@@ -114,6 +114,7 @@ Public
 					level.AddActor(shine)
 					level.AddActor(shot)
 					level.camera.Shake(4.0)
+					PlaySound(AssetBox.SfxShoot)
 				Else If (inputSlide)
 					DoDrift(delta)
 				Else
@@ -316,6 +317,7 @@ Public
 				velx = Sgn(velx) * FallingSpeed
 				vely = Sgn(vely) * FallingSpeed
 			End If
+			PlaySound(AssetBox.SfxTrip, 0)
 			status = Falling
 		Else 
 			status = Idle
