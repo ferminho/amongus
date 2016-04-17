@@ -9947,10 +9947,10 @@ function c_Character(){
 	this.m_inputShoot=false;
 	this.m_inputJump=false;
 	this.m_timeToShoot=-1;
-	this.m_collisionX=0;
-	this.m_collisionY=0;
 	this.m_velx=.0;
 	this.m_vely=.0;
+	this.m_collisionX=0;
+	this.m_collisionY=0;
 	this.m_jumpDistanceAcum=.0;
 	this.m_timeToRecover=-1;
 	this.m_img=0;
@@ -10016,7 +10016,7 @@ c_Character.prototype.p_IA=function(){
 			}
 		}else{
 			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<175>";
-			if(this.m_timeToShoot!=-1 && this.m_status==2){
+			if(this.m_timeToShoot!=-1 && this.m_status==2 && (this.m_velx!=0.0 || this.m_vely!=0.0)){
 				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<176>";
 				this.m_inputJump=true;
 				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<177>";

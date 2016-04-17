@@ -172,7 +172,7 @@ Public
 				inputSlide = True
 			End If
 		Else
-			If (timeToShoot <> -1 And (status = Sliding))
+			If (timeToShoot <> -1 And (status = Sliding) And (velx <> 0.0 Or vely <> 0.0))
 				inputJump = True
 				timeToShoot = -1
 			Else
@@ -328,7 +328,6 @@ Public
 		Local tile:Int
 		Local increase:Float
 
-		Print(velx + " " + vely)		
 		'movement & colision
 		x += (velx * delta) / 1000.0
 		increase = Sgn(velx)
