@@ -18,6 +18,7 @@ Class Level Implements Scene
 	Field camera:Camera
 	Field map:GameMap
 	Field chr:Character
+	Field world:List<Actor> = New List<Actor>()
 	
 	Method New(map:GameMap)
 		Self.map = map
@@ -26,9 +27,10 @@ Class Level Implements Scene
 			camera = New CameraEditor(map)
 			chr = New DummyCharacter()
 		Else
-			chr = New Character(map)
+			chr = New Character(Self)
 			camera = New Camera(chr)
 		End If
+		world.AddFirst(chr)
 		chr.x = Int(((map.width * TileSize) / 2.0) + 0.5)
 		chr.y = Int(((map.height * TileSize) / 2.0) + 0.5)
 		camera.x = chr.x
@@ -39,7 +41,9 @@ Class Level Implements Scene
 	End Method
 
 	Method Update:Int()
-		chr.Update()
+		For Local actor:Actor = EachIn world
+			actor.Update()
+		End For
 		camera.Update()
 		Return Scene.KeepRunning
 	End Method
@@ -49,8 +53,14 @@ Class Level Implements Scene
 		canvas.SetColor(1.0, 1.0, 1.0, 1.0)
 		
 		map.Draw(canvas, camera)
-		chr.Draw(canvas, camera)
-		camera.Draw(canvas, camera) ' usually doesn't draw but who knows?
+		world.Sort()
+		For Local actor:Actor = EachIn world
+			actor.Draw(canvas, camera)
+		End For
+		camera.Draw(canvas, camera) ' usually doesn't draw
 	End Method
 		
+	Method AddActor:Void(actor:Actor)
+		world.AddLast(actor)
+	End Method
 End Class

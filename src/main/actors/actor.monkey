@@ -17,5 +17,13 @@ Public
 
 	Method Draw:Void(canvas:Canvas, camera:Camera)
 	End Method
-		
+	
+	Method Compare:Int(actor:Actor)
+		If (y < actor.y)
+			Return -1
+		ElseIf (y > actor.y)
+			Return 1
+		End If
+		Return 0
+	End Method
 End Class

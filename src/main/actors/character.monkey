@@ -7,6 +7,7 @@ Import actors.actor
 Import actors.animator
 Import assetbox
 Import maps.gamemap
+Import scenes.level
 Import time
 
 Class Character Extends Actor
@@ -31,6 +32,7 @@ Public
 	Const Falling:Int = 5
 	
 	Field map:GameMap
+	Field level:Level
 	Field atlas:Image[]
 	Field img:Int
 	Field animator:Animator = New Animator()
@@ -50,10 +52,11 @@ Public
 	Field collisionX:Int
 	Field collisionY:Int
 
-	Method New(map:GameMap)
+	Method New(level:Level)
+		Self.level = level
 		atlas = AssetBox.GfxCharacter
 		animator.Animate(Idle, 0.0, 1.0)
-		Self.map = map
+		map = level.map
 	End Method
 	
 	Method Update:Void()
