@@ -11,7 +11,7 @@ Import time
 
 Class AmongUs Extends App
 Private
-	Const DesiredFps:Float = 50.0
+	Const DesiredFps:Float = 40.0
 	Const FrameTime:Int = 1000.0 / DesiredFps
 
 	Field canvas:Canvas

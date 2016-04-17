@@ -16,11 +16,12 @@ Public
 	Const RunningSpeed:Float = 45.0
 	Const RunningSpeedDiagonal:Float = 31.82
 	Const JumpingSpeed:Float = 20.0
-	Const JumpingSpeedDiagonal:Float = 14.14
+	Const JumpingSpeedDiagonal:Float = 15
 	Const FallingSpeed:Float = 10.0
 	Const FallingSpeedDiagonal:Float = 7.07
 	Const DriftDecel:Float = 0.002
 	Const SpacePressShootTime:Int = 400
+	Const JumpDistance:Float = 21.0
 	
 	Const Idle:Int = 0
 	Const Running:Int = 1
@@ -36,6 +37,7 @@ Public
 	Field status:Int = Idle
 
 	Field velx:Float, vely:Float
+	Field jumpDistanceAcum:Float 
 	
 	Field timeToShoot:Int = -1
 	Field inputMoveUp:Bool
@@ -81,6 +83,7 @@ Public
 				End If
 			Case Drifting
 				If (inputJump)
+					jumpDistanceAcum = 0.0
 					status = Jumping
 					If (velx <> 0.0 And vely <> 0.0)
 						velx = Sgn(velx) * JumpingSpeedDiagonal
@@ -109,9 +112,6 @@ Public
 			Select (status)
 				Case Shooting
 					status = Idle
-					animResult = animator.Animate(status, directionX, directionY)
-				Case Jumping
-					StopJump()
 					animResult = animator.Animate(status, directionX, directionY)
 			End Select
 		End If
@@ -146,11 +146,12 @@ Public
 		inputDrift = False
 		inputShoot = False
 		inputJump = False
-		If (KeyDown(KEY_SPACE) And (status = Idle Or status = Running Or status = Drifting))
-			If (timeToShoot = -1) timeToShoot = Time.instance.realActTime + SpacePressShootTime
+		If (KeyDown(KEY_SPACE) And (status = Idle Or status = Running) And timeToShoot = -1)
+			timeToShoot = Time.instance.realActTime + SpacePressShootTime
+			inputDrift = True
+		Else If (KeyDown(KEY_SPACE) And status = Drifting)
 			If (Time.instance.realActTime >= timeToShoot)
 				inputShoot = True
-				timeToShoot = -1
 			Else
 				inputDrift = True
 			End If
@@ -159,7 +160,7 @@ Public
 				inputJump = True
 				timeToShoot = -1
 			Else
-				timeToShoot = -1 ' reset just in case it was interrupted
+				If (Not KeyDown(KEY_SPACE)) Then timeToShoot = -1 ' able to shoot/drift again
 				If (KeyDown(KEY_UP))
 					inputMoveUp = True
 				Else If (KeyDown(KEY_DOWN))
@@ -220,6 +221,11 @@ Public
 			tile = GetCurrentTile(0.0, increase * CollisionRadius)
 			collisionY = increase
 		End While
+		If ((velx <> 0.0 And vely <> 0.0 And collisionX And collisionY) Or
+			(velx <> 0.0 And vely = 0.0 And collisionX) Or 
+			(velx = 0.0 And vely <> 0.0 And collisionY))
+			status = Idle
+		End If
 	End Method
 
 	Method DoDrift:Void(delta:Float)
@@ -258,7 +264,6 @@ Public
 		End While
 	End Method
 	
-	
 	Method DoJump:Void(delta:Float)
 		Local tile:Int
 		Local increase:Float
@@ -283,7 +288,11 @@ Public
 			status = Idle
 		End While
 		
-		If (collisionX Or collisionY) Then StopJump()
+		Local xi:Int = Int(Floor(((velx * delta) / 1000.0) + 0.5))
+		Local yi:Int = Int(Floor(((vely * delta) / 1000.0) + 0.5))
+		jumpDistanceAcum += Int(Floor(Sqrt(xi * xi + yi * yi) + 0.5))
+		If (collisionX Or collisionY Or jumpDistanceAcum >= JumpDistance) Then StopJump()
+		
 	End Method
 
 	Method StopJump:Void()
