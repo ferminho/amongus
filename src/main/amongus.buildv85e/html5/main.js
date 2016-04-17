@@ -10036,8 +10036,6 @@ c_Character.prototype.p_DoDrift=function(t_delta){
 		t_tile=this.m_map.p_GetTileTypeAt(this.m_x+t_increase*2.0,this.m_y);
 		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<268>";
 		this.m_collisionX=((t_increase)|0);
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<269>";
-		this.m_status=0;
 	}
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<271>";
 	this.m_y+=this.m_vely*t_delta/1000.0;
@@ -10053,8 +10051,6 @@ c_Character.prototype.p_DoDrift=function(t_delta){
 		t_tile=this.m_map.p_GetTileTypeAt(this.m_x,this.m_y+t_increase*2.0);
 		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<277>";
 		this.m_collisionY=((t_increase)|0);
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<278>";
-		this.m_status=0;
 	}
 	pop_err();
 }

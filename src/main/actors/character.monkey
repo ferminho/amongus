@@ -266,7 +266,6 @@ Public
 			x -= increase
 			tile = map.GetTileTypeAt(x + increase * CollisionRadius, y)
 			collisionX = increase
-			status = Idle
 		End While
 		y += (vely * delta) / 1000.0
 		increase = Sgn(vely)
@@ -275,7 +274,6 @@ Public
 			y -= increase
 			tile = map.GetTileTypeAt(x, y + increase * CollisionRadius)
 			collisionY = increase
-			status = Idle
 		End While
 	End Method
 	
