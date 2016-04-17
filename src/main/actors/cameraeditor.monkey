@@ -20,24 +20,27 @@ Public
 
 	Method New(map:GameMap)
 		Self.map = map
-		x = Int((map.width * TileSize) / 2.0)
-		y = Int((map.height * TileSize) / 2.0)
 	End Method
 	
 	Method Update:Void()
 		Local vel:Float = (32.0 * Time.instance.realLastFrame) / 1000.0
-		If (KeyDown(KEY_SHIFT)) Then vel *= 2.0
-		If (KeyDown(KEY_CONTROL)) Then vel *= 4.0
-		If (KeyDown(KEY_W))
-			y -= vel
-		Else If (KeyDown(KEY_S))
-			y += vel
-		End If
-		If (KeyDown(KEY_A))
-			x -= vel
-		Else If (KeyDown(KEY_D))
-			x += vel
-		End If
+		If (KeyDown(KEY_SPACE))
+			x = Int(((map.width * TileSize) / 2.0) + 0.5)
+			y = Int(((map.height * TileSize) / 2.0) + 0.5)
+		Else			
+			If (KeyDown(KEY_SHIFT)) Then vel *= 2.0
+			If (KeyDown(KEY_CONTROL)) Then vel *= 4.0
+			If (KeyDown(KEY_UP))
+				y -= vel
+			Else If (KeyDown(KEY_DOWN))
+				y += vel
+			End If
+			If (KeyDown(KEY_LEFT))
+				x -= vel
+			Else If (KeyDown(KEY_RIGHT))
+				x += vel
+			End If
+		End If	
 		
 		Local mx:Float = TMouseX()
 		Local my:Float = TMouseY()

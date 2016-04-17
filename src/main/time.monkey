@@ -41,6 +41,7 @@ Public
 			lastFpsTime = temp
 			fps = (frames + 1) / 3
 			frames = 0
+			Print(fps)
 		Else
 			frames += 1
 		End If

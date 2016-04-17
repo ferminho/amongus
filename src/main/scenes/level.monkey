@@ -8,6 +8,7 @@ Import actors.actor
 Import actors.camera
 Import actors.cameraeditor
 Import actors.character
+Import actors.dummycharacter
 Import maps.gamemap
 Import maps.testmap
 Import scenes.scene
@@ -20,15 +21,18 @@ Class Level Implements Scene
 	
 	Method New(map:GameMap)
 		Self.map = map
-		chr = New Character()
-		chr.x = 4.0
-		chr.y = 7.0
 		
 		If (Editing)
 			camera = New CameraEditor(map)
+			chr = New DummyCharacter()
 		Else
+			chr = New Character()
 			camera = New Camera(chr)
 		End If
+		chr.x = Int(((map.width * TileSize) / 2.0) + 0.5)
+		chr.y = Int(((map.height * TileSize) / 2.0) + 0.5)
+		camera.x = chr.x
+		camera.y = chr.y 
 	End Method
 	
 	Method Start:Void()
