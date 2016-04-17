@@ -41,7 +41,9 @@ Public
 			lastFpsTime = temp
 			fps = (frames + 1) / 5
 			frames = 0
+			#If CONFIG="debug"
 			Print(fps)
+			#End
 		Else
 			frames += 1
 		End If
