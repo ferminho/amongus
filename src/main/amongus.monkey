@@ -19,6 +19,7 @@ Private
 	Field currentScene:Int = 0
 	
 	Field nextExpectedFrame:Int 
+	Field transitioning:Bool = True
 
 	Method OnCreate:Int()
 		Time.instance.Update()
@@ -38,18 +39,23 @@ Private
 	Method OnUpdate:Int()
 		Local time:Int = Millisecs()
 
-		If (time >= nextExpectedFrame)
-			UpdateMouse()
-			nextExpectedFrame = time + FrameTime
-			Time.instance.Update()
-			Local status:Int = scenes[currentScene].Update()
-			If (status = Scene.SkipToNextScene)
-				currentScene+= 1
-				scenes[currentScene].Start()
-			Else If (status = Scene.Abort)
-				currentScene-= 1
-				If (currentScene < 0) Then EndApp()
-				scenes[currentScene].Start()
+		If (transitioning)
+			If (Not KeyDown(KEY_SPACE)) Then transitioning = False 
+		Else
+			If (time >= nextExpectedFrame)
+				UpdateMouse()
+				nextExpectedFrame = time + FrameTime
+				Time.instance.Update()
+				Local status:Int = scenes[currentScene].Update()
+				If (status = Scene.SkipToNextScene)
+					currentScene+= 1
+					scenes[currentScene].Start()
+					transitioning = True
+				Else If (status = Scene.Abort)
+					currentScene-= 1
+					If (currentScene < 0) Then EndApp()
+					scenes[currentScene].Start()
+				End If
 			End If
 		End If
 		Return 0
@@ -57,7 +63,9 @@ Private
 	
 	Method OnRender:Int()
 		canvas.Clear()
-		scenes[currentScene].Draw(canvas)
+		If (Not transitioning)
+			scenes[currentScene].Draw(canvas)
+		End If
 		canvas.Flush()
 		Return 0
 	End Method

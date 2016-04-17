@@ -25,6 +25,7 @@ Class Game Implements Scene
 	
 	Method Start:Void()
 		currentLevel = 0
+		levels[currentLevel].Start()
 	End Method
 
 	Method Update:Int()

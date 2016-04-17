@@ -13,14 +13,21 @@ Class Character Extends Actor
 Public
 
 	Const CollisionRadius:Float = 2.0
-	Const RunningSpeed:Float = 32.0
-	Const RunningSpeedDiagonal:Float = 22.63
+	Const RunningSpeed:Float = 45.0
+	Const RunningSpeedDiagonal:Float = 31.82
+	Const JumpingSpeed:Float = 20.0
+	Const JumpingSpeedDiagonal:Float = 14.14
+	Const FallingSpeed:Float = 10.0
+	Const FallingSpeedDiagonal:Float = 7.07
+	Const DriftDecel:Float = 0.002
+	Const SpacePressShootTime:Int = 400
 	
 	Const Idle:Int = 0
 	Const Running:Int = 1
-	Const Jumping:Int = 2
-	Const Falling:Int = 3
+	Const Drifting:Int = 2
+	Const Jumping:Int = 3
 	Const Shooting:Int = 4
+	Const Falling:Int = 5
 	
 	Field map:GameMap
 	Field atlas:Image[]
@@ -29,12 +36,15 @@ Public
 	Field status:Int = Idle
 
 	Field velx:Float, vely:Float
-		
+	
+	Field timeToShoot:Int = -1
 	Field inputMoveUp:Bool
 	Field inputMoveDown:Bool
 	Field inputMoveLeft:Bool
 	Field inputMoveRight:Bool
+	Field inputDrift:Bool
 	Field inputShoot:Bool
+	Field inputJump:Bool
 	Field collisionX:Int
 	Field collisionY:Int
 
@@ -46,64 +56,49 @@ Public
 	
 	Method Update:Void()
 		Local delta:Float = Time.instance.lastFrame
-		Local vel:Float
 		Local animResult:AnimResult
-		Local tile:Int
-		Local increase:Float
+		
+		#If CONFIG="debug"
+			If (KeyDown(KEY_R))
+				status = Idle
+				x = map.width * TileSize / 2.0
+				y = map.height * TileSize / 2.0
+			End If
+		#End
 		
 		IA()
 		collisionX = 0
 		collisionY = 0
-		
 		Select (status)
 			Case Idle, Running
-				If (inputMoveDown Or inputMoveLeft Or inputMoveRight Or inputMoveUp)
-					status = Running
-					directionX = 0
-					directionY = 0
-					velx = 0.0
-					vely = 0.0
-					If (KeyDown(KEY_UP))
-						vel = RunningSpeed
-						vely = -1.0
-						directionY = -1
-					Else If (KeyDown(KEY_DOWN))
-						vel = RunningSpeed
-						vely = 1.0
-						directionY = 1
-					End If
-					If (KeyDown(KEY_LEFT))
-						If (vel > 0) Then vel = RunningSpeedDiagonal Else vel = RunningSpeed
-						velx = -1.0
-						directionX = -1
-					Else If (KeyDown(KEY_RIGHT))
-						If (vel > 0) Then vel = RunningSpeedDiagonal Else vel = RunningSpeed
-						velx = 1.0
-						directionX = 1
-					End If
-					vel = (vel * delta) / 1000.0
-					velx *= vel
-					vely *= vel
-					'movement & colision
-					x += velx
-					increase = Sgn(velx)
-					tile = GetCurrentTile(increase * CollisionRadius, 0.0)
-					While (Tileset.TileType[tile] = Tileset.TileBlock Or Tileset.TileType[tile] = Tileset.TileJump)
-						x -= increase
-						tile = GetCurrentTile(increase * CollisionRadius, 0.0)
-						collisionX = increase
-					End While
-					y += vely
-					increase = Sgn(vely)
-					tile = GetCurrentTile(0.0, increase * CollisionRadius)
-					While (Tileset.TileType[tile] = Tileset.TileBlock Or Tileset.TileType[tile] = Tileset.TileJump)
-						y -= increase
-						tile = GetCurrentTile(0.0, increase * CollisionRadius)
-						collisionY = increase
-					End While
+				If (inputDrift)
+					status = Drifting
+					DoDrift(delta)
+				Else If (inputMoveDown Or inputMoveLeft Or inputMoveRight Or inputMoveUp)
+					DoRun(delta)
 				Else
 					status = Idle
 				End If
+			Case Drifting
+				If (inputJump)
+					status = Jumping
+					If (velx <> 0.0 And vely <> 0.0)
+						velx = Sgn(velx) * JumpingSpeedDiagonal
+						vely = Sgn(vely) * JumpingSpeedDiagonal
+					Else
+						velx = Sgn(velx) * JumpingSpeed
+						vely = Sgn(vely) * JumpingSpeed
+					End If
+					DoJump(delta)
+				Else If (inputShoot)
+					status = Shooting
+				Else If (inputDrift)
+					DoDrift(delta)
+				Else
+					status = Idle
+				End If
+			Case Jumping
+				DoJump(delta)
 		End Select	
 		
 		x = Int(Floor(x + 0.5))
@@ -115,15 +110,14 @@ Public
 				Case Shooting
 					status = Idle
 					animResult = animator.Animate(status, directionX, directionY)
-				Case Falling
-					status = Idle
+				Case Jumping
+					StopJump()
 					animResult = animator.Animate(status, directionX, directionY)
 			End Select
 		End If
 		img = animResult.graph
-		
 	End Method
-
+	
 	Method GetCurrentTile:Int(dispX:Float, dispY:Float)
 		Local i:Int = Floor((y + dispY - 0.5) / TileSize)
 		Local j:Int = Floor((x + dispX + 0.5) / TileSize)
@@ -149,20 +143,162 @@ Public
 		inputMoveLeft = False
 		inputMoveRight = False
 		inputMoveUp = False
+		inputDrift = False
 		inputShoot = False
-		If (KeyDown(KEY_UP))
-			inputMoveUp = True
-		Else If (KeyDown(KEY_DOWN))
-			inputMoveDown = True
-		End If
-		If (KeyDown(KEY_LEFT))
-			inputMoveLeft = True
-		Else If (KeyDown(KEY_RIGHT))
-			inputMoveRight = True
-		End If
-		If (KeyDown(KEY_SPACE))
-			inputShoot = True
+		inputJump = False
+		If (KeyDown(KEY_SPACE) And (status = Idle Or status = Running Or status = Drifting))
+			If (timeToShoot = -1) timeToShoot = Time.instance.realActTime + SpacePressShootTime
+			If (Time.instance.realActTime >= timeToShoot)
+				inputShoot = True
+				timeToShoot = -1
+			Else
+				inputDrift = True
+			End If
+		Else
+			If (timeToShoot <> -1 And (status = Drifting))
+				inputJump = True
+				timeToShoot = -1
+			Else
+				timeToShoot = -1 ' reset just in case it was interrupted
+				If (KeyDown(KEY_UP))
+					inputMoveUp = True
+				Else If (KeyDown(KEY_DOWN))
+					inputMoveDown = True
+				End If
+				If (KeyDown(KEY_LEFT))
+					inputMoveLeft = True
+				Else If (KeyDown(KEY_RIGHT))
+					inputMoveRight = True
+				End If
+			End If
 		End If
 	End Method
 	
+	Method DoRun:Void(delta:Float)
+		Local tile:Int
+		Local increase:Float
+		Local vel:Float
+		status = Running
+		directionX = 0
+		directionY = 0
+		velx = 0.0
+		vely = 0.0
+		If (inputMoveUp)
+			vel = RunningSpeed
+			vely = -1.0
+			directionY = -1
+		Else If (inputMoveDown)
+			vel = RunningSpeed
+			vely = 1.0
+			directionY = 1
+		End If
+		If (inputMoveLeft)
+			If (vel > 0) Then vel = RunningSpeedDiagonal Else vel = RunningSpeed
+			velx = -1.0
+			directionX = -1
+		Else If (inputMoveRight)
+			If (vel > 0) Then vel = RunningSpeedDiagonal Else vel = RunningSpeed
+			velx = 1.0
+			directionX = 1
+		End If
+		velx *= vel
+		vely *= vel
+		'movement & colision
+		x += (velx * delta) / 1000.0
+		increase = Sgn(velx)
+		tile = GetCurrentTile(increase * CollisionRadius, 0.0)
+		While (Tileset.TileType[tile] = Tileset.TileBlock Or Tileset.TileType[tile] = Tileset.TileJump)
+			x -= increase
+			tile = GetCurrentTile(increase * CollisionRadius, 0.0)
+			collisionX = increase
+		End While
+		y += (vely * delta) / 1000.0
+		increase = Sgn(vely)
+		tile = GetCurrentTile(0.0, increase * CollisionRadius)
+		While (Tileset.TileType[tile] = Tileset.TileBlock Or Tileset.TileType[tile] = Tileset.TileJump)
+			y -= increase
+			tile = GetCurrentTile(0.0, increase * CollisionRadius)
+			collisionY = increase
+		End While
+	End Method
+
+	Method DoDrift:Void(delta:Float)
+		Local decel:Float = delta * DriftDecel
+		Local tile:Int
+		Local increase:Float
+		If (Abs(velx) < decel)
+			velx = 0.0
+		Else
+			velx -= decel * Sgn(velx)
+		End If
+		If (Abs(vely) < decel)
+			vely = 0.0
+		Else
+			vely -= decel * Sgn(vely)
+		End If
+		
+		'movement & colision
+		x += (velx * delta) / 1000.0
+		increase = Sgn(velx)
+		tile = GetCurrentTile(increase * CollisionRadius, 0.0)
+		While (Tileset.TileType[tile] = Tileset.TileBlock Or Tileset.TileType[tile] = Tileset.TileJump)
+			x -= increase
+			tile = GetCurrentTile(increase * CollisionRadius, 0.0)
+			collisionX = increase
+			status = Idle
+		End While
+		y += (vely * delta) / 1000.0
+		increase = Sgn(vely)
+		tile = GetCurrentTile(0.0, increase * CollisionRadius)
+		While (Tileset.TileType[tile] = Tileset.TileBlock Or Tileset.TileType[tile] = Tileset.TileJump)
+			y -= increase
+			tile = GetCurrentTile(0.0, increase * CollisionRadius)
+			collisionY = increase
+			status = Idle
+		End While
+	End Method
+	
+	
+	Method DoJump:Void(delta:Float)
+		Local tile:Int
+		Local increase:Float
+		
+		'movement & colision
+		x += (velx * delta) / 1000.0
+		increase = Sgn(velx)
+		tile = GetCurrentTile(increase * CollisionRadius, 0.0)
+		While (Tileset.TileType[tile] = Tileset.TileBlock)
+			x -= increase
+			tile = GetCurrentTile(increase * CollisionRadius, 0.0)
+			collisionX = increase
+			status = Idle
+		End While
+		y += (vely * delta) / 1000.0
+		increase = Sgn(vely)
+		tile = GetCurrentTile(0.0, increase * CollisionRadius)
+		While (Tileset.TileType[tile] = Tileset.TileBlock)
+			y -= increase
+			tile = GetCurrentTile(0.0, increase * CollisionRadius)
+			collisionY = increase
+			status = Idle
+		End While
+		
+		If (collisionX Or collisionY) Then StopJump()
+	End Method
+
+	Method StopJump:Void()
+		If (Tileset.TileType[GetCurrentTile(0.0, 0.0)] = Tileset.TileJump)
+			If (velx <> 0.0 And vely <> 0.0)
+				velx = Sgn(velx) * FallingSpeedDiagonal
+				vely = Sgn(vely) * FallingSpeedDiagonal
+			Else
+				velx = Sgn(velx) * FallingSpeed
+				vely = Sgn(vely) * FallingSpeed
+			End If
+			status = Falling
+		Else 
+			status = Idle
+		End If
+	End Method
+		
 End Class

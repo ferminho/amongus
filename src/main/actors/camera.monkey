@@ -11,7 +11,7 @@ Public
 
 	Const ShiftX:Float = CanvasHeight / 3.5
 	Const ShiftY:Float = CanvasWidth / 3.5
-	Const Speed:Float = 64.0
+	Const Speed:Float = 80.0
 	
 	Field x0:Int	' screen origin
 	Field y0:Int

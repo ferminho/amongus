@@ -5,7 +5,7 @@ CFG_BRL_DATABUFFER_IMPLEMENTED="1";
 CFG_BRL_GAMETARGET_IMPLEMENTED="1";
 CFG_BRL_THREAD_IMPLEMENTED="1";
 CFG_CD="";
-CFG_CONFIG="release";
+CFG_CONFIG="debug";
 CFG_HOST="winnt";
 CFG_HTML5_WEBAUDIO_ENABLED="1";
 CFG_IMAGE_FILES="*.png|*.jpg";
@@ -2583,41 +2583,68 @@ function c_App(){
 	Object.call(this);
 }
 c_App.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<152>";
 	if((bb_app__app)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<152>";
 		error("App has already been created");
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<153>";
 	bb_app__app=this;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<154>";
 	bb_app__delegate=c_GameDelegate.m_new.call(new c_GameDelegate);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<155>";
 	bb_app__game.SetDelegate(bb_app__delegate);
+	pop_err();
 	return this;
 }
 c_App.prototype.p_OnResize=function(){
+	push_err();
+	pop_err();
 	return 0;
 }
 c_App.prototype.p_OnCreate=function(){
+	push_err();
+	pop_err();
 	return 0;
 }
 c_App.prototype.p_OnSuspend=function(){
+	push_err();
+	pop_err();
 	return 0;
 }
 c_App.prototype.p_OnResume=function(){
+	push_err();
+	pop_err();
 	return 0;
 }
 c_App.prototype.p_OnUpdate=function(){
+	push_err();
+	pop_err();
 	return 0;
 }
 c_App.prototype.p_OnLoading=function(){
+	push_err();
+	pop_err();
 	return 0;
 }
 c_App.prototype.p_OnRender=function(){
+	push_err();
+	pop_err();
 	return 0;
 }
 c_App.prototype.p_OnClose=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<177>";
 	bb_app_EndApp();
+	pop_err();
 	return 0;
 }
 c_App.prototype.p_OnBack=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<181>";
 	this.p_OnClose();
+	pop_err();
 	return 0;
 }
 function c_AmongUs(){
@@ -2625,49 +2652,101 @@ function c_AmongUs(){
 	this.m_canvas=null;
 	this.m_scenes=new_object_array(2);
 	this.m_nextExpectedFrame=0;
+	this.m_transitioning=true;
 	this.m_currentScene=0;
 }
 c_AmongUs.prototype=extend_class(c_App);
 c_AmongUs.m_new=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<12>";
 	c_App.m_new.call(this);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<12>";
+	pop_err();
 	return this;
 }
 c_AmongUs.prototype.p_OnCreate=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<25>";
 	c_Time.m_instance.p_Update();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<27>";
 	this.m_canvas=c_Canvas.m_new.call(new c_Canvas,null);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<28>";
 	this.m_canvas.p_SetProjection2d(0.0,64.0,0.0,64.0,-1.0,1.0);
-	this.m_scenes[0]=(c_Menu.m_new.call(new c_Menu));
-	this.m_scenes[1]=(c_Game.m_new.call(new c_Game));
-	this.m_scenes[0].p_Start();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<30>";
+	dbg_array(this.m_scenes,0)[dbg_index]=(c_Menu.m_new.call(new c_Menu));
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<31>";
+	dbg_array(this.m_scenes,1)[dbg_index]=(c_Game.m_new.call(new c_Game));
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<33>";
+	dbg_array(this.m_scenes,0)[dbg_index].p_Start();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<35>";
 	this.m_nextExpectedFrame=bb_app_Millisecs()+20;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<36>";
+	pop_err();
 	return 0;
 }
 c_AmongUs.prototype.p_OnUpdate=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<40>";
 	var t_time=bb_app_Millisecs();
-	if(t_time>=this.m_nextExpectedFrame){
-		bb_input_UpdateMouse();
-		this.m_nextExpectedFrame=t_time+20;
-		c_Time.m_instance.p_Update();
-		var t_status=this.m_scenes[this.m_currentScene].p_Update();
-		if(t_status==2){
-			this.m_currentScene+=1;
-			this.m_scenes[this.m_currentScene].p_Start();
-		}else{
-			if(t_status==1){
-				this.m_currentScene-=1;
-				if(this.m_currentScene<0){
-					bb_app_EndApp();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<42>";
+	if(this.m_transitioning){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<43>";
+		if(!((bb_input2_KeyDown(32))!=0)){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<43>";
+			this.m_transitioning=false;
+		}
+	}else{
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<45>";
+		if(t_time>=this.m_nextExpectedFrame){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<46>";
+			bb_input_UpdateMouse();
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<47>";
+			this.m_nextExpectedFrame=t_time+20;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<48>";
+			c_Time.m_instance.p_Update();
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<49>";
+			var t_status=dbg_array(this.m_scenes,this.m_currentScene)[dbg_index].p_Update();
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<50>";
+			if(t_status==2){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<51>";
+				this.m_currentScene+=1;
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<52>";
+				dbg_array(this.m_scenes,this.m_currentScene)[dbg_index].p_Start();
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<53>";
+				this.m_transitioning=true;
+			}else{
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<54>";
+				if(t_status==1){
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<55>";
+					this.m_currentScene-=1;
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<56>";
+					if(this.m_currentScene<0){
+						err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<56>";
+						bb_app_EndApp();
+					}
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<57>";
+					dbg_array(this.m_scenes,this.m_currentScene)[dbg_index].p_Start();
 				}
-				this.m_scenes[this.m_currentScene].p_Start();
 			}
 		}
 	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<61>";
+	pop_err();
 	return 0;
 }
 c_AmongUs.prototype.p_OnRender=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<65>";
 	this.m_canvas.p_Clear(0.0,0.0,0.0,1.0);
-	this.m_scenes[this.m_currentScene].p_Draw(this.m_canvas);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<66>";
+	if(!this.m_transitioning){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<67>";
+		dbg_array(this.m_scenes,this.m_currentScene)[dbg_index].p_Draw(this.m_canvas);
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<69>";
 	this.m_canvas.p_Flush();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<70>";
+	pop_err();
 	return 0;
 }
 var bb_app__app=null;
@@ -2679,85 +2758,155 @@ function c_GameDelegate(){
 }
 c_GameDelegate.prototype=extend_class(BBGameDelegate);
 c_GameDelegate.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<65>";
+	pop_err();
 	return this;
 }
 c_GameDelegate.prototype.StartGame=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<75>";
 	this.m__graphics=(new gxtkGraphics);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<76>";
 	bb_graphics_SetGraphicsDevice(this.m__graphics);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<77>";
 	bb_graphics_SetFont(null,32);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<79>";
 	this.m__audio=(new gxtkAudio);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<80>";
 	bb_audio_SetAudioDevice(this.m__audio);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<82>";
 	this.m__input=c_InputDevice.m_new.call(new c_InputDevice);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<83>";
 	bb_input2_SetInputDevice(this.m__input);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<85>";
 	bb_app_ValidateDeviceWindow(false);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<87>";
 	bb_app_EnumDisplayModes();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<89>";
 	bb_app__app.p_OnCreate();
+	pop_err();
 }
 c_GameDelegate.prototype.SuspendGame=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<93>";
 	bb_app__app.p_OnSuspend();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<94>";
 	this.m__audio.Suspend();
+	pop_err();
 }
 c_GameDelegate.prototype.ResumeGame=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<98>";
 	this.m__audio.Resume();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<99>";
 	bb_app__app.p_OnResume();
+	pop_err();
 }
 c_GameDelegate.prototype.UpdateGame=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<103>";
 	bb_app_ValidateDeviceWindow(true);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<104>";
 	this.m__input.p_BeginUpdate();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<105>";
 	bb_app__app.p_OnUpdate();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<106>";
 	this.m__input.p_EndUpdate();
+	pop_err();
 }
 c_GameDelegate.prototype.RenderGame=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<110>";
 	bb_app_ValidateDeviceWindow(true);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<111>";
 	var t_mode=this.m__graphics.BeginRender();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<112>";
 	if((t_mode)!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<112>";
 		bb_graphics_BeginRender();
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<113>";
 	if(t_mode==2){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<113>";
 		bb_app__app.p_OnLoading();
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<113>";
 		bb_app__app.p_OnRender();
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<114>";
 	if((t_mode)!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<114>";
 		bb_graphics_EndRender();
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<115>";
 	this.m__graphics.EndRender();
+	pop_err();
 }
 c_GameDelegate.prototype.KeyEvent=function(t_event,t_data){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<119>";
 	this.m__input.p_KeyEvent(t_event,t_data);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<120>";
 	if(t_event!=1){
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<121>";
 	var t_1=t_data;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<122>";
 	if(t_1==432){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<123>";
 		bb_app__app.p_OnClose();
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<124>";
 		if(t_1==416){
+			err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<125>";
 			bb_app__app.p_OnBack();
 		}
 	}
+	pop_err();
 }
 c_GameDelegate.prototype.MouseEvent=function(t_event,t_data,t_x,t_y){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<130>";
 	this.m__input.p_MouseEvent(t_event,t_data,t_x,t_y);
+	pop_err();
 }
 c_GameDelegate.prototype.TouchEvent=function(t_event,t_data,t_x,t_y){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<134>";
 	this.m__input.p_TouchEvent(t_event,t_data,t_x,t_y);
+	pop_err();
 }
 c_GameDelegate.prototype.MotionEvent=function(t_event,t_data,t_x,t_y,t_z){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<138>";
 	this.m__input.p_MotionEvent(t_event,t_data,t_x,t_y,t_z);
+	pop_err();
 }
 c_GameDelegate.prototype.DiscardGraphics=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<142>";
 	this.m__graphics.DiscardGraphics();
+	pop_err();
 }
 var bb_app__delegate=null;
 var bb_app__game=null;
 function bbMain(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<76>";
 	c_AmongUs.m_new.call(new c_AmongUs);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/amongus.monkey<77>";
+	pop_err();
 	return 0;
 }
 var bb_graphics_device=null;
 function bb_graphics_SetGraphicsDevice(t_dev){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<63>";
 	bb_graphics_device=t_dev;
+	pop_err();
 	return 0;
 }
 function c_Image(){
@@ -2773,81 +2922,147 @@ function c_Image(){
 }
 c_Image.m_DefaultFlags=0;
 c_Image.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<70>";
+	pop_err();
 	return this;
 }
 c_Image.prototype.p_SetHandle=function(t_tx,t_ty){
-	this.m_tx=t_tx;
-	this.m_ty=t_ty;
-	this.m_flags=this.m_flags&-2;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<114>";
+	dbg_object(this).m_tx=t_tx;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<115>";
+	dbg_object(this).m_ty=t_ty;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<116>";
+	dbg_object(this).m_flags=dbg_object(this).m_flags&-2;
+	pop_err();
 	return 0;
 }
 c_Image.prototype.p_ApplyFlags=function(t_iflags){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<197>";
 	this.m_flags=t_iflags;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<199>";
 	if((this.m_flags&2)!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<200>";
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<200>";
 		var t_=this.m_frames;
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<200>";
 		var t_2=0;
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<200>";
 		while(t_2<t_.length){
-			var t_f=t_[t_2];
+			err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<200>";
+			var t_f=dbg_array(t_,t_2)[dbg_index];
+			err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<200>";
 			t_2=t_2+1;
-			t_f.m_x+=1;
+			err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<201>";
+			dbg_object(t_f).m_x+=1;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<203>";
 		this.m_width-=2;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<206>";
 	if((this.m_flags&4)!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<207>";
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<207>";
 		var t_3=this.m_frames;
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<207>";
 		var t_4=0;
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<207>";
 		while(t_4<t_3.length){
-			var t_f2=t_3[t_4];
+			err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<207>";
+			var t_f2=dbg_array(t_3,t_4)[dbg_index];
+			err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<207>";
 			t_4=t_4+1;
-			t_f2.m_y+=1;
+			err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<208>";
+			dbg_object(t_f2).m_y+=1;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<210>";
 		this.m_height-=2;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<213>";
 	if((this.m_flags&1)!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<214>";
 		this.p_SetHandle((this.m_width)/2.0,(this.m_height)/2.0);
 	}
-	if(this.m_frames.length==1 && this.m_frames[0].m_x==0 && this.m_frames[0].m_y==0 && this.m_width==this.m_surface.Width() && this.m_height==this.m_surface.Height()){
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<217>";
+	if(this.m_frames.length==1 && dbg_object(dbg_array(this.m_frames,0)[dbg_index]).m_x==0 && dbg_object(dbg_array(this.m_frames,0)[dbg_index]).m_y==0 && this.m_width==this.m_surface.Width() && this.m_height==this.m_surface.Height()){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<218>";
 		this.m_flags|=65536;
 	}
+	pop_err();
 	return 0;
 }
 c_Image.prototype.p_Init=function(t_surf,t_nframes,t_iflags){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<143>";
 	if((this.m_surface)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<143>";
 		error("Image already initialized");
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<144>";
 	this.m_surface=t_surf;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<146>";
 	this.m_width=((this.m_surface.Width()/t_nframes)|0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<147>";
 	this.m_height=this.m_surface.Height();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<149>";
 	this.m_frames=new_object_array(t_nframes);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<150>";
 	for(var t_i=0;t_i<t_nframes;t_i=t_i+1){
-		this.m_frames[t_i]=c_Frame.m_new.call(new c_Frame,t_i*this.m_width,0);
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<151>";
+		dbg_array(this.m_frames,t_i)[dbg_index]=c_Frame.m_new.call(new c_Frame,t_i*this.m_width,0);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<154>";
 	this.p_ApplyFlags(t_iflags);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<155>";
+	pop_err();
 	return this;
 }
 c_Image.prototype.p_Init2=function(t_surf,t_x,t_y,t_iwidth,t_iheight,t_nframes,t_iflags,t_src,t_srcx,t_srcy,t_srcw,t_srch){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<159>";
 	if((this.m_surface)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<159>";
 		error("Image already initialized");
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<160>";
 	this.m_surface=t_surf;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<161>";
 	this.m_source=t_src;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<163>";
 	this.m_width=t_iwidth;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<164>";
 	this.m_height=t_iheight;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<166>";
 	this.m_frames=new_object_array(t_nframes);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<168>";
 	var t_ix=t_x;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<168>";
 	var t_iy=t_y;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<170>";
 	for(var t_i=0;t_i<t_nframes;t_i=t_i+1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<171>";
 		if(t_ix+this.m_width>t_srcw){
+			err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<172>";
 			t_ix=0;
+			err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<173>";
 			t_iy+=this.m_height;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<175>";
 		if(t_ix+this.m_width>t_srcw || t_iy+this.m_height>t_srch){
+			err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<176>";
 			error("Image frame outside surface");
 		}
-		this.m_frames[t_i]=c_Frame.m_new.call(new c_Frame,t_ix+t_srcx,t_iy+t_srcy);
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<178>";
+		dbg_array(this.m_frames,t_i)[dbg_index]=c_Frame.m_new.call(new c_Frame,t_ix+t_srcx,t_iy+t_srcy);
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<179>";
 		t_ix+=this.m_width;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<182>";
 	this.p_ApplyFlags(t_iflags);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<183>";
+	pop_err();
 	return this;
 }
 function c_GraphicsContext(){
@@ -2875,18 +3090,32 @@ function c_GraphicsContext(){
 	this.m_scissor_height=.0;
 }
 c_GraphicsContext.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<29>";
+	pop_err();
 	return this;
 }
 var bb_graphics_context=null;
 function bb_data_FixDataPath(t_path){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/data.monkey<7>";
 	var t_i=t_path.indexOf(":/",0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/data.monkey<8>";
 	if(t_i!=-1 && t_path.indexOf("/",0)==t_i+1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/data.monkey<8>";
+		pop_err();
 		return t_path;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/data.monkey<9>";
 	if(string_startswith(t_path,"./") || string_startswith(t_path,"/")){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/data.monkey<9>";
+		pop_err();
 		return t_path;
 	}
-	return "monkey://data/"+t_path;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/data.monkey<10>";
+	var t_="monkey://data/"+t_path;
+	pop_err();
+	return t_;
 }
 function c_Frame(){
 	Object.call(this);
@@ -2894,42 +3123,75 @@ function c_Frame(){
 	this.m_y=0;
 }
 c_Frame.m_new=function(t_x,t_y){
-	this.m_x=t_x;
-	this.m_y=t_y;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<23>";
+	dbg_object(this).m_x=t_x;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<24>";
+	dbg_object(this).m_y=t_y;
+	pop_err();
 	return this;
 }
 c_Frame.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<18>";
+	pop_err();
 	return this;
 }
 function bb_graphics_LoadImage(t_path,t_frameCount,t_flags){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<239>";
 	var t_surf=bb_graphics_device.LoadSurface(bb_data_FixDataPath(t_path));
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<240>";
 	if((t_surf)!=null){
-		return (c_Image.m_new.call(new c_Image)).p_Init(t_surf,t_frameCount,t_flags);
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<240>";
+		var t_=(c_Image.m_new.call(new c_Image)).p_Init(t_surf,t_frameCount,t_flags);
+		pop_err();
+		return t_;
 	}
+	pop_err();
 	return null;
 }
 function bb_graphics_LoadImage2(t_path,t_frameWidth,t_frameHeight,t_frameCount,t_flags){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<244>";
 	var t_surf=bb_graphics_device.LoadSurface(bb_data_FixDataPath(t_path));
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<245>";
 	if((t_surf)!=null){
-		return (c_Image.m_new.call(new c_Image)).p_Init2(t_surf,0,0,t_frameWidth,t_frameHeight,t_frameCount,t_flags,null,0,0,t_surf.Width(),t_surf.Height());
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<245>";
+		var t_=(c_Image.m_new.call(new c_Image)).p_Init2(t_surf,0,0,t_frameWidth,t_frameHeight,t_frameCount,t_flags,null,0,0,t_surf.Width(),t_surf.Height());
+		pop_err();
+		return t_;
 	}
+	pop_err();
 	return null;
 }
 function bb_graphics_SetFont(t_font,t_firstChar){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<548>";
 	if(!((t_font)!=null)){
-		if(!((bb_graphics_context.m_defaultFont)!=null)){
-			bb_graphics_context.m_defaultFont=bb_graphics_LoadImage("mojo_font.png",96,2);
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<549>";
+		if(!((dbg_object(bb_graphics_context).m_defaultFont)!=null)){
+			err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<550>";
+			dbg_object(bb_graphics_context).m_defaultFont=bb_graphics_LoadImage("mojo_font.png",96,2);
 		}
-		t_font=bb_graphics_context.m_defaultFont;
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<552>";
+		t_font=dbg_object(bb_graphics_context).m_defaultFont;
+		err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<553>";
 		t_firstChar=32;
 	}
-	bb_graphics_context.m_font=t_font;
-	bb_graphics_context.m_firstChar=t_firstChar;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<555>";
+	dbg_object(bb_graphics_context).m_font=t_font;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<556>";
+	dbg_object(bb_graphics_context).m_firstChar=t_firstChar;
+	pop_err();
 	return 0;
 }
 var bb_audio_device=null;
 function bb_audio_SetAudioDevice(t_dev){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/audio.monkey<22>";
 	bb_audio_device=t_dev;
+	pop_err();
 	return 0;
 }
 function c_InputDevice(){
@@ -2951,152 +3213,262 @@ function c_InputDevice(){
 	this.m__accelZ=.0;
 }
 c_InputDevice.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<26>";
 	for(var t_i=0;t_i<4;t_i=t_i+1){
-		this.m__joyStates[t_i]=c_JoyState.m_new.call(new c_JoyState);
+		err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<27>";
+		dbg_array(this.m__joyStates,t_i)[dbg_index]=c_JoyState.m_new.call(new c_JoyState);
 	}
+	pop_err();
 	return this;
 }
 c_InputDevice.prototype.p_PutKeyHit=function(t_key){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<237>";
 	if(this.m__keyHitPut==this.m__keyHitQueue.length){
+		pop_err();
 		return;
 	}
-	this.m__keyHit[t_key]+=1;
-	this.m__keyHitQueue[this.m__keyHitPut]=t_key;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<238>";
+	dbg_array(this.m__keyHit,t_key)[dbg_index]+=1;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<239>";
+	dbg_array(this.m__keyHitQueue,this.m__keyHitPut)[dbg_index]=t_key;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<240>";
 	this.m__keyHitPut+=1;
+	pop_err();
 }
 c_InputDevice.prototype.p_BeginUpdate=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<189>";
 	for(var t_i=0;t_i<4;t_i=t_i+1){
-		var t_state=this.m__joyStates[t_i];
-		if(!BBGame.Game().PollJoystick(t_i,t_state.m_joyx,t_state.m_joyy,t_state.m_joyz,t_state.m_buttons)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<190>";
+		var t_state=dbg_array(this.m__joyStates,t_i)[dbg_index];
+		err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<191>";
+		if(!BBGame.Game().PollJoystick(t_i,dbg_object(t_state).m_joyx,dbg_object(t_state).m_joyy,dbg_object(t_state).m_joyz,dbg_object(t_state).m_buttons)){
+			err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<191>";
 			break;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<192>";
 		for(var t_j=0;t_j<32;t_j=t_j+1){
+			err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<193>";
 			var t_key=256+t_i*32+t_j;
-			if(t_state.m_buttons[t_j]){
-				if(!this.m__keyDown[t_key]){
-					this.m__keyDown[t_key]=true;
+			err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<194>";
+			if(dbg_array(dbg_object(t_state).m_buttons,t_j)[dbg_index]){
+				err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<195>";
+				if(!dbg_array(this.m__keyDown,t_key)[dbg_index]){
+					err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<196>";
+					dbg_array(this.m__keyDown,t_key)[dbg_index]=true;
+					err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<197>";
 					this.p_PutKeyHit(t_key);
 				}
 			}else{
-				this.m__keyDown[t_key]=false;
+				err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<200>";
+				dbg_array(this.m__keyDown,t_key)[dbg_index]=false;
 			}
 		}
 	}
+	pop_err();
 }
 c_InputDevice.prototype.p_EndUpdate=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<207>";
 	for(var t_i=0;t_i<this.m__keyHitPut;t_i=t_i+1){
-		this.m__keyHit[this.m__keyHitQueue[t_i]]=0;
+		err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<208>";
+		dbg_array(this.m__keyHit,dbg_array(this.m__keyHitQueue,t_i)[dbg_index])[dbg_index]=0;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<210>";
 	this.m__keyHitPut=0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<211>";
 	this.m__charGet=0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<212>";
 	this.m__charPut=0;
+	pop_err();
 }
 c_InputDevice.prototype.p_KeyEvent=function(t_event,t_data){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<111>";
 	var t_1=t_event;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<112>";
 	if(t_1==1){
-		if(!this.m__keyDown[t_data]){
-			this.m__keyDown[t_data]=true;
+		err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<113>";
+		if(!dbg_array(this.m__keyDown,t_data)[dbg_index]){
+			err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<114>";
+			dbg_array(this.m__keyDown,t_data)[dbg_index]=true;
+			err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<115>";
 			this.p_PutKeyHit(t_data);
+			err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<116>";
 			if(t_data==1){
-				this.m__keyDown[384]=true;
+				err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<117>";
+				dbg_array(this.m__keyDown,384)[dbg_index]=true;
+				err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<118>";
 				this.p_PutKeyHit(384);
 			}else{
+				err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<119>";
 				if(t_data==384){
-					this.m__keyDown[1]=true;
+					err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<120>";
+					dbg_array(this.m__keyDown,1)[dbg_index]=true;
+					err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<121>";
 					this.p_PutKeyHit(1);
 				}
 			}
 		}
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<124>";
 		if(t_1==2){
-			if(this.m__keyDown[t_data]){
-				this.m__keyDown[t_data]=false;
+			err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<125>";
+			if(dbg_array(this.m__keyDown,t_data)[dbg_index]){
+				err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<126>";
+				dbg_array(this.m__keyDown,t_data)[dbg_index]=false;
+				err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<127>";
 				if(t_data==1){
-					this.m__keyDown[384]=false;
+					err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<128>";
+					dbg_array(this.m__keyDown,384)[dbg_index]=false;
 				}else{
+					err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<129>";
 					if(t_data==384){
-						this.m__keyDown[1]=false;
+						err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<130>";
+						dbg_array(this.m__keyDown,1)[dbg_index]=false;
 					}
 				}
 			}
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<133>";
 			if(t_1==3){
+				err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<134>";
 				if(this.m__charPut<this.m__charQueue.length){
-					this.m__charQueue[this.m__charPut]=t_data;
+					err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<135>";
+					dbg_array(this.m__charQueue,this.m__charPut)[dbg_index]=t_data;
+					err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<136>";
 					this.m__charPut+=1;
 				}
 			}
 		}
 	}
+	pop_err();
 }
 c_InputDevice.prototype.p_MouseEvent=function(t_event,t_data,t_x,t_y){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<142>";
 	var t_2=t_event;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<143>";
 	if(t_2==4){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<144>";
 		this.p_KeyEvent(1,1+t_data);
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<145>";
 		if(t_2==5){
+			err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<146>";
 			this.p_KeyEvent(2,1+t_data);
+			pop_err();
 			return;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<148>";
 			if(t_2==6){
 			}else{
+				pop_err();
 				return;
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<152>";
 	this.m__mouseX=t_x;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<153>";
 	this.m__mouseY=t_y;
-	this.m__touchX[0]=t_x;
-	this.m__touchY[0]=t_y;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<154>";
+	dbg_array(this.m__touchX,0)[dbg_index]=t_x;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<155>";
+	dbg_array(this.m__touchY,0)[dbg_index]=t_y;
+	pop_err();
 }
 c_InputDevice.prototype.p_TouchEvent=function(t_event,t_data,t_x,t_y){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<159>";
 	var t_3=t_event;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<160>";
 	if(t_3==7){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<161>";
 		this.p_KeyEvent(1,384+t_data);
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<162>";
 		if(t_3==8){
+			err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<163>";
 			this.p_KeyEvent(2,384+t_data);
+			pop_err();
 			return;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<165>";
 			if(t_3==9){
 			}else{
+				pop_err();
 				return;
 			}
 		}
 	}
-	this.m__touchX[t_data]=t_x;
-	this.m__touchY[t_data]=t_y;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<169>";
+	dbg_array(this.m__touchX,t_data)[dbg_index]=t_x;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<170>";
+	dbg_array(this.m__touchY,t_data)[dbg_index]=t_y;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<171>";
 	if(t_data==0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<172>";
 		this.m__mouseX=t_x;
+		err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<173>";
 		this.m__mouseY=t_y;
 	}
+	pop_err();
 }
 c_InputDevice.prototype.p_MotionEvent=function(t_event,t_data,t_x,t_y,t_z){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<178>";
 	var t_4=t_event;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<179>";
 	if(t_4==10){
 	}else{
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<183>";
 	this.m__accelX=t_x;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<184>";
 	this.m__accelY=t_y;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<185>";
 	this.m__accelZ=t_z;
+	pop_err();
 }
 c_InputDevice.prototype.p_KeyDown=function(t_key){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<47>";
 	if(t_key>0 && t_key<512){
-		return this.m__keyDown[t_key];
+		err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<47>";
+		pop_err();
+		return dbg_array(this.m__keyDown,t_key)[dbg_index];
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<48>";
+	pop_err();
 	return false;
 }
 c_InputDevice.prototype.p_MouseX=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<69>";
+	pop_err();
 	return this.m__mouseX;
 }
 c_InputDevice.prototype.p_MouseY=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<73>";
+	pop_err();
 	return this.m__mouseY;
 }
 c_InputDevice.prototype.p_KeyHit=function(t_key){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<52>";
 	if(t_key>0 && t_key<512){
-		return this.m__keyHit[t_key];
+		err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<52>";
+		pop_err();
+		return dbg_array(this.m__keyHit,t_key)[dbg_index];
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<53>";
+	pop_err();
 	return 0;
 }
 function c_JoyState(){
@@ -3107,26 +3479,42 @@ function c_JoyState(){
 	this.m_buttons=new_bool_array(32);
 }
 c_JoyState.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/inputdevice.monkey<14>";
+	pop_err();
 	return this;
 }
 var bb_input2_device=null;
 function bb_input2_SetInputDevice(t_dev){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/input.monkey<22>";
 	bb_input2_device=t_dev;
+	pop_err();
 	return 0;
 }
 var bb_app__devWidth=0;
 var bb_app__devHeight=0;
 function bb_app_ValidateDeviceWindow(t_notifyApp){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<57>";
 	var t_w=bb_app__game.GetDeviceWidth();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<58>";
 	var t_h=bb_app__game.GetDeviceHeight();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<59>";
 	if(t_w==bb_app__devWidth && t_h==bb_app__devHeight){
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<60>";
 	bb_app__devWidth=t_w;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<61>";
 	bb_app__devHeight=t_h;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<62>";
 	if(t_notifyApp){
+		err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<62>";
 		bb_app__app.p_OnResize();
 	}
+	pop_err();
 }
 function c_DisplayMode(){
 	Object.call(this);
@@ -3134,11 +3522,18 @@ function c_DisplayMode(){
 	this.m__height=0;
 }
 c_DisplayMode.m_new=function(t_width,t_height){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<192>";
 	this.m__width=t_width;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<193>";
 	this.m__height=t_height;
+	pop_err();
 	return this;
 }
 c_DisplayMode.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<189>";
+	pop_err();
 	return this;
 }
 function c_Map(){
@@ -3146,152 +3541,263 @@ function c_Map(){
 	this.m_root=null;
 }
 c_Map.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<7>";
+	pop_err();
 	return this;
 }
 c_Map.prototype.p_Compare=function(t_lhs,t_rhs){
 }
 c_Map.prototype.p_FindNode=function(t_key){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<157>";
 	var t_node=this.m_root;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<159>";
 	while((t_node)!=null){
-		var t_cmp=this.p_Compare(t_key,t_node.m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<160>";
+		var t_cmp=this.p_Compare(t_key,dbg_object(t_node).m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<161>";
 		if(t_cmp>0){
-			t_node=t_node.m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<162>";
+			t_node=dbg_object(t_node).m_right;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<163>";
 			if(t_cmp<0){
-				t_node=t_node.m_left;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<164>";
+				t_node=dbg_object(t_node).m_left;
 			}else{
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<166>";
+				pop_err();
 				return t_node;
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<169>";
+	pop_err();
 	return t_node;
 }
 c_Map.prototype.p_Contains=function(t_key){
-	return this.p_FindNode(t_key)!=null;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<25>";
+	var t_=this.p_FindNode(t_key)!=null;
+	pop_err();
+	return t_;
 }
 c_Map.prototype.p_RotateLeft=function(t_node){
-	var t_child=t_node.m_right;
-	t_node.m_right=t_child.m_left;
-	if((t_child.m_left)!=null){
-		t_child.m_left.m_parent=t_node;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<251>";
+	var t_child=dbg_object(t_node).m_right;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<252>";
+	dbg_object(t_node).m_right=dbg_object(t_child).m_left;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<253>";
+	if((dbg_object(t_child).m_left)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<254>";
+		dbg_object(dbg_object(t_child).m_left).m_parent=t_node;
 	}
-	t_child.m_parent=t_node.m_parent;
-	if((t_node.m_parent)!=null){
-		if(t_node==t_node.m_parent.m_left){
-			t_node.m_parent.m_left=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<256>";
+	dbg_object(t_child).m_parent=dbg_object(t_node).m_parent;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<257>";
+	if((dbg_object(t_node).m_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<258>";
+		if(t_node==dbg_object(dbg_object(t_node).m_parent).m_left){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<259>";
+			dbg_object(dbg_object(t_node).m_parent).m_left=t_child;
 		}else{
-			t_node.m_parent.m_right=t_child;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<261>";
+			dbg_object(dbg_object(t_node).m_parent).m_right=t_child;
 		}
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<264>";
 		this.m_root=t_child;
 	}
-	t_child.m_left=t_node;
-	t_node.m_parent=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<266>";
+	dbg_object(t_child).m_left=t_node;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<267>";
+	dbg_object(t_node).m_parent=t_child;
+	pop_err();
 	return 0;
 }
 c_Map.prototype.p_RotateRight=function(t_node){
-	var t_child=t_node.m_left;
-	t_node.m_left=t_child.m_right;
-	if((t_child.m_right)!=null){
-		t_child.m_right.m_parent=t_node;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<271>";
+	var t_child=dbg_object(t_node).m_left;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<272>";
+	dbg_object(t_node).m_left=dbg_object(t_child).m_right;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<273>";
+	if((dbg_object(t_child).m_right)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<274>";
+		dbg_object(dbg_object(t_child).m_right).m_parent=t_node;
 	}
-	t_child.m_parent=t_node.m_parent;
-	if((t_node.m_parent)!=null){
-		if(t_node==t_node.m_parent.m_right){
-			t_node.m_parent.m_right=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<276>";
+	dbg_object(t_child).m_parent=dbg_object(t_node).m_parent;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<277>";
+	if((dbg_object(t_node).m_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<278>";
+		if(t_node==dbg_object(dbg_object(t_node).m_parent).m_right){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<279>";
+			dbg_object(dbg_object(t_node).m_parent).m_right=t_child;
 		}else{
-			t_node.m_parent.m_left=t_child;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<281>";
+			dbg_object(dbg_object(t_node).m_parent).m_left=t_child;
 		}
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<284>";
 		this.m_root=t_child;
 	}
-	t_child.m_right=t_node;
-	t_node.m_parent=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<286>";
+	dbg_object(t_child).m_right=t_node;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<287>";
+	dbg_object(t_node).m_parent=t_child;
+	pop_err();
 	return 0;
 }
 c_Map.prototype.p_InsertFixup=function(t_node){
-	while(((t_node.m_parent)!=null) && t_node.m_parent.m_color==-1 && ((t_node.m_parent.m_parent)!=null)){
-		if(t_node.m_parent==t_node.m_parent.m_parent.m_left){
-			var t_uncle=t_node.m_parent.m_parent.m_right;
-			if(((t_uncle)!=null) && t_uncle.m_color==-1){
-				t_node.m_parent.m_color=1;
-				t_uncle.m_color=1;
-				t_uncle.m_parent.m_color=-1;
-				t_node=t_uncle.m_parent;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<212>";
+	while(((dbg_object(t_node).m_parent)!=null) && dbg_object(dbg_object(t_node).m_parent).m_color==-1 && ((dbg_object(dbg_object(t_node).m_parent).m_parent)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<213>";
+		if(dbg_object(t_node).m_parent==dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_left){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<214>";
+			var t_uncle=dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<215>";
+			if(((t_uncle)!=null) && dbg_object(t_uncle).m_color==-1){
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<216>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<217>";
+				dbg_object(t_uncle).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<218>";
+				dbg_object(dbg_object(t_uncle).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<219>";
+				t_node=dbg_object(t_uncle).m_parent;
 			}else{
-				if(t_node==t_node.m_parent.m_right){
-					t_node=t_node.m_parent;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<221>";
+				if(t_node==dbg_object(dbg_object(t_node).m_parent).m_right){
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<222>";
+					t_node=dbg_object(t_node).m_parent;
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<223>";
 					this.p_RotateLeft(t_node);
 				}
-				t_node.m_parent.m_color=1;
-				t_node.m_parent.m_parent.m_color=-1;
-				this.p_RotateRight(t_node.m_parent.m_parent);
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<225>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<226>";
+				dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<227>";
+				this.p_RotateRight(dbg_object(dbg_object(t_node).m_parent).m_parent);
 			}
 		}else{
-			var t_uncle2=t_node.m_parent.m_parent.m_left;
-			if(((t_uncle2)!=null) && t_uncle2.m_color==-1){
-				t_node.m_parent.m_color=1;
-				t_uncle2.m_color=1;
-				t_uncle2.m_parent.m_color=-1;
-				t_node=t_uncle2.m_parent;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<230>";
+			var t_uncle2=dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_left;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<231>";
+			if(((t_uncle2)!=null) && dbg_object(t_uncle2).m_color==-1){
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<232>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<233>";
+				dbg_object(t_uncle2).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<234>";
+				dbg_object(dbg_object(t_uncle2).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<235>";
+				t_node=dbg_object(t_uncle2).m_parent;
 			}else{
-				if(t_node==t_node.m_parent.m_left){
-					t_node=t_node.m_parent;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<237>";
+				if(t_node==dbg_object(dbg_object(t_node).m_parent).m_left){
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<238>";
+					t_node=dbg_object(t_node).m_parent;
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<239>";
 					this.p_RotateRight(t_node);
 				}
-				t_node.m_parent.m_color=1;
-				t_node.m_parent.m_parent.m_color=-1;
-				this.p_RotateLeft(t_node.m_parent.m_parent);
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<241>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<242>";
+				dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<243>";
+				this.p_RotateLeft(dbg_object(dbg_object(t_node).m_parent).m_parent);
 			}
 		}
 	}
-	this.m_root.m_color=1;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<247>";
+	dbg_object(this.m_root).m_color=1;
+	pop_err();
 	return 0;
 }
 c_Map.prototype.p_Set=function(t_key,t_value){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<29>";
 	var t_node=this.m_root;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<30>";
 	var t_parent=null;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<30>";
 	var t_cmp=0;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<32>";
 	while((t_node)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<33>";
 		t_parent=t_node;
-		t_cmp=this.p_Compare(t_key,t_node.m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<34>";
+		t_cmp=this.p_Compare(t_key,dbg_object(t_node).m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<35>";
 		if(t_cmp>0){
-			t_node=t_node.m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<36>";
+			t_node=dbg_object(t_node).m_right;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<37>";
 			if(t_cmp<0){
-				t_node=t_node.m_left;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<38>";
+				t_node=dbg_object(t_node).m_left;
 			}else{
-				t_node.m_value=t_value;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<40>";
+				dbg_object(t_node).m_value=t_value;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<41>";
+				pop_err();
 				return false;
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<45>";
 	t_node=c_Node.m_new.call(new c_Node,t_key,t_value,-1,t_parent);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<47>";
 	if((t_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<48>";
 		if(t_cmp>0){
-			t_parent.m_right=t_node;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<49>";
+			dbg_object(t_parent).m_right=t_node;
 		}else{
-			t_parent.m_left=t_node;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<51>";
+			dbg_object(t_parent).m_left=t_node;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<53>";
 		this.p_InsertFixup(t_node);
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<55>";
 		this.m_root=t_node;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<57>";
+	pop_err();
 	return true;
 }
 c_Map.prototype.p_Insert=function(t_key,t_value){
-	return this.p_Set(t_key,t_value);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<146>";
+	var t_=this.p_Set(t_key,t_value);
+	pop_err();
+	return t_;
 }
 function c_IntMap(){
 	c_Map.call(this);
 }
 c_IntMap.prototype=extend_class(c_Map);
 c_IntMap.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<534>";
 	c_Map.m_new.call(this);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<534>";
+	pop_err();
 	return this;
 }
 c_IntMap.prototype.p_Compare=function(t_lhs,t_rhs){
-	return t_lhs-t_rhs;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<537>";
+	var t_=t_lhs-t_rhs;
+	pop_err();
+	return t_;
 }
 function c_Stack(){
 	Object.call(this);
@@ -3299,33 +3805,58 @@ function c_Stack(){
 	this.m_length=0;
 }
 c_Stack.m_new=function(){
+	push_err();
+	pop_err();
 	return this;
 }
 c_Stack.m_new2=function(t_data){
-	this.m_data=t_data.slice(0);
-	this.m_length=t_data.length;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<13>";
+	dbg_object(this).m_data=t_data.slice(0);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<14>";
+	dbg_object(this).m_length=t_data.length;
+	pop_err();
 	return this;
 }
 c_Stack.prototype.p_Push=function(t_value){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<71>";
 	if(this.m_length==this.m_data.length){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<72>";
 		this.m_data=resize_object_array(this.m_data,this.m_length*2+10);
 	}
-	this.m_data[this.m_length]=t_value;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<74>";
+	dbg_array(this.m_data,this.m_length)[dbg_index]=t_value;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<75>";
 	this.m_length+=1;
+	pop_err();
 }
 c_Stack.prototype.p_Push2=function(t_values,t_offset,t_count){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<83>";
 	for(var t_i=0;t_i<t_count;t_i=t_i+1){
-		this.p_Push(t_values[t_offset+t_i]);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<84>";
+		this.p_Push(dbg_array(t_values,t_offset+t_i)[dbg_index]);
 	}
+	pop_err();
 }
 c_Stack.prototype.p_Push3=function(t_values,t_offset){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<79>";
 	this.p_Push2(t_values,t_offset,t_values.length-t_offset);
+	pop_err();
 }
 c_Stack.prototype.p_ToArray=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<18>";
 	var t_t=new_object_array(this.m_length);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<19>";
 	for(var t_i=0;t_i<this.m_length;t_i=t_i+1){
-		t_t[t_i]=this.m_data[t_i];
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<20>";
+		dbg_array(t_t,t_i)[dbg_index]=dbg_array(this.m_data,t_i)[dbg_index];
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<22>";
+	pop_err();
 	return t_t;
 }
 function c_Node(){
@@ -3338,106 +3869,188 @@ function c_Node(){
 	this.m_parent=null;
 }
 c_Node.m_new=function(t_key,t_value,t_color,t_parent){
-	this.m_key=t_key;
-	this.m_value=t_value;
-	this.m_color=t_color;
-	this.m_parent=t_parent;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<364>";
+	dbg_object(this).m_key=t_key;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<365>";
+	dbg_object(this).m_value=t_value;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<366>";
+	dbg_object(this).m_color=t_color;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<367>";
+	dbg_object(this).m_parent=t_parent;
+	pop_err();
 	return this;
 }
 c_Node.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<361>";
+	pop_err();
 	return this;
 }
 var bb_app__displayModes=[];
 var bb_app__desktopMode=null;
 function bb_app_DeviceWidth(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<263>";
+	pop_err();
 	return bb_app__devWidth;
 }
 function bb_app_DeviceHeight(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<267>";
+	pop_err();
 	return bb_app__devHeight;
 }
 function bb_app_EnumDisplayModes(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<33>";
 	var t_modes=bb_app__game.GetDisplayModes();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<34>";
 	var t_mmap=c_IntMap.m_new.call(new c_IntMap);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<35>";
 	var t_mstack=c_Stack.m_new.call(new c_Stack);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<36>";
 	for(var t_i=0;t_i<t_modes.length;t_i=t_i+1){
-		var t_w=t_modes[t_i].width;
-		var t_h=t_modes[t_i].height;
+		err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<37>";
+		var t_w=dbg_object(dbg_array(t_modes,t_i)[dbg_index]).width;
+		err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<38>";
+		var t_h=dbg_object(dbg_array(t_modes,t_i)[dbg_index]).height;
+		err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<39>";
 		var t_size=t_w<<16|t_h;
+		err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<40>";
 		if(t_mmap.p_Contains(t_size)){
 		}else{
-			var t_mode=c_DisplayMode.m_new.call(new c_DisplayMode,t_modes[t_i].width,t_modes[t_i].height);
+			err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<42>";
+			var t_mode=c_DisplayMode.m_new.call(new c_DisplayMode,dbg_object(dbg_array(t_modes,t_i)[dbg_index]).width,dbg_object(dbg_array(t_modes,t_i)[dbg_index]).height);
+			err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<43>";
 			t_mmap.p_Insert(t_size,t_mode);
+			err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<44>";
 			t_mstack.p_Push(t_mode);
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<47>";
 	bb_app__displayModes=t_mstack.p_ToArray();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<48>";
 	var t_mode2=bb_app__game.GetDesktopMode();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<49>";
 	if((t_mode2)!=null){
-		bb_app__desktopMode=c_DisplayMode.m_new.call(new c_DisplayMode,t_mode2.width,t_mode2.height);
+		err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<50>";
+		bb_app__desktopMode=c_DisplayMode.m_new.call(new c_DisplayMode,dbg_object(t_mode2).width,dbg_object(t_mode2).height);
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<52>";
 		bb_app__desktopMode=c_DisplayMode.m_new.call(new c_DisplayMode,bb_app_DeviceWidth(),bb_app_DeviceHeight());
 	}
+	pop_err();
 }
 var bb_graphics_renderDevice=null;
 function bb_graphics_SetMatrix(t_ix,t_iy,t_jx,t_jy,t_tx,t_ty){
-	bb_graphics_context.m_ix=t_ix;
-	bb_graphics_context.m_iy=t_iy;
-	bb_graphics_context.m_jx=t_jx;
-	bb_graphics_context.m_jy=t_jy;
-	bb_graphics_context.m_tx=t_tx;
-	bb_graphics_context.m_ty=t_ty;
-	bb_graphics_context.m_tformed=((t_ix!=1.0 || t_iy!=0.0 || t_jx!=0.0 || t_jy!=1.0 || t_tx!=0.0 || t_ty!=0.0)?1:0);
-	bb_graphics_context.m_matDirty=1;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<312>";
+	dbg_object(bb_graphics_context).m_ix=t_ix;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<313>";
+	dbg_object(bb_graphics_context).m_iy=t_iy;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<314>";
+	dbg_object(bb_graphics_context).m_jx=t_jx;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<315>";
+	dbg_object(bb_graphics_context).m_jy=t_jy;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<316>";
+	dbg_object(bb_graphics_context).m_tx=t_tx;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<317>";
+	dbg_object(bb_graphics_context).m_ty=t_ty;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<318>";
+	dbg_object(bb_graphics_context).m_tformed=((t_ix!=1.0 || t_iy!=0.0 || t_jx!=0.0 || t_jy!=1.0 || t_tx!=0.0 || t_ty!=0.0)?1:0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<319>";
+	dbg_object(bb_graphics_context).m_matDirty=1;
+	pop_err();
 	return 0;
 }
 function bb_graphics_SetMatrix2(t_m){
-	bb_graphics_SetMatrix(t_m[0],t_m[1],t_m[2],t_m[3],t_m[4],t_m[5]);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<308>";
+	bb_graphics_SetMatrix(dbg_array(t_m,0)[dbg_index],dbg_array(t_m,1)[dbg_index],dbg_array(t_m,2)[dbg_index],dbg_array(t_m,3)[dbg_index],dbg_array(t_m,4)[dbg_index],dbg_array(t_m,5)[dbg_index]);
+	pop_err();
 	return 0;
 }
 function bb_graphics_SetColor(t_r,t_g,t_b){
-	bb_graphics_context.m_color_r=t_r;
-	bb_graphics_context.m_color_g=t_g;
-	bb_graphics_context.m_color_b=t_b;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<254>";
+	dbg_object(bb_graphics_context).m_color_r=t_r;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<255>";
+	dbg_object(bb_graphics_context).m_color_g=t_g;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<256>";
+	dbg_object(bb_graphics_context).m_color_b=t_b;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<257>";
 	bb_graphics_renderDevice.SetColor(t_r,t_g,t_b);
+	pop_err();
 	return 0;
 }
 function bb_graphics_SetAlpha(t_alpha){
-	bb_graphics_context.m_alpha=t_alpha;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<271>";
+	dbg_object(bb_graphics_context).m_alpha=t_alpha;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<272>";
 	bb_graphics_renderDevice.SetAlpha(t_alpha);
+	pop_err();
 	return 0;
 }
 function bb_graphics_SetBlend(t_blend){
-	bb_graphics_context.m_blend=t_blend;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<280>";
+	dbg_object(bb_graphics_context).m_blend=t_blend;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<281>";
 	bb_graphics_renderDevice.SetBlend(t_blend);
+	pop_err();
 	return 0;
 }
 function bb_graphics_SetScissor(t_x,t_y,t_width,t_height){
-	bb_graphics_context.m_scissor_x=t_x;
-	bb_graphics_context.m_scissor_y=t_y;
-	bb_graphics_context.m_scissor_width=t_width;
-	bb_graphics_context.m_scissor_height=t_height;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<289>";
+	dbg_object(bb_graphics_context).m_scissor_x=t_x;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<290>";
+	dbg_object(bb_graphics_context).m_scissor_y=t_y;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<291>";
+	dbg_object(bb_graphics_context).m_scissor_width=t_width;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<292>";
+	dbg_object(bb_graphics_context).m_scissor_height=t_height;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<293>";
 	bb_graphics_renderDevice.SetScissor(((t_x)|0),((t_y)|0),((t_width)|0),((t_height)|0));
+	pop_err();
 	return 0;
 }
 function bb_graphics_BeginRender(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<225>";
 	bb_graphics_renderDevice=bb_graphics_device;
-	bb_graphics_context.m_matrixSp=0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<226>";
+	dbg_object(bb_graphics_context).m_matrixSp=0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<227>";
 	bb_graphics_SetMatrix(1.0,0.0,0.0,1.0,0.0,0.0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<228>";
 	bb_graphics_SetColor(255.0,255.0,255.0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<229>";
 	bb_graphics_SetAlpha(1.0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<230>";
 	bb_graphics_SetBlend(0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<231>";
 	bb_graphics_SetScissor(0.0,0.0,(bb_app_DeviceWidth()),(bb_app_DeviceHeight()));
+	pop_err();
 	return 0;
 }
 function bb_graphics_EndRender(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/graphics.monkey<235>";
 	bb_graphics_renderDevice=null;
+	pop_err();
 	return 0;
 }
 function c_BBGameEvent(){
 	Object.call(this);
 }
 function bb_app_EndApp(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<259>";
 	error("");
+	pop_err();
 }
 function c_Time(){
 	Object.call(this);
@@ -3452,32 +4065,55 @@ function c_Time(){
 	this.m_fps=0.0;
 }
 c_Time.m_new=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/time.monkey<26>";
 	this.m_initialTime=bb_app_Millisecs();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/time.monkey<27>";
 	this.m_realActTime=0;
+	pop_err();
 	return this;
 }
 c_Time.m_instance=null;
 c_Time.prototype.p_Update=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/time.monkey<31>";
 	var t_temp=bb_app_Millisecs()-this.m_initialTime;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/time.monkey<33>";
 	this.m_realLastFrame=(t_temp-this.m_realActTime);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/time.monkey<34>";
 	this.m_lastFrame=this.m_realLastFrame*this.m_timeDistortion;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/time.monkey<35>";
 	this.m_actTime=this.m_actTime+this.m_lastFrame;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/time.monkey<36>";
 	this.m_realActTime=t_temp;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/time.monkey<38>";
 	if((this.m_lastFpsTime)==-1.0){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/time.monkey<39>";
 		this.m_lastFpsTime=t_temp;
 	}else{
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/time.monkey<40>";
 		if(t_temp-this.m_lastFpsTime>=5000){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/time.monkey<41>";
 			this.m_lastFpsTime=t_temp;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/time.monkey<42>";
 			this.m_fps=(((this.m_frames+1)/5)|0);
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/time.monkey<43>";
 			this.m_frames=0;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/time.monkey<44>";
 			print(String(this.m_fps));
 		}else{
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/time.monkey<46>";
 			this.m_frames+=1;
 		}
 	}
+	pop_err();
 }
 function bb_app_Millisecs(){
-	return bb_app__game.Millisecs();
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<233>";
+	var t_=bb_app__game.Millisecs();
+	pop_err();
+	return t_;
 }
 function c_DrawList(){
 	Object.call(this);
@@ -3503,47 +4139,84 @@ function c_DrawList(){
 	this.m__matSp=0;
 }
 c_DrawList.prototype.p_SetFont=function(t_font){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1477>";
 	if(!((t_font)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1477>";
 		t_font=bb_graphics2_defaultFont;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1478>";
 	this.m__font=t_font;
+	pop_err();
 }
 c_DrawList.prototype.p_SetDefaultMaterial=function(t_material){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1486>";
 	this.m__defaultMaterial=t_material;
+	pop_err();
 }
 c_DrawList.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1341>";
 	bb_graphics2_InitMojo2();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1343>";
 	this.p_SetFont(null);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1344>";
 	this.p_SetDefaultMaterial(bb_graphics2_fastShader.p_DefaultMaterial());
+	pop_err();
 	return this;
 }
 c_DrawList.prototype.p_IsEmpty=function(){
-	return this.m__next==0;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1848>";
+	var t_=this.m__next==0;
+	pop_err();
+	return t_;
 }
 c_DrawList.prototype.p_Render=function(t_op,t_index,t_count){
-	if(!t_op.m_material.p_Bind()){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1861>";
+	if(!dbg_object(t_op).m_material.p_Bind()){
+		pop_err();
 		return;
 	}
-	if(t_op.m_blend!=bb_graphics2_rs_blend){
-		bb_graphics2_rs_blend=t_op.m_blend;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1863>";
+	if(dbg_object(t_op).m_blend!=bb_graphics2_rs_blend){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1864>";
+		bb_graphics2_rs_blend=dbg_object(t_op).m_blend;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1865>";
 		var t_4=bb_graphics2_rs_blend;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1866>";
 		if(t_4==0){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1867>";
 			gl.disable(3042);
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1868>";
 			if(t_4==1){
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1869>";
 				gl.enable(3042);
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1870>";
 				gl.blendFunc(1,771);
 			}else{
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1871>";
 				if(t_4==2){
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1872>";
 					gl.enable(3042);
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1873>";
 					gl.blendFunc(1,1);
 				}else{
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1874>";
 					if(t_4==3){
+						err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1875>";
 						gl.enable(3042);
+						err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1876>";
 						gl.blendFunc(774,771);
 					}else{
+						err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1877>";
 						if(t_4==4){
+							err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1878>";
 							gl.enable(3042);
+							err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1879>";
 							gl.blendFunc(774,0);
 						}
 					}
@@ -3551,300 +4224,564 @@ c_DrawList.prototype.p_Render=function(t_op,t_index,t_count){
 			}
 		}
 	}
-	var t_5=t_op.m_order;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1883>";
+	var t_5=dbg_object(t_op).m_order;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1884>";
 	if(t_5==1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1885>";
 		gl.drawArrays(0,t_index,t_count);
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1886>";
 		if(t_5==2){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1887>";
 			gl.drawArrays(1,t_index,t_count);
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1888>";
 			if(t_5==3){
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1889>";
 				gl.drawArrays(4,t_index,t_count);
 			}else{
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1890>";
 				if(t_5==4){
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1891>";
 					gl.drawElements(4,((t_count/4)|0)*6,5123,(((t_index/4)|0)*6+(t_index&3)*3510)*2);
 				}else{
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1893>";
 					var t_j=0;
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1894>";
 					while(t_j<t_count){
-						gl.drawArrays(6,t_index+t_j,t_op.m_order);
-						t_j+=t_op.m_order;
+						err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1895>";
+						gl.drawArrays(6,t_index+t_j,dbg_object(t_op).m_order);
+						err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1896>";
+						t_j+=dbg_object(t_op).m_order;
 					}
 				}
 			}
 		}
 	}
+	pop_err();
 }
 c_DrawList.prototype.p_Render2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1903>";
 	if(!((this.m__next)!=0)){
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1905>";
 	var t_offset=0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1905>";
 	var t_opid=0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1905>";
 	var t_ops=this.m__ops.p_Data();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1905>";
 	var t_length=this.m__ops.p_Length2();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1907>";
 	while(t_offset<this.m__next){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1909>";
 		var t_size=this.m__next-t_offset;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1909>";
 		var t_lastop=t_length;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1911>";
 		if(t_size>65520){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1913>";
 			t_size=0;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1914>";
 			t_lastop=t_opid;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1915>";
 			while(t_lastop<t_length){
-				var t_op=t_ops[t_lastop];
-				var t_n=t_op.m_count*28;
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1916>";
+				var t_op=dbg_array(t_ops,t_lastop)[dbg_index];
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1917>";
+				var t_n=dbg_object(t_op).m_count*28;
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1918>";
 				if(t_size+t_n>65520){
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1918>";
 					break;
 				}
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1919>";
 				t_size+=t_n;
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1920>";
 				t_lastop+=1;
 			}
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1923>";
 			if(!((t_size)!=0)){
-				var t_op2=t_ops[t_opid];
-				var t_count=t_op2.m_count;
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1924>";
+				var t_op2=dbg_array(t_ops,t_opid)[dbg_index];
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1925>";
+				var t_count=dbg_object(t_op2).m_count;
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1926>";
 				while((t_count)!=0){
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1927>";
 					var t_n2=t_count;
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1928>";
 					if(t_n2>2340){
-						t_n2=((2340/t_op2.m_order)|0)*t_op2.m_order;
+						err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1928>";
+						t_n2=((2340/dbg_object(t_op2).m_order)|0)*dbg_object(t_op2).m_order;
 					}
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1929>";
 					var t_size2=t_n2*28;
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1931>";
 					if(true){
+						err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1931>";
 						_glBufferData(34962,65520,null,35040);
 					}
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1932>";
 					_glBufferSubData(34962,0,t_size2,this.m__data,t_offset);
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1934>";
 					this.p_Render(t_op2,0,t_n2);
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1936>";
 					t_offset+=t_size2;
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1937>";
 					t_count-=t_n2;
 				}
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1939>";
 				t_opid+=1;
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1940>";
 				continue;
 			}
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1945>";
 		if(true){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1945>";
 			_glBufferData(34962,65520,null,35040);
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1946>";
 		_glBufferSubData(34962,0,t_size,this.m__data,t_offset);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1948>";
 		var t_index=0;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1949>";
 		while(t_opid<t_lastop){
-			var t_op3=t_ops[t_opid];
-			this.p_Render(t_op3,t_index,t_op3.m_count);
-			t_index+=t_op3.m_count;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1950>";
+			var t_op3=dbg_array(t_ops,t_opid)[dbg_index];
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1951>";
+			this.p_Render(t_op3,t_index,dbg_object(t_op3).m_count);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1952>";
+			t_index+=dbg_object(t_op3).m_count;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1953>";
 			t_opid+=1;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1955>";
 		t_offset+=t_size;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1959>";
 	gl.getError();
+	pop_err();
 }
 c_DrawList.prototype.p_Reset=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1964>";
 	this.m__next=0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1966>";
 	var t_data=this.m__ops.p_Data();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1967>";
 	for(var t_i=0;t_i<this.m__ops.p_Length2();t_i=t_i+1){
-		t_data[t_i].m_material=null;
-		bb_graphics2_freeOps.p_Push7(t_data[t_i]);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1968>";
+		dbg_object(dbg_array(t_data,t_i)[dbg_index]).m_material=null;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1969>";
+		bb_graphics2_freeOps.p_Push7(dbg_array(t_data,t_i)[dbg_index]);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1971>";
 	this.m__ops.p_Clear2();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1972>";
 	this.m__op=bb_graphics2_nullOp;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1974>";
 	this.m__casters.p_Clear2();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1975>";
 	this.m__casterVerts.p_Clear2();
+	pop_err();
 }
 c_DrawList.prototype.p_Flush=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1979>";
 	this.p_Render2();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1980>";
 	this.p_Reset();
+	pop_err();
 }
 c_DrawList.prototype.p_SetBlendMode=function(t_blend){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1348>";
 	this.m__blend=t_blend;
+	pop_err();
 }
 c_DrawList.prototype.p_SetColor=function(t_r,t_g,t_b){
-	this.m__color[0]=t_r;
-	this.m__color[1]=t_g;
-	this.m__color[2]=t_b;
-	this.m__pmcolor=((this.m__alpha)|0)<<24|((this.m__color[2]*this.m__alpha)|0)<<16|((this.m__color[1]*this.m__alpha)|0)<<8|((this.m__color[0]*this.m__alpha)|0);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1356>";
+	dbg_array(this.m__color,0)[dbg_index]=t_r;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1357>";
+	dbg_array(this.m__color,1)[dbg_index]=t_g;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1358>";
+	dbg_array(this.m__color,2)[dbg_index]=t_b;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1359>";
+	this.m__pmcolor=((this.m__alpha)|0)<<24|((dbg_array(this.m__color,2)[dbg_index]*this.m__alpha)|0)<<16|((dbg_array(this.m__color,1)[dbg_index]*this.m__alpha)|0)<<8|((dbg_array(this.m__color,0)[dbg_index]*this.m__alpha)|0);
+	pop_err();
 }
 c_DrawList.prototype.p_SetColor2=function(t_r,t_g,t_b,t_a){
-	this.m__color[0]=t_r;
-	this.m__color[1]=t_g;
-	this.m__color[2]=t_b;
-	this.m__color[3]=t_a;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1363>";
+	dbg_array(this.m__color,0)[dbg_index]=t_r;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1364>";
+	dbg_array(this.m__color,1)[dbg_index]=t_g;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1365>";
+	dbg_array(this.m__color,2)[dbg_index]=t_b;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1366>";
+	dbg_array(this.m__color,3)[dbg_index]=t_a;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1367>";
 	this.m__alpha=t_a*255.0;
-	this.m__pmcolor=((this.m__alpha)|0)<<24|((this.m__color[2]*this.m__alpha)|0)<<16|((this.m__color[1]*this.m__alpha)|0)<<8|((this.m__color[0]*this.m__alpha)|0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1368>";
+	this.m__pmcolor=((this.m__alpha)|0)<<24|((dbg_array(this.m__color,2)[dbg_index]*this.m__alpha)|0)<<16|((dbg_array(this.m__color,1)[dbg_index]*this.m__alpha)|0)<<8|((dbg_array(this.m__color,0)[dbg_index]*this.m__alpha)|0);
+	pop_err();
 }
 c_DrawList.prototype.p_BeginPrim=function(t_material,t_order){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2009>";
 	if(!((t_material)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2009>";
 		t_material=this.m__defaultMaterial;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2011>";
 	if(this.m__next+t_order*28>this.m__data.Length()){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2013>";
 		var t_newsize=bb_math_Max(this.m__data.Length()+((this.m__data.Length()/2)|0),this.m__next+t_order*28);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2014>";
 		var t_data=c_DataBuffer.m_new.call(new c_DataBuffer,t_newsize,true);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2015>";
 		this.m__data.p_CopyBytes(0,t_data,0,this.m__next);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2016>";
 		this.m__data.Discard();
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2017>";
 		this.m__data=t_data;
 	}
-	if(t_material==this.m__op.m_material && this.m__blend==this.m__op.m_blend && t_order==this.m__op.m_order){
-		this.m__op.m_count+=t_order;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2020>";
+	if(t_material==dbg_object(this.m__op).m_material && this.m__blend==dbg_object(this.m__op).m_blend && t_order==dbg_object(this.m__op).m_order){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2021>";
+		dbg_object(this.m__op).m_count+=t_order;
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2025>";
 	if((bb_graphics2_freeOps.p_Length2())!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2025>";
 		this.m__op=bb_graphics2_freeOps.p_Pop();
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2025>";
 		this.m__op=c_DrawOp.m_new.call(new c_DrawOp);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2027>";
 	this.m__ops.p_Push7(this.m__op);
-	this.m__op.m_material=t_material;
-	this.m__op.m_blend=this.m__blend;
-	this.m__op.m_order=t_order;
-	this.m__op.m_count=t_order;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2028>";
+	dbg_object(this.m__op).m_material=t_material;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2029>";
+	dbg_object(this.m__op).m_blend=this.m__blend;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2030>";
+	dbg_object(this.m__op).m_order=t_order;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2031>";
+	dbg_object(this.m__op).m_count=t_order;
+	pop_err();
 }
 c_DrawList.prototype.p_PrimVert=function(t_x0,t_y0,t_s0,t_t0){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2064>";
 	this.m__data.PokeFloat(this.m__next+0,t_x0*this.m__ix+t_y0*this.m__jx+this.m__tx);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2065>";
 	this.m__data.PokeFloat(this.m__next+4,t_x0*this.m__iy+t_y0*this.m__jy+this.m__ty);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2066>";
 	this.m__data.PokeFloat(this.m__next+8,t_s0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2067>";
 	this.m__data.PokeFloat(this.m__next+12,t_t0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2068>";
 	this.m__data.PokeFloat(this.m__next+16,this.m__ix);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2069>";
 	this.m__data.PokeFloat(this.m__next+20,this.m__iy);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2070>";
 	this.m__data.PokeInt(this.m__next+24,this.m__pmcolor);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2071>";
 	this.m__next+=28;
+	pop_err();
 }
 c_DrawList.prototype.p_AddShadowCaster=function(t_caster){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1816>";
 	this.m__casters.p_Push10(t_caster);
-	var t_verts=t_caster.m__verts;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1817>";
+	var t_verts=dbg_object(t_caster).m__verts;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1818>";
 	for(var t_i=0;t_i<t_verts.length-1;t_i=t_i+2){
-		var t_x0=t_verts[t_i];
-		var t_y0=t_verts[t_i+1];
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1819>";
+		var t_x0=dbg_array(t_verts,t_i)[dbg_index];
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1820>";
+		var t_y0=dbg_array(t_verts,t_i+1)[dbg_index];
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1821>";
 		this.m__casterVerts.p_Push13(t_x0*this.m__ix+t_y0*this.m__jx+this.m__tx);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1822>";
 		this.m__casterVerts.p_Push13(t_x0*this.m__iy+t_y0*this.m__jy+this.m__ty);
 	}
+	pop_err();
 }
 c_DrawList.prototype.p_PushMatrix=function(){
-	this.m__matStack[this.m__matSp+0]=this.m__ix;
-	this.m__matStack[this.m__matSp+1]=this.m__iy;
-	this.m__matStack[this.m__matSp+2]=this.m__jx;
-	this.m__matStack[this.m__matSp+3]=this.m__jy;
-	this.m__matStack[this.m__matSp+4]=this.m__tx;
-	this.m__matStack[this.m__matSp+5]=this.m__ty;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1463>";
+	dbg_array(this.m__matStack,this.m__matSp+0)[dbg_index]=this.m__ix;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1463>";
+	dbg_array(this.m__matStack,this.m__matSp+1)[dbg_index]=this.m__iy;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1464>";
+	dbg_array(this.m__matStack,this.m__matSp+2)[dbg_index]=this.m__jx;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1464>";
+	dbg_array(this.m__matStack,this.m__matSp+3)[dbg_index]=this.m__jy;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1465>";
+	dbg_array(this.m__matStack,this.m__matSp+4)[dbg_index]=this.m__tx;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1465>";
+	dbg_array(this.m__matStack,this.m__matSp+5)[dbg_index]=this.m__ty;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1466>";
 	this.m__matSp+=6;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1466>";
 	if(this.m__matSp>=this.m__matStack.length){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1466>";
 		this.m__matSp-=this.m__matStack.length;
 	}
+	pop_err();
 }
 c_DrawList.prototype.p_SetMatrix=function(t_ix,t_iy,t_jx,t_jy,t_tx,t_ty){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1399>";
 	this.m__ix=t_ix;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1399>";
 	this.m__iy=t_iy;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1400>";
 	this.m__jx=t_jx;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1400>";
 	this.m__jy=t_jy;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1401>";
 	this.m__tx=t_tx;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1401>";
 	this.m__ty=t_ty;
+	pop_err();
 }
 c_DrawList.prototype.p_Transform=function(t_ix,t_iy,t_jx,t_jy,t_tx,t_ty){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1414>";
 	var t_ix2=t_ix*this.m__ix+t_iy*this.m__jx;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1414>";
 	var t_iy2=t_ix*this.m__iy+t_iy*this.m__jy;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1415>";
 	var t_jx2=t_jx*this.m__ix+t_jy*this.m__jx;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1415>";
 	var t_jy2=t_jx*this.m__iy+t_jy*this.m__jy;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1416>";
 	var t_tx2=t_tx*this.m__ix+t_ty*this.m__jx+this.m__tx;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1416>";
 	var t_ty2=t_tx*this.m__iy+t_ty*this.m__jy+this.m__ty;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1417>";
 	this.p_SetMatrix(t_ix2,t_iy2,t_jx2,t_jy2,t_tx2,t_ty2);
+	pop_err();
 }
 c_DrawList.prototype.p_Translate=function(t_tx,t_ty){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1421>";
 	this.p_Transform(1.0,0.0,0.0,1.0,t_tx,t_ty);
+	pop_err();
 }
 c_DrawList.prototype.p_Rotate=function(t_rz){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1425>";
 	this.p_Transform(Math.cos((t_rz)*D2R),-Math.sin((t_rz)*D2R),Math.sin((t_rz)*D2R),Math.cos((t_rz)*D2R),0.0,0.0);
+	pop_err();
 	return 0;
 }
 c_DrawList.prototype.p_TranslateRotate=function(t_tx,t_ty,t_rz){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1433>";
 	this.p_Translate(t_tx,t_ty);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1434>";
 	this.p_Rotate(t_rz);
+	pop_err();
 }
 c_DrawList.prototype.p_Scale=function(t_sx,t_sy){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1429>";
 	this.p_Transform(t_sx,0.0,0.0,t_sy,0.0,0.0);
+	pop_err();
 }
 c_DrawList.prototype.p_TranslateRotateScale=function(t_tx,t_ty,t_rz,t_sx,t_sy){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1448>";
 	this.p_Translate(t_tx,t_ty);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1449>";
 	this.p_Rotate(t_rz);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1450>";
 	this.p_Scale(t_sx,t_sy);
+	pop_err();
 }
 c_DrawList.prototype.p_PopMatrix=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1470>";
 	this.m__matSp-=6;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1470>";
 	if(this.m__matSp<0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1470>";
 		this.m__matSp+=this.m__matStack.length;
 	}
-	this.m__ix=this.m__matStack[this.m__matSp+0];
-	this.m__iy=this.m__matStack[this.m__matSp+1];
-	this.m__jx=this.m__matStack[this.m__matSp+2];
-	this.m__jy=this.m__matStack[this.m__matSp+3];
-	this.m__tx=this.m__matStack[this.m__matSp+4];
-	this.m__ty=this.m__matStack[this.m__matSp+5];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1471>";
+	this.m__ix=dbg_array(this.m__matStack,this.m__matSp+0)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1471>";
+	this.m__iy=dbg_array(this.m__matStack,this.m__matSp+1)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1472>";
+	this.m__jx=dbg_array(this.m__matStack,this.m__matSp+2)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1472>";
+	this.m__jy=dbg_array(this.m__matStack,this.m__matSp+3)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1473>";
+	this.m__tx=dbg_array(this.m__matStack,this.m__matSp+4)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1473>";
+	this.m__ty=dbg_array(this.m__matStack,this.m__matSp+5)[dbg_index];
+	pop_err();
 }
 c_DrawList.prototype.p_AddShadowCaster2=function(t_caster,t_tx,t_ty,t_rz,t_sx,t_sy){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1841>";
 	this.p_PushMatrix();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1842>";
 	this.p_TranslateRotateScale(t_tx,t_ty,t_rz,t_sx,t_sy);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1843>";
 	this.p_AddShadowCaster(t_caster);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1844>";
 	this.p_PopMatrix();
+	pop_err();
 }
 c_DrawList.prototype.p_AddShadowCaster3=function(t_caster,t_tx,t_ty,t_rz){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1834>";
 	this.p_PushMatrix();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1835>";
 	this.p_TranslateRotate(t_tx,t_ty,t_rz);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1836>";
 	this.p_AddShadowCaster(t_caster);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1837>";
 	this.p_PopMatrix();
+	pop_err();
 }
 c_DrawList.prototype.p_AddShadowCaster4=function(t_caster,t_tx,t_ty){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1827>";
 	this.p_PushMatrix();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1828>";
 	this.p_Translate(t_tx,t_ty);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1829>";
 	this.p_AddShadowCaster(t_caster);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1830>";
 	this.p_PopMatrix();
+	pop_err();
 }
 c_DrawList.prototype.p_DrawImage=function(t_image){
-	this.p_BeginPrim(t_image.m__material,4);
-	this.p_PrimVert(t_image.m__x0,t_image.m__y0,t_image.m__s0,t_image.m__t0);
-	this.p_PrimVert(t_image.m__x1,t_image.m__y0,t_image.m__s1,t_image.m__t0);
-	this.p_PrimVert(t_image.m__x1,t_image.m__y1,t_image.m__s1,t_image.m__t1);
-	this.p_PrimVert(t_image.m__x0,t_image.m__y1,t_image.m__s0,t_image.m__t1);
-	if((t_image.m__caster)!=null){
-		this.p_AddShadowCaster(t_image.m__caster);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1683>";
+	this.p_BeginPrim(dbg_object(t_image).m__material,4);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1684>";
+	this.p_PrimVert(dbg_object(t_image).m__x0,dbg_object(t_image).m__y0,dbg_object(t_image).m__s0,dbg_object(t_image).m__t0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1685>";
+	this.p_PrimVert(dbg_object(t_image).m__x1,dbg_object(t_image).m__y0,dbg_object(t_image).m__s1,dbg_object(t_image).m__t0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1686>";
+	this.p_PrimVert(dbg_object(t_image).m__x1,dbg_object(t_image).m__y1,dbg_object(t_image).m__s1,dbg_object(t_image).m__t1);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1687>";
+	this.p_PrimVert(dbg_object(t_image).m__x0,dbg_object(t_image).m__y1,dbg_object(t_image).m__s0,dbg_object(t_image).m__t1);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1688>";
+	if((dbg_object(t_image).m__caster)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1688>";
+		this.p_AddShadowCaster(dbg_object(t_image).m__caster);
 	}
+	pop_err();
 }
 c_DrawList.prototype.p_DrawImage2=function(t_image,t_tx,t_ty,t_rz,t_sx,t_sy){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1724>";
 	this.p_PushMatrix();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1725>";
 	this.p_TranslateRotateScale(t_tx,t_ty,t_rz,t_sx,t_sy);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1726>";
 	this.p_DrawImage(t_image);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1727>";
 	this.p_PopMatrix();
+	pop_err();
 }
 c_DrawList.prototype.p_DrawImage3=function(t_image,t_tx,t_ty,t_rz){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1706>";
 	this.p_PushMatrix();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1707>";
 	this.p_TranslateRotate(t_tx,t_ty,t_rz);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1708>";
 	this.p_DrawImage(t_image);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1709>";
 	this.p_PopMatrix();
+	pop_err();
 }
 c_DrawList.prototype.p_DrawImage4=function(t_image,t_tx,t_ty){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1692>";
 	this.p_PushMatrix();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1693>";
 	this.p_Translate(t_tx,t_ty);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1694>";
 	this.p_DrawImage(t_image);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1695>";
 	this.p_PopMatrix();
+	pop_err();
 }
 c_DrawList.prototype.p_SetAlpha=function(t_a){
-	this.m__color[3]=t_a;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1372>";
+	dbg_array(this.m__color,3)[dbg_index]=t_a;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1373>";
 	this.m__alpha=t_a*255.0;
-	this.m__pmcolor=((this.m__alpha)|0)<<24|((this.m__color[2]*this.m__alpha)|0)<<16|((this.m__color[1]*this.m__alpha)|0)<<8|((this.m__color[0]*this.m__alpha)|0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1374>";
+	this.m__pmcolor=((this.m__alpha)|0)<<24|((dbg_array(this.m__color,2)[dbg_index]*this.m__alpha)|0)<<16|((dbg_array(this.m__color,1)[dbg_index]*this.m__alpha)|0)<<8|((dbg_array(this.m__color,0)[dbg_index]*this.m__alpha)|0);
+	pop_err();
 }
 c_DrawList.prototype.p_DrawRect=function(t_x0,t_y0,t_width,t_height,t_material,t_s0,t_t0,t_s1,t_t1){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1619>";
 	var t_x1=t_x0+t_width;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1619>";
 	var t_y1=t_y0+t_height;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1620>";
 	this.p_BeginPrim(t_material,4);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1621>";
 	this.p_PrimVert(t_x0,t_y0,t_s0,t_t0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1622>";
 	this.p_PrimVert(t_x1,t_y0,t_s1,t_t0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1623>";
 	this.p_PrimVert(t_x1,t_y1,t_s1,t_t1);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1624>";
 	this.p_PrimVert(t_x0,t_y1,t_s0,t_t1);
+	pop_err();
 }
 c_DrawList.prototype.p_DrawRect2=function(t_x0,t_y0,t_width,t_height,t_image,t_sourceX,t_sourceY,t_sourceWidth,t_sourceHeight){
-	var t_material=t_image.m__material;
-	var t_s0=(t_image.m__x+t_sourceX)/(t_material.p_Width());
-	var t_t0=(t_image.m__y+t_sourceY)/(t_material.p_Height());
-	var t_s1=(t_image.m__x+t_sourceX+t_sourceWidth)/(t_material.p_Width());
-	var t_t1=(t_image.m__y+t_sourceY+t_sourceHeight)/(t_material.p_Height());
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1636>";
+	var t_material=dbg_object(t_image).m__material;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1637>";
+	var t_s0=(dbg_object(t_image).m__x+t_sourceX)/(t_material.p_Width());
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1638>";
+	var t_t0=(dbg_object(t_image).m__y+t_sourceY)/(t_material.p_Height());
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1639>";
+	var t_s1=(dbg_object(t_image).m__x+t_sourceX+t_sourceWidth)/(t_material.p_Width());
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1640>";
+	var t_t1=(dbg_object(t_image).m__y+t_sourceY+t_sourceHeight)/(t_material.p_Height());
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1641>";
 	this.p_DrawRect(t_x0,t_y0,t_width,t_height,t_material,t_s0,t_t0,t_s1,t_t1);
+	pop_err();
 }
 c_DrawList.prototype.p_DrawRect3=function(t_x,t_y,t_image,t_sourceX,t_sourceY,t_sourceWidth,t_sourceHeight){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1632>";
 	this.p_DrawRect2(t_x,t_y,(t_sourceWidth),(t_sourceHeight),t_image,t_sourceX,t_sourceY,t_sourceWidth,t_sourceHeight);
+	pop_err();
 }
 c_DrawList.prototype.p_DrawRect4=function(t_x0,t_y0,t_width,t_height,t_image){
-	this.p_DrawRect(t_x0,t_y0,t_width,t_height,t_image.m__material,t_image.m__s0,t_image.m__t0,t_image.m__s1,t_image.m__t1);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1628>";
+	this.p_DrawRect(t_x0,t_y0,t_width,t_height,dbg_object(t_image).m__material,dbg_object(t_image).m__s0,dbg_object(t_image).m__t0,dbg_object(t_image).m__s1,dbg_object(t_image).m__t1);
+	pop_err();
 }
 function c_Canvas(){
 	c_DrawList.call(this);
@@ -3879,248 +4816,437 @@ function c_Canvas(){
 }
 c_Canvas.prototype=extend_class(c_DrawList);
 c_Canvas.prototype.p_Init3=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2524>";
 	this.m__dirty=-1;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2525>";
 	for(var t_i=0;t_i<4;t_i=t_i+1){
-		this.m__lights[t_i]=c_LightData.m_new.call(new c_LightData);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2526>";
+		dbg_array(this.m__lights,t_i)[dbg_index]=c_LightData.m_new.call(new c_LightData);
 	}
+	pop_err();
 }
 c_Canvas.m__active=null;
 c_Canvas.prototype.p_Flush=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2443>";
 	this.p_FlushPrims();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2445>";
 	if(!((this.m__texture)!=null)){
+		pop_err();
 		return;
 	}
-	if((this.m__texture.m__flags&256)!=0){
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2447>";
+	if((dbg_object(this.m__texture).m__flags&256)!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2448>";
 		this.p_Validate();
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2450>";
 		gl.disable(3089);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2451>";
 		gl.viewport(0,0,this.m__twidth,this.m__theight);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2453>";
 		if(this.m__width==this.m__twidth && this.m__height==this.m__theight){
-			_glReadPixels(0,0,this.m__twidth,this.m__theight,6408,5121,object_downcast((this.m__texture.m__data),c_DataBuffer),0);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2454>";
+			_glReadPixels(0,0,this.m__twidth,this.m__theight,6408,5121,object_downcast((dbg_object(this.m__texture).m__data),c_DataBuffer),0);
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2456>";
 			for(var t_y=0;t_y<this.m__height;t_y=t_y+1){
-				_glReadPixels(this.m__image.m__x,this.m__image.m__y+t_y,this.m__width,1,6408,5121,object_downcast((this.m__texture.m__data),c_DataBuffer),(this.m__image.m__y+t_y)*(this.m__twidth*4)+this.m__image.m__x*4);
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2457>";
+				_glReadPixels(dbg_object(this.m__image).m__x,dbg_object(this.m__image).m__y+t_y,this.m__width,1,6408,5121,object_downcast((dbg_object(this.m__texture).m__data),c_DataBuffer),(dbg_object(this.m__image).m__y+t_y)*(this.m__twidth*4)+dbg_object(this.m__image).m__x*4);
 			}
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2461>";
 		this.m__dirty|=2;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2464>";
 	this.m__texture.p_UpdateMipmaps();
+	pop_err();
 }
 c_Canvas.prototype.p_Validate=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2537>";
 	if(this.m__seq!=webglGraphicsSeq){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2538>";
 		this.m__seq=webglGraphicsSeq;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2539>";
 		bb_graphics2_InitVbos();
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2540>";
 		if(!((this.m__texture)!=null)){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2541>";
 			this.m__width=bb_app_DeviceWidth();
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2542>";
 			this.m__height=bb_app_DeviceHeight();
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2543>";
 			this.m__twidth=this.m__width;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2544>";
 			this.m__theight=this.m__height;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2546>";
 		this.m__dirty=-1;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2549>";
 	if(c_Canvas.m__active==this){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2550>";
 		if(!((this.m__dirty)!=0)){
+			pop_err();
 			return;
 		}
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2552>";
 		if((c_Canvas.m__active)!=null){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2552>";
 			c_Canvas.m__active.p_Flush();
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2553>";
 		c_Canvas.m__active=this;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2554>";
 		this.m__dirty=-1;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2559>";
 	if((this.m__dirty&1)!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2561>";
 		if((this.m__texture)!=null){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2562>";
 			_glBindFramebuffer(36160,this.m__texture.p_GLFramebuffer());
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2564>";
 			_glBindFramebuffer(36160,bb_graphics2_defaultFbo);
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2568>";
 	if((this.m__dirty&2)!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2570>";
 		if(!((this.m__texture)!=null)){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2571>";
 			this.m__width=bb_app_DeviceWidth();
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2572>";
 			this.m__height=bb_app_DeviceHeight();
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2573>";
 			this.m__twidth=this.m__width;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2574>";
 			this.m__theight=this.m__height;
 		}
-		this.m__vpx=this.m__viewport[0];
-		this.m__vpy=this.m__viewport[1];
-		this.m__vpw=this.m__viewport[2];
-		this.m__vph=this.m__viewport[3];
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2577>";
+		this.m__vpx=dbg_array(this.m__viewport,0)[dbg_index];
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2577>";
+		this.m__vpy=dbg_array(this.m__viewport,1)[dbg_index];
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2577>";
+		this.m__vpw=dbg_array(this.m__viewport,2)[dbg_index];
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2577>";
+		this.m__vph=dbg_array(this.m__viewport,3)[dbg_index];
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2578>";
 		if((this.m__image)!=null){
-			this.m__vpx+=this.m__image.m__x;
-			this.m__vpy+=this.m__image.m__y;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2579>";
+			this.m__vpx+=dbg_object(this.m__image).m__x;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2580>";
+			this.m__vpy+=dbg_object(this.m__image).m__y;
 		}
-		this.m__scx=this.m__scissor[0];
-		this.m__scy=this.m__scissor[1];
-		this.m__scw=this.m__scissor[2];
-		this.m__sch=this.m__scissor[3];
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2583>";
+		this.m__scx=dbg_array(this.m__scissor,0)[dbg_index];
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2583>";
+		this.m__scy=dbg_array(this.m__scissor,1)[dbg_index];
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2583>";
+		this.m__scw=dbg_array(this.m__scissor,2)[dbg_index];
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2583>";
+		this.m__sch=dbg_array(this.m__scissor,3)[dbg_index];
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2585>";
 		if(this.m__scx<0){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2585>";
 			this.m__scx=0;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2585>";
 			if(this.m__scx>this.m__vpw){
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2585>";
 				this.m__scx=this.m__vpw;
 			}
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2586>";
 		if(this.m__scw<0){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2586>";
 			this.m__scw=0;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2586>";
 			if(this.m__scx+this.m__scw>this.m__vpw){
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2586>";
 				this.m__scw=this.m__vpw-this.m__scx;
 			}
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2588>";
 		if(this.m__scy<0){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2588>";
 			this.m__scy=0;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2588>";
 			if(this.m__scy>this.m__vph){
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2588>";
 				this.m__scy=this.m__vph;
 			}
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2589>";
 		if(this.m__sch<0){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2589>";
 			this.m__sch=0;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2589>";
 			if(this.m__scy+this.m__sch>this.m__vph){
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2589>";
 				this.m__sch=this.m__vph-this.m__scy;
 			}
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2591>";
 		this.m__scx+=this.m__vpx;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2591>";
 		this.m__scy+=this.m__vpy;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2593>";
 		if(!((this.m__texture)!=null)){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2594>";
 			this.m__vpy=this.m__theight-this.m__vpy-this.m__vph;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2595>";
 			this.m__scy=this.m__theight-this.m__scy-this.m__sch;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2598>";
 		gl.viewport(this.m__vpx,this.m__vpy,this.m__vpw,this.m__vph);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2600>";
 		if(this.m__scx!=this.m__vpx || this.m__scy!=this.m__vpy || this.m__scw!=this.m__vpw || this.m__sch!=this.m__vph){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2601>";
 			gl.enable(3089);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2602>";
 			gl.scissor(this.m__scx,this.m__scy,this.m__scw,this.m__sch);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2603>";
 			this.m__clsScissor=false;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2605>";
 			gl.disable(3089);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2606>";
 			this.m__clsScissor=this.m__scx!=0 || this.m__scy!=0 || this.m__vpw!=this.m__twidth || this.m__vph!=this.m__theight;
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2611>";
 	if((this.m__dirty&4)!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2613>";
 		bb_graphics2_rs_program=null;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2615>";
 		if((this.m__texture)!=null){
-			bb_graphics2_rs_clipPosScale[1]=1.0;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2616>";
+			dbg_array(bb_graphics2_rs_clipPosScale,1)[dbg_index]=1.0;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2617>";
 			bb_math3d_Mat4Copy(this.m__projMatrix,bb_graphics2_rs_projMatrix);
 		}else{
-			bb_graphics2_rs_clipPosScale[1]=-1.0;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2619>";
+			dbg_array(bb_graphics2_rs_clipPosScale,1)[dbg_index]=-1.0;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2620>";
 			bb_math3d_Mat4Multiply(bb_graphics2_flipYMatrix,this.m__projMatrix,bb_graphics2_rs_projMatrix);
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2623>";
 		bb_math3d_Mat4Multiply(this.m__viewMatrix,this.m__modelMatrix,bb_graphics2_rs_modelViewMatrix);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2624>";
 		bb_math3d_Mat4Multiply(bb_graphics2_rs_projMatrix,bb_graphics2_rs_modelViewMatrix,bb_graphics2_rs_modelViewProjMatrix);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2625>";
 		bb_math3d_Vec4Copy(this.m__ambientLight,bb_graphics2_rs_ambientLight);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2626>";
 		bb_math3d_Vec4Copy(this.m__fogColor,bb_graphics2_rs_fogColor);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2628>";
 		bb_graphics2_rs_numLights=0;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2629>";
 		for(var t_i=0;t_i<4;t_i=t_i+1){
-			var t_light=this.m__lights[t_i];
-			if(!((t_light.m_type)!=0)){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2631>";
+			var t_light=dbg_array(this.m__lights,t_i)[dbg_index];
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2632>";
+			if(!((dbg_object(t_light).m_type)!=0)){
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2632>";
 				continue;
 			}
-			bb_math3d_Mat4Transform(this.m__viewMatrix,t_light.m_vector,t_light.m_tvector);
-			bb_graphics2_rs_lightColors[bb_graphics2_rs_numLights*4+0]=t_light.m_color[0];
-			bb_graphics2_rs_lightColors[bb_graphics2_rs_numLights*4+1]=t_light.m_color[1];
-			bb_graphics2_rs_lightColors[bb_graphics2_rs_numLights*4+2]=t_light.m_color[2];
-			bb_graphics2_rs_lightColors[bb_graphics2_rs_numLights*4+3]=t_light.m_color[3];
-			bb_graphics2_rs_lightVectors[bb_graphics2_rs_numLights*4+0]=t_light.m_tvector[0];
-			bb_graphics2_rs_lightVectors[bb_graphics2_rs_numLights*4+1]=t_light.m_tvector[1];
-			bb_graphics2_rs_lightVectors[bb_graphics2_rs_numLights*4+2]=t_light.m_tvector[2];
-			bb_graphics2_rs_lightVectors[bb_graphics2_rs_numLights*4+3]=t_light.m_range;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2634>";
+			bb_math3d_Mat4Transform(this.m__viewMatrix,dbg_object(t_light).m_vector,dbg_object(t_light).m_tvector);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2636>";
+			dbg_array(bb_graphics2_rs_lightColors,bb_graphics2_rs_numLights*4+0)[dbg_index]=dbg_array(dbg_object(t_light).m_color,0)[dbg_index];
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2637>";
+			dbg_array(bb_graphics2_rs_lightColors,bb_graphics2_rs_numLights*4+1)[dbg_index]=dbg_array(dbg_object(t_light).m_color,1)[dbg_index];
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2638>";
+			dbg_array(bb_graphics2_rs_lightColors,bb_graphics2_rs_numLights*4+2)[dbg_index]=dbg_array(dbg_object(t_light).m_color,2)[dbg_index];
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2639>";
+			dbg_array(bb_graphics2_rs_lightColors,bb_graphics2_rs_numLights*4+3)[dbg_index]=dbg_array(dbg_object(t_light).m_color,3)[dbg_index];
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2641>";
+			dbg_array(bb_graphics2_rs_lightVectors,bb_graphics2_rs_numLights*4+0)[dbg_index]=dbg_array(dbg_object(t_light).m_tvector,0)[dbg_index];
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2642>";
+			dbg_array(bb_graphics2_rs_lightVectors,bb_graphics2_rs_numLights*4+1)[dbg_index]=dbg_array(dbg_object(t_light).m_tvector,1)[dbg_index];
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2643>";
+			dbg_array(bb_graphics2_rs_lightVectors,bb_graphics2_rs_numLights*4+2)[dbg_index]=dbg_array(dbg_object(t_light).m_tvector,2)[dbg_index];
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2644>";
+			dbg_array(bb_graphics2_rs_lightVectors,bb_graphics2_rs_numLights*4+3)[dbg_index]=dbg_object(t_light).m_range;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2646>";
 			bb_graphics2_rs_numLights+=1;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2649>";
 		if((this.m__shadowMap)!=null){
-			bb_graphics2_rs_shadowTexture=this.m__shadowMap.m__material.m__colorTexture;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2650>";
+			bb_graphics2_rs_shadowTexture=dbg_object(dbg_object(this.m__shadowMap).m__material).m__colorTexture;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2652>";
 			bb_graphics2_rs_shadowTexture=null;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2655>";
 		bb_graphics2_rs_blend=-1;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2659>";
 	if((this.m__dirty&8)!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2660>";
 		gl.lineWidth(this.m__lineWidth);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2663>";
 	if((this.m__dirty&16)!=0){
-		gl.colorMask(this.m__colorMask[0],this.m__colorMask[1],this.m__colorMask[2],this.m__colorMask[3]);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2664>";
+		gl.colorMask(dbg_array(this.m__colorMask,0)[dbg_index],dbg_array(this.m__colorMask,1)[dbg_index],dbg_array(this.m__colorMask,2)[dbg_index],dbg_array(this.m__colorMask,3)[dbg_index]);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2667>";
 	this.m__dirty=0;
+	pop_err();
 }
 c_Canvas.prototype.p_FlushPrims=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2531>";
 	if(c_DrawList.prototype.p_IsEmpty.call(this)){
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2532>";
 	this.p_Validate();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2533>";
 	c_DrawList.prototype.p_Flush.call(this);
+	pop_err();
 }
 c_Canvas.prototype.p_SetRenderTarget=function(t_target){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2094>";
 	this.p_FlushPrims();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2096>";
 	if(!((t_target)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2098>";
 		this.m__image=null;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2099>";
 		this.m__texture=null;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2100>";
 		this.m__width=bb_app_DeviceWidth();
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2101>";
 		this.m__height=bb_app_DeviceHeight();
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2102>";
 		this.m__twidth=this.m__width;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2103>";
 		this.m__theight=this.m__height;
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2105>";
 		if((object_downcast((t_target),c_Image2))!=null){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2107>";
 			this.m__image=object_downcast((t_target),c_Image2);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2108>";
 			this.m__texture=this.m__image.p_Material().p_ColorTexture();
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2109>";
 			if(!((this.m__texture.p_Flags()&16)!=0)){
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2109>";
 				error("Texture is not a render target texture");
 			}
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2110>";
 			this.m__width=this.m__image.p_Width();
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2111>";
 			this.m__height=this.m__image.p_Height();
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2112>";
 			this.m__twidth=this.m__texture.p_Width();
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2113>";
 			this.m__theight=this.m__texture.p_Height();
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2115>";
 			if((object_downcast((t_target),c_Texture))!=null){
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2117>";
 				this.m__image=null;
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2118>";
 				this.m__texture=object_downcast((t_target),c_Texture);
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2119>";
 				if(!((this.m__texture.p_Flags()&16)!=0)){
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2119>";
 					error("Texture is not a render target texture");
 				}
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2120>";
 				this.m__width=this.m__texture.p_Width();
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2121>";
 				this.m__height=this.m__texture.p_Height();
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2122>";
 				this.m__twidth=this.m__texture.p_Width();
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2123>";
 				this.m__theight=this.m__texture.p_Height();
 			}else{
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2127>";
 				error("RenderTarget object must an Image, a Texture or Null");
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2131>";
 	this.m__dirty=-1;
+	pop_err();
 }
 c_Canvas.prototype.p_SetViewport=function(t_x,t_y,t_w,t_h){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2161>";
 	this.p_FlushPrims();
-	this.m__viewport[0]=t_x;
-	this.m__viewport[1]=t_y;
-	this.m__viewport[2]=t_w;
-	this.m__viewport[3]=t_h;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2162>";
+	dbg_array(this.m__viewport,0)[dbg_index]=t_x;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2163>";
+	dbg_array(this.m__viewport,1)[dbg_index]=t_y;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2164>";
+	dbg_array(this.m__viewport,2)[dbg_index]=t_w;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2165>";
+	dbg_array(this.m__viewport,3)[dbg_index]=t_h;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2166>";
 	this.m__dirty|=2;
+	pop_err();
 }
 c_Canvas.prototype.p_SetProjection2d=function(t_left,t_right,t_top,t_bottom,t_znear,t_zfar){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2197>";
 	this.p_FlushPrims();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2198>";
 	bb_math3d_Mat4Ortho(t_left,t_right,t_top,t_bottom,t_znear,t_zfar,this.m__projMatrix);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2199>";
 	this.m__dirty|=4;
+	pop_err();
 }
 c_Canvas.m_new=function(t_target){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2082>";
 	c_DrawList.m_new.call(this);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2083>";
 	this.p_Init3();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2084>";
 	this.p_SetRenderTarget(t_target);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2085>";
 	this.p_SetViewport(0,0,this.m__width,this.m__height);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2086>";
 	this.p_SetProjection2d(0.0,(this.m__width),0.0,(this.m__height),-1.0,1.0);
+	pop_err();
 	return this;
 }
 c_Canvas.prototype.p_Clear=function(t_r,t_g,t_b,t_a){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2333>";
 	this.p_FlushPrims();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2334>";
 	this.p_Validate();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2335>";
 	if(this.m__clsScissor){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2336>";
 		gl.enable(3089);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2337>";
 		gl.scissor(this.m__vpx,this.m__vpy,this.m__vpw,this.m__vph);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2339>";
 	gl.clearColor(t_r,t_g,t_b,t_a);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2340>";
 	gl.clear(16384);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2341>";
 	if(this.m__clsScissor){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<2341>";
 		gl.disable(3089);
 	}
+	pop_err();
 }
 var bb_graphics2_inited=false;
 var bb_graphics2_vbosSeq=0;
@@ -4130,69 +5256,121 @@ function c_DataBuffer(){
 }
 c_DataBuffer.prototype=extend_class(BBDataBuffer);
 c_DataBuffer.m_new=function(t_length,t_direct){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/brl/databuffer.monkey<102>";
 	if(!this._New(t_length)){
+		err_info="F:/progs/gamedev/monkey/modules/brl/databuffer.monkey<102>";
 		error("Allocate DataBuffer failed");
 	}
+	pop_err();
 	return this;
 }
 c_DataBuffer.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/brl/databuffer.monkey<96>";
+	pop_err();
 	return this;
 }
 c_DataBuffer.prototype.p_CopyBytes=function(t_address,t_dst,t_dstaddress,t_count){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/brl/databuffer.monkey<123>";
 	if(t_address+t_count>this.Length()){
+		err_info="F:/progs/gamedev/monkey/modules/brl/databuffer.monkey<123>";
 		t_count=this.Length()-t_address;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/brl/databuffer.monkey<124>";
 	if(t_dstaddress+t_count>t_dst.Length()){
+		err_info="F:/progs/gamedev/monkey/modules/brl/databuffer.monkey<124>";
 		t_count=t_dst.Length()-t_dstaddress;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/brl/databuffer.monkey<126>";
 	if(t_dstaddress<=t_address){
+		err_info="F:/progs/gamedev/monkey/modules/brl/databuffer.monkey<127>";
 		for(var t_i=0;t_i<t_count;t_i=t_i+1){
+			err_info="F:/progs/gamedev/monkey/modules/brl/databuffer.monkey<128>";
 			t_dst.PokeByte(t_dstaddress+t_i,this.PeekByte(t_address+t_i));
 		}
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/brl/databuffer.monkey<131>";
 		for(var t_i2=t_count-1;t_i2>=0;t_i2=t_i2+-1){
+			err_info="F:/progs/gamedev/monkey/modules/brl/databuffer.monkey<132>";
 			t_dst.PokeByte(t_dstaddress+t_i2,this.PeekByte(t_address+t_i2));
 		}
 	}
+	pop_err();
 }
 var bb_graphics2_rs_ibo=0;
 function bb_graphics2_InitVbos(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<116>";
 	if(bb_graphics2_vbosSeq==webglGraphicsSeq){
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<117>";
 	bb_graphics2_vbosSeq=webglGraphicsSeq;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<121>";
 	bb_graphics2_rs_vbo=gl.createBuffer();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<122>";
 	_glBindBuffer(34962,bb_graphics2_rs_vbo);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<123>";
 	_glBufferData(34962,65520,null,35040);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<124>";
 	gl.enableVertexAttribArray(0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<124>";
 	gl.vertexAttribPointer(0,2,5126,false,28,0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<125>";
 	gl.enableVertexAttribArray(1);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<125>";
 	gl.vertexAttribPointer(1,2,5126,false,28,8);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<126>";
 	gl.enableVertexAttribArray(2);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<126>";
 	gl.vertexAttribPointer(2,2,5126,false,28,16);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<127>";
 	gl.enableVertexAttribArray(3);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<127>";
 	gl.vertexAttribPointer(3,4,5121,true,28,24);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<129>";
 	bb_graphics2_rs_ibo=gl.createBuffer();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<130>";
 	_glBindBuffer(34963,bb_graphics2_rs_ibo);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<131>";
 	var t_idxs=c_DataBuffer.m_new.call(new c_DataBuffer,28080,true);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<132>";
 	for(var t_j=0;t_j<4;t_j=t_j+1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<133>";
 		var t_k=t_j*3510*2;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<134>";
 		for(var t_i=0;t_i<585;t_i=t_i+1){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<135>";
 			t_idxs.PokeShort(t_i*12+t_k+0,t_i*4+t_j+0);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<136>";
 			t_idxs.PokeShort(t_i*12+t_k+2,t_i*4+t_j+1);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<137>";
 			t_idxs.PokeShort(t_i*12+t_k+4,t_i*4+t_j+2);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<138>";
 			t_idxs.PokeShort(t_i*12+t_k+6,t_i*4+t_j+0);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<139>";
 			t_idxs.PokeShort(t_i*12+t_k+8,t_i*4+t_j+2);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<140>";
 			t_idxs.PokeShort(t_i*12+t_k+10,t_i*4+t_j+3);
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<143>";
 	_glBufferData(34963,t_idxs.Length(),t_idxs,35044);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<144>";
 	t_idxs.Discard();
+	pop_err();
 }
 var bb_graphics2_tmpi=[];
 var bb_graphics2_defaultFbo=0;
 function bb_app_LoadString(t_path){
-	return bb_app__game.LoadString(bb_data_FixDataPath(t_path));
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/app.monkey<220>";
+	var t_=bb_app__game.LoadString(bb_data_FixDataPath(t_path));
+	pop_err();
+	return t_;
 }
 var bb_graphics2_mainShader="";
 function c_Shader(){
@@ -4206,138 +5384,254 @@ function c_Shader(){
 	this.m__seq=0;
 }
 c_Shader.prototype.p_Build=function(t_numLights){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<685>";
 	var t_defs="";
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<686>";
 	t_defs=t_defs+("#define NUM_LIGHTS "+String(t_numLights)+"\n");
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<688>";
 	var t_vshader=bb_glutil_glCompile(35633,t_defs+this.m__vsource);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<689>";
 	var t_fshader=bb_glutil_glCompile(35632,t_defs+this.m__fsource);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<691>";
 	var t_program=gl.createProgram();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<692>";
 	gl.attachShader(t_program,t_vshader);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<693>";
 	gl.attachShader(t_program,t_fshader);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<694>";
 	gl.deleteShader(t_vshader);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<695>";
 	gl.deleteShader(t_fshader);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<697>";
 	gl.bindAttribLocation(t_program,0,"Position");
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<698>";
 	gl.bindAttribLocation(t_program,1,"Texcoord0");
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<699>";
 	gl.bindAttribLocation(t_program,2,"Tangent");
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<700>";
 	gl.bindAttribLocation(t_program,3,"Color");
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<702>";
 	bb_glutil_glLink(t_program);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<705>";
 	var t_matuniforms=c_Stack2.m_new.call(new c_Stack2);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<706>";
 	var t_size=new_number_array(1);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<706>";
 	var t_type=new_number_array(1);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<706>";
 	var t_name=new_string_array(1);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<707>";
 	_glGetProgramiv(t_program,35718,bb_graphics2_tmpi);
-	for(var t_i=0;t_i<bb_graphics2_tmpi[0];t_i=t_i+1){
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<708>";
+	for(var t_i=0;t_i<dbg_array(bb_graphics2_tmpi,0)[dbg_index];t_i=t_i+1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<709>";
 		_glGetActiveUniform(t_program,t_i,t_size,t_type,t_name);
-		if(this.m__uniforms.p_Contains2(t_name[0])){
-			var t_location=_glGetUniformLocation(t_program,t_name[0]);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<710>";
+		if(this.m__uniforms.p_Contains2(dbg_array(t_name,0)[dbg_index])){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<711>";
+			var t_location=_glGetUniformLocation(t_program,dbg_array(t_name,0)[dbg_index]);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<712>";
 			if(t_location==-1){
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<712>";
 				continue;
 			}
-			t_matuniforms.p_Push4(c_GLUniform.m_new.call(new c_GLUniform,t_name[0],t_location,t_size[0],t_type[0]));
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<713>";
+			t_matuniforms.p_Push4(c_GLUniform.m_new.call(new c_GLUniform,dbg_array(t_name,0)[dbg_index],t_location,dbg_array(t_size,0)[dbg_index],dbg_array(t_type,0)[dbg_index]));
 		}
 	}
-	return c_GLProgram.m_new.call(new c_GLProgram,t_program,t_matuniforms.p_ToArray());
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<718>";
+	var t_=c_GLProgram.m_new.call(new c_GLProgram,t_program,t_matuniforms.p_ToArray());
+	pop_err();
+	return t_;
 }
 c_Shader.prototype.p_Build2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<723>";
 	bb_graphics2_InitMojo2();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<725>";
 	var t_p=c_GlslParser.m_new.call(new c_GlslParser,this.m__source);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<727>";
 	var t_vars=c_StringSet.m_new.call(new c_StringSet);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<729>";
 	while((t_p.p_Toke()).length!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<731>";
 		if(t_p.p_CParse("uniform")){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<733>";
 			var t_ty=t_p.p_ParseType();
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<734>";
 			var t_id=t_p.p_ParseIdent();
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<735>";
 			t_p.p_Parse2(";");
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<736>";
 			this.m__uniforms.p_Insert2(t_id);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<738>";
 			continue;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<741>";
 		var t_id2=t_p.p_CParseIdent();
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<742>";
 		if((t_id2).length!=0){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<743>";
 			if(string_startswith(t_id2,"gl_")){
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<744>";
 				t_vars.p_Insert2("B3D_"+t_id2.toUpperCase());
 			}else{
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<745>";
 				if(string_startswith(t_id2,"b3d_")){
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<746>";
 					t_vars.p_Insert2(t_id2.toUpperCase());
 				}
 			}
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<748>";
 			continue;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<751>";
 		t_p.p_Bump();
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<754>";
 	var t_vardefs="";
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<755>";
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<755>";
 	var t_=t_vars.p_ObjectEnumerator();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<755>";
 	while(t_.p_HasNext()){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<755>";
 		var t_var=t_.p_NextObject();
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<756>";
 		t_vardefs=t_vardefs+("#define "+t_var+" 1\n");
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<761>";
 	var t_source=bb_graphics2_mainShader;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<762>";
 	var t_i0=t_source.indexOf("//@vertex",0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<763>";
 	if(t_i0==-1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<763>";
 		error("Can't find //@vertex chunk");
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<764>";
 	var t_i1=t_source.indexOf("//@fragment",0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<765>";
 	if(t_i1==-1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<765>";
 		error("Can't find //@fragment chunk");
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<767>";
 	var t_header=t_vardefs+t_source.slice(0,t_i0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<768>";
 	this.m__vsource=t_header+t_source.slice(t_i0,t_i1);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<769>";
 	this.m__fsource=t_header+string_replace(t_source.slice(t_i1),"${SHADER}",this.m__source);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<771>";
 	for(var t_numLights=0;t_numLights<=4;t_numLights=t_numLights+1){
-		this.m__glPrograms[t_numLights]=this.p_Build(t_numLights);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<773>";
+		dbg_array(this.m__glPrograms,t_numLights)[dbg_index]=this.p_Build(t_numLights);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<775>";
 		if(((t_numLights)!=0) || t_vars.p_Contains2("B3D_DIFFUSE") || t_vars.p_Contains2("B3D_SPECULAR")){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<775>";
 			continue;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<777>";
 		for(var t_i=1;t_i<=4;t_i=t_i+1){
-			this.m__glPrograms[t_i]=this.m__glPrograms[0];
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<778>";
+			dbg_array(this.m__glPrograms,t_i)[dbg_index]=dbg_array(this.m__glPrograms,0)[dbg_index];
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<781>";
 		break;
 	}
+	pop_err();
 }
 c_Shader.prototype.p_Build3=function(t_source){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<630>";
 	this.m__source=t_source;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<631>";
 	this.p_Build2();
+	pop_err();
 }
 c_Shader.m_new=function(t_source){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<590>";
 	this.p_Build3(t_source);
+	pop_err();
 	return this;
 }
 c_Shader.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<587>";
+	pop_err();
 	return this;
 }
 c_Shader.prototype.p_OnInitMaterial=function(t_material){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<635>";
 	t_material.p_SetTexture("ColorTexture",c_Texture.m_White());
+	pop_err();
 }
 c_Shader.prototype.p_OnLoadMaterial=function(t_material,t_path,t_texFlags){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<639>";
 	var t_texture=c_Texture.m_Load(t_path,4,t_texFlags);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<640>";
 	if(!((t_texture)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<640>";
+		pop_err();
 		return null;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<641>";
 	t_material.p_SetTexture("ColorTexture",t_texture);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<642>";
 	if((t_texture)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<642>";
 		t_texture.p_Release();
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<643>";
+	pop_err();
 	return t_material;
 }
 c_Shader.prototype.p_DefaultMaterial=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<594>";
 	if(!((this.m__defaultMaterial)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<594>";
 		this.m__defaultMaterial=c_Material.m_new.call(new c_Material,this);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<595>";
+	pop_err();
 	return this.m__defaultMaterial;
 }
 c_Shader.prototype.p_GLProgram=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<674>";
 	if(this.m__seq!=webglGraphicsSeq){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<675>";
 		this.m__seq=webglGraphicsSeq;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<676>";
 		bb_graphics2_rs_program=null;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<677>";
 		this.p_Build2();
 	}
-	return this.m__glPrograms[bb_graphics2_rs_numLights];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<680>";
+	pop_err();
+	return dbg_array(this.m__glPrograms,bb_graphics2_rs_numLights)[dbg_index];
 }
 c_Shader.prototype.p_Bind=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<662>";
 	var t_program=this.p_GLProgram();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<664>";
 	if(t_program==bb_graphics2_rs_program){
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<666>";
 	bb_graphics2_rs_program=t_program;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<667>";
 	bb_graphics2_rs_material=null;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<669>";
 	t_program.p_Bind();
+	pop_err();
 }
 function c_GLProgram(){
 	Object.call(this);
@@ -4354,82 +5648,145 @@ function c_GLProgram(){
 	this.m_shadowTexture=0;
 }
 c_GLProgram.m_new=function(t_program,t_matuniforms){
-	this.m_program=t_program;
-	this.m_matuniforms=t_matuniforms;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<547>";
+	dbg_object(this).m_program=t_program;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<548>";
+	dbg_object(this).m_matuniforms=t_matuniforms;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<549>";
 	this.m_mvpMatrix=_glGetUniformLocation(t_program,"ModelViewProjectionMatrix");
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<550>";
 	this.m_mvMatrix=_glGetUniformLocation(t_program,"ModelViewMatrix");
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<551>";
 	this.m_clipPosScale=_glGetUniformLocation(t_program,"ClipPosScale");
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<552>";
 	this.m_globalColor=_glGetUniformLocation(t_program,"GlobalColor");
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<553>";
 	this.m_fogColor=_glGetUniformLocation(t_program,"FogColor");
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<554>";
 	this.m_ambientLight=_glGetUniformLocation(t_program,"AmbientLight");
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<555>";
 	this.m_lightColors=_glGetUniformLocation(t_program,"LightColors");
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<556>";
 	this.m_lightVectors=_glGetUniformLocation(t_program,"LightVectors");
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<557>";
 	this.m_shadowTexture=_glGetUniformLocation(t_program,"ShadowTexture");
+	pop_err();
 	return this;
 }
 c_GLProgram.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<531>";
+	pop_err();
 	return this;
 }
 c_GLProgram.prototype.p_Bind=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<563>";
 	gl.useProgram(this.m_program);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<565>";
 	if(this.m_mvpMatrix!=-1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<565>";
 		_glUniformMatrix4fv(this.m_mvpMatrix,1,false,bb_graphics2_rs_modelViewProjMatrix);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<566>";
 	if(this.m_mvMatrix!=-1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<566>";
 		_glUniformMatrix4fv(this.m_mvMatrix,1,false,bb_graphics2_rs_modelViewMatrix);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<567>";
 	if(this.m_clipPosScale!=-1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<567>";
 		_glUniform4fv(this.m_clipPosScale,1,bb_graphics2_rs_clipPosScale);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<568>";
 	if(this.m_globalColor!=-1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<568>";
 		_glUniform4fv(this.m_globalColor,1,bb_graphics2_rs_globalColor);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<569>";
 	if(this.m_fogColor!=-1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<569>";
 		_glUniform4fv(this.m_fogColor,1,bb_graphics2_rs_fogColor);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<570>";
 	if(this.m_ambientLight!=-1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<570>";
 		_glUniform4fv(this.m_ambientLight,1,bb_graphics2_rs_ambientLight);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<571>";
 	if(this.m_lightColors!=-1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<571>";
 		_glUniform4fv(this.m_lightColors,bb_graphics2_rs_numLights,bb_graphics2_rs_lightColors);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<572>";
 	if(this.m_lightVectors!=-1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<572>";
 		_glUniform4fv(this.m_lightVectors,bb_graphics2_rs_numLights,bb_graphics2_rs_lightVectors);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<573>";
 	if(this.m_shadowTexture!=-1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<574>";
 		var t_tex=bb_graphics2_rs_shadowTexture;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<575>";
 		if(!((t_tex)!=null)){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<575>";
 			t_tex=c_Texture.m_White();
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<576>";
 		gl.activeTexture(33991);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<577>";
 		_glBindTexture(3553,t_tex.p_GLTexture());
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<578>";
 		gl.activeTexture(33984);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<579>";
 		gl.uniform1i(this.m_shadowTexture,7);
 	}
+	pop_err();
 }
 var bb_glutil_tmpi=[];
 function bb_glutil_glCompile(t_type,t_source){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<37>";
 	t_source="precision mediump float;\n"+t_source;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<40>";
 	var t_shader=gl.createShader(t_type);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<41>";
 	gl.shaderSource(t_shader,t_source);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<42>";
 	gl.compileShader(t_shader);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<43>";
 	_glGetShaderiv(t_shader,35713,bb_glutil_tmpi);
-	if(!((bb_glutil_tmpi[0])!=0)){
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<44>";
+	if(!((dbg_array(bb_glutil_tmpi,0)[dbg_index])!=0)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<45>";
 		print("Failed to compile fragment shader:"+gl.getShaderInfoLog(t_shader));
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<46>";
 		var t_lines=t_source.split("\n");
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<47>";
 		for(var t_i=0;t_i<t_lines.length;t_i=t_i+1){
-			print(String(t_i+1)+":\t"+t_lines[t_i]);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<48>";
+			print(String(t_i+1)+":\t"+dbg_array(t_lines,t_i)[dbg_index]);
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<50>";
 		error("Compile fragment shader failed");
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<52>";
+	pop_err();
 	return t_shader;
 }
 function bb_glutil_glLink(t_program){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<57>";
 	gl.linkProgram(t_program);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<58>";
 	_glGetProgramiv(t_program,35714,bb_glutil_tmpi);
-	if(!((bb_glutil_tmpi[0])!=0)){
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<59>";
+	if(!((dbg_array(bb_glutil_tmpi,0)[dbg_index])!=0)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<59>";
 		error("Failed to link program:"+gl.getProgramInfoLog(t_program));
 	}
+	pop_err();
 }
 function c_GLUniform(){
 	Object.call(this);
@@ -4439,13 +5796,22 @@ function c_GLUniform(){
 	this.m_type=0;
 }
 c_GLUniform.m_new=function(t_name,t_location,t_size,t_type){
-	this.m_name=t_name;
-	this.m_location=t_location;
-	this.m_size=t_size;
-	this.m_type=t_type;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<523>";
+	dbg_object(this).m_name=t_name;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<524>";
+	dbg_object(this).m_location=t_location;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<525>";
+	dbg_object(this).m_size=t_size;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<526>";
+	dbg_object(this).m_type=t_type;
+	pop_err();
 	return this;
 }
 c_GLUniform.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<516>";
+	pop_err();
 	return this;
 }
 function c_Stack2(){
@@ -4454,33 +5820,58 @@ function c_Stack2(){
 	this.m_length=0;
 }
 c_Stack2.m_new=function(){
+	push_err();
+	pop_err();
 	return this;
 }
 c_Stack2.m_new2=function(t_data){
-	this.m_data=t_data.slice(0);
-	this.m_length=t_data.length;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<13>";
+	dbg_object(this).m_data=t_data.slice(0);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<14>";
+	dbg_object(this).m_length=t_data.length;
+	pop_err();
 	return this;
 }
 c_Stack2.prototype.p_Push4=function(t_value){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<71>";
 	if(this.m_length==this.m_data.length){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<72>";
 		this.m_data=resize_object_array(this.m_data,this.m_length*2+10);
 	}
-	this.m_data[this.m_length]=t_value;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<74>";
+	dbg_array(this.m_data,this.m_length)[dbg_index]=t_value;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<75>";
 	this.m_length+=1;
+	pop_err();
 }
 c_Stack2.prototype.p_Push5=function(t_values,t_offset,t_count){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<83>";
 	for(var t_i=0;t_i<t_count;t_i=t_i+1){
-		this.p_Push4(t_values[t_offset+t_i]);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<84>";
+		this.p_Push4(dbg_array(t_values,t_offset+t_i)[dbg_index]);
 	}
+	pop_err();
 }
 c_Stack2.prototype.p_Push6=function(t_values,t_offset){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<79>";
 	this.p_Push5(t_values,t_offset,t_values.length-t_offset);
+	pop_err();
 }
 c_Stack2.prototype.p_ToArray=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<18>";
 	var t_t=new_object_array(this.m_length);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<19>";
 	for(var t_i=0;t_i<this.m_length;t_i=t_i+1){
-		t_t[t_i]=this.m_data[t_i];
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<20>";
+		dbg_array(t_t,t_i)[dbg_index]=dbg_array(this.m_data,t_i)[dbg_index];
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<22>";
+	pop_err();
 	return t_t;
 }
 function c_Set(){
@@ -4488,28 +5879,48 @@ function c_Set(){
 	this.m_map=null;
 }
 c_Set.m_new=function(t_map){
-	this.m_map=t_map;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/set.monkey<16>";
+	dbg_object(this).m_map=t_map;
+	pop_err();
 	return this;
 }
 c_Set.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/set.monkey<13>";
+	pop_err();
 	return this;
 }
 c_Set.prototype.p_Contains2=function(t_value){
-	return this.m_map.p_Contains2(t_value);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/set.monkey<32>";
+	var t_=this.m_map.p_Contains2(t_value);
+	pop_err();
+	return t_;
 }
 c_Set.prototype.p_Insert2=function(t_value){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/set.monkey<36>";
 	this.m_map.p_Insert3(t_value,null);
+	pop_err();
 	return 0;
 }
 c_Set.prototype.p_ObjectEnumerator=function(){
-	return this.m_map.p_Keys().p_ObjectEnumerator();
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/set.monkey<44>";
+	var t_=this.m_map.p_Keys().p_ObjectEnumerator();
+	pop_err();
+	return t_;
 }
 function c_StringSet(){
 	c_Set.call(this);
 }
 c_StringSet.prototype=extend_class(c_Set);
 c_StringSet.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/set.monkey<69>";
 	c_Set.m_new.call(this,(c_StringMap.m_new.call(new c_StringMap)));
+	pop_err();
 	return this;
 }
 function c_Map2(){
@@ -4517,153 +5928,269 @@ function c_Map2(){
 	this.m_root=null;
 }
 c_Map2.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<7>";
+	pop_err();
 	return this;
 }
 c_Map2.prototype.p_Compare2=function(t_lhs,t_rhs){
 }
 c_Map2.prototype.p_FindNode2=function(t_key){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<157>";
 	var t_node=this.m_root;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<159>";
 	while((t_node)!=null){
-		var t_cmp=this.p_Compare2(t_key,t_node.m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<160>";
+		var t_cmp=this.p_Compare2(t_key,dbg_object(t_node).m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<161>";
 		if(t_cmp>0){
-			t_node=t_node.m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<162>";
+			t_node=dbg_object(t_node).m_right;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<163>";
 			if(t_cmp<0){
-				t_node=t_node.m_left;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<164>";
+				t_node=dbg_object(t_node).m_left;
 			}else{
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<166>";
+				pop_err();
 				return t_node;
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<169>";
+	pop_err();
 	return t_node;
 }
 c_Map2.prototype.p_Contains2=function(t_key){
-	return this.p_FindNode2(t_key)!=null;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<25>";
+	var t_=this.p_FindNode2(t_key)!=null;
+	pop_err();
+	return t_;
 }
 c_Map2.prototype.p_RotateLeft2=function(t_node){
-	var t_child=t_node.m_right;
-	t_node.m_right=t_child.m_left;
-	if((t_child.m_left)!=null){
-		t_child.m_left.m_parent=t_node;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<251>";
+	var t_child=dbg_object(t_node).m_right;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<252>";
+	dbg_object(t_node).m_right=dbg_object(t_child).m_left;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<253>";
+	if((dbg_object(t_child).m_left)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<254>";
+		dbg_object(dbg_object(t_child).m_left).m_parent=t_node;
 	}
-	t_child.m_parent=t_node.m_parent;
-	if((t_node.m_parent)!=null){
-		if(t_node==t_node.m_parent.m_left){
-			t_node.m_parent.m_left=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<256>";
+	dbg_object(t_child).m_parent=dbg_object(t_node).m_parent;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<257>";
+	if((dbg_object(t_node).m_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<258>";
+		if(t_node==dbg_object(dbg_object(t_node).m_parent).m_left){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<259>";
+			dbg_object(dbg_object(t_node).m_parent).m_left=t_child;
 		}else{
-			t_node.m_parent.m_right=t_child;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<261>";
+			dbg_object(dbg_object(t_node).m_parent).m_right=t_child;
 		}
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<264>";
 		this.m_root=t_child;
 	}
-	t_child.m_left=t_node;
-	t_node.m_parent=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<266>";
+	dbg_object(t_child).m_left=t_node;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<267>";
+	dbg_object(t_node).m_parent=t_child;
+	pop_err();
 	return 0;
 }
 c_Map2.prototype.p_RotateRight2=function(t_node){
-	var t_child=t_node.m_left;
-	t_node.m_left=t_child.m_right;
-	if((t_child.m_right)!=null){
-		t_child.m_right.m_parent=t_node;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<271>";
+	var t_child=dbg_object(t_node).m_left;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<272>";
+	dbg_object(t_node).m_left=dbg_object(t_child).m_right;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<273>";
+	if((dbg_object(t_child).m_right)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<274>";
+		dbg_object(dbg_object(t_child).m_right).m_parent=t_node;
 	}
-	t_child.m_parent=t_node.m_parent;
-	if((t_node.m_parent)!=null){
-		if(t_node==t_node.m_parent.m_right){
-			t_node.m_parent.m_right=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<276>";
+	dbg_object(t_child).m_parent=dbg_object(t_node).m_parent;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<277>";
+	if((dbg_object(t_node).m_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<278>";
+		if(t_node==dbg_object(dbg_object(t_node).m_parent).m_right){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<279>";
+			dbg_object(dbg_object(t_node).m_parent).m_right=t_child;
 		}else{
-			t_node.m_parent.m_left=t_child;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<281>";
+			dbg_object(dbg_object(t_node).m_parent).m_left=t_child;
 		}
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<284>";
 		this.m_root=t_child;
 	}
-	t_child.m_right=t_node;
-	t_node.m_parent=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<286>";
+	dbg_object(t_child).m_right=t_node;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<287>";
+	dbg_object(t_node).m_parent=t_child;
+	pop_err();
 	return 0;
 }
 c_Map2.prototype.p_InsertFixup2=function(t_node){
-	while(((t_node.m_parent)!=null) && t_node.m_parent.m_color==-1 && ((t_node.m_parent.m_parent)!=null)){
-		if(t_node.m_parent==t_node.m_parent.m_parent.m_left){
-			var t_uncle=t_node.m_parent.m_parent.m_right;
-			if(((t_uncle)!=null) && t_uncle.m_color==-1){
-				t_node.m_parent.m_color=1;
-				t_uncle.m_color=1;
-				t_uncle.m_parent.m_color=-1;
-				t_node=t_uncle.m_parent;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<212>";
+	while(((dbg_object(t_node).m_parent)!=null) && dbg_object(dbg_object(t_node).m_parent).m_color==-1 && ((dbg_object(dbg_object(t_node).m_parent).m_parent)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<213>";
+		if(dbg_object(t_node).m_parent==dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_left){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<214>";
+			var t_uncle=dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<215>";
+			if(((t_uncle)!=null) && dbg_object(t_uncle).m_color==-1){
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<216>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<217>";
+				dbg_object(t_uncle).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<218>";
+				dbg_object(dbg_object(t_uncle).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<219>";
+				t_node=dbg_object(t_uncle).m_parent;
 			}else{
-				if(t_node==t_node.m_parent.m_right){
-					t_node=t_node.m_parent;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<221>";
+				if(t_node==dbg_object(dbg_object(t_node).m_parent).m_right){
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<222>";
+					t_node=dbg_object(t_node).m_parent;
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<223>";
 					this.p_RotateLeft2(t_node);
 				}
-				t_node.m_parent.m_color=1;
-				t_node.m_parent.m_parent.m_color=-1;
-				this.p_RotateRight2(t_node.m_parent.m_parent);
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<225>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<226>";
+				dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<227>";
+				this.p_RotateRight2(dbg_object(dbg_object(t_node).m_parent).m_parent);
 			}
 		}else{
-			var t_uncle2=t_node.m_parent.m_parent.m_left;
-			if(((t_uncle2)!=null) && t_uncle2.m_color==-1){
-				t_node.m_parent.m_color=1;
-				t_uncle2.m_color=1;
-				t_uncle2.m_parent.m_color=-1;
-				t_node=t_uncle2.m_parent;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<230>";
+			var t_uncle2=dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_left;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<231>";
+			if(((t_uncle2)!=null) && dbg_object(t_uncle2).m_color==-1){
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<232>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<233>";
+				dbg_object(t_uncle2).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<234>";
+				dbg_object(dbg_object(t_uncle2).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<235>";
+				t_node=dbg_object(t_uncle2).m_parent;
 			}else{
-				if(t_node==t_node.m_parent.m_left){
-					t_node=t_node.m_parent;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<237>";
+				if(t_node==dbg_object(dbg_object(t_node).m_parent).m_left){
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<238>";
+					t_node=dbg_object(t_node).m_parent;
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<239>";
 					this.p_RotateRight2(t_node);
 				}
-				t_node.m_parent.m_color=1;
-				t_node.m_parent.m_parent.m_color=-1;
-				this.p_RotateLeft2(t_node.m_parent.m_parent);
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<241>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<242>";
+				dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<243>";
+				this.p_RotateLeft2(dbg_object(dbg_object(t_node).m_parent).m_parent);
 			}
 		}
 	}
-	this.m_root.m_color=1;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<247>";
+	dbg_object(this.m_root).m_color=1;
+	pop_err();
 	return 0;
 }
 c_Map2.prototype.p_Set2=function(t_key,t_value){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<29>";
 	var t_node=this.m_root;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<30>";
 	var t_parent=null;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<30>";
 	var t_cmp=0;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<32>";
 	while((t_node)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<33>";
 		t_parent=t_node;
-		t_cmp=this.p_Compare2(t_key,t_node.m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<34>";
+		t_cmp=this.p_Compare2(t_key,dbg_object(t_node).m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<35>";
 		if(t_cmp>0){
-			t_node=t_node.m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<36>";
+			t_node=dbg_object(t_node).m_right;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<37>";
 			if(t_cmp<0){
-				t_node=t_node.m_left;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<38>";
+				t_node=dbg_object(t_node).m_left;
 			}else{
-				t_node.m_value=t_value;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<40>";
+				dbg_object(t_node).m_value=t_value;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<41>";
+				pop_err();
 				return false;
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<45>";
 	t_node=c_Node2.m_new.call(new c_Node2,t_key,t_value,-1,t_parent);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<47>";
 	if((t_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<48>";
 		if(t_cmp>0){
-			t_parent.m_right=t_node;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<49>";
+			dbg_object(t_parent).m_right=t_node;
 		}else{
-			t_parent.m_left=t_node;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<51>";
+			dbg_object(t_parent).m_left=t_node;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<53>";
 		this.p_InsertFixup2(t_node);
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<55>";
 		this.m_root=t_node;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<57>";
+	pop_err();
 	return true;
 }
 c_Map2.prototype.p_Insert3=function(t_key,t_value){
-	return this.p_Set2(t_key,t_value);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<146>";
+	var t_=this.p_Set2(t_key,t_value);
+	pop_err();
+	return t_;
 }
 c_Map2.prototype.p_Keys=function(){
-	return c_MapKeys.m_new.call(new c_MapKeys,this);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<113>";
+	var t_=c_MapKeys.m_new.call(new c_MapKeys,this);
+	pop_err();
+	return t_;
 }
 c_Map2.prototype.p_FirstNode=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<125>";
 	if(!((this.m_root)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<125>";
+		pop_err();
 		return null;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<127>";
 	var t_node=this.m_root;
-	while((t_node.m_left)!=null){
-		t_node=t_node.m_left;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<128>";
+	while((dbg_object(t_node).m_left)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<129>";
+		t_node=dbg_object(t_node).m_left;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<131>";
+	pop_err();
 	return t_node;
 }
 function c_StringMap(){
@@ -4671,11 +6198,19 @@ function c_StringMap(){
 }
 c_StringMap.prototype=extend_class(c_Map2);
 c_StringMap.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<551>";
 	c_Map2.m_new.call(this);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<551>";
+	pop_err();
 	return this;
 }
 c_StringMap.prototype.p_Compare2=function(t_lhs,t_rhs){
-	return string_compare(t_lhs,t_rhs);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<554>";
+	var t_=string_compare(t_lhs,t_rhs);
+	pop_err();
+	return t_;
 }
 function c_Node2(){
 	Object.call(this);
@@ -4687,30 +6222,54 @@ function c_Node2(){
 	this.m_parent=null;
 }
 c_Node2.m_new=function(t_key,t_value,t_color,t_parent){
-	this.m_key=t_key;
-	this.m_value=t_value;
-	this.m_color=t_color;
-	this.m_parent=t_parent;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<364>";
+	dbg_object(this).m_key=t_key;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<365>";
+	dbg_object(this).m_value=t_value;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<366>";
+	dbg_object(this).m_color=t_color;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<367>";
+	dbg_object(this).m_parent=t_parent;
+	pop_err();
 	return this;
 }
 c_Node2.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<361>";
+	pop_err();
 	return this;
 }
 c_Node2.prototype.p_NextNode=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<385>";
 	var t_node=null;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<386>";
 	if((this.m_right)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<387>";
 		t_node=this.m_right;
-		while((t_node.m_left)!=null){
-			t_node=t_node.m_left;
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<388>";
+		while((dbg_object(t_node).m_left)!=null){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<389>";
+			t_node=dbg_object(t_node).m_left;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<391>";
+		pop_err();
 		return t_node;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<393>";
 	t_node=this;
-	var t_parent=this.m_parent;
-	while(((t_parent)!=null) && t_node==t_parent.m_right){
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<394>";
+	var t_parent=dbg_object(this).m_parent;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<395>";
+	while(((t_parent)!=null) && t_node==dbg_object(t_parent).m_right){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<396>";
 		t_node=t_parent;
-		t_parent=t_parent.m_parent;
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<397>";
+		t_parent=dbg_object(t_parent).m_parent;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<399>";
+	pop_err();
 	return t_parent;
 }
 function c_Parser(){
@@ -4722,187 +6281,338 @@ function c_Parser(){
 	this.m__tokeType=0;
 }
 c_Parser.prototype.p_Bump=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<43>";
 	while(this.m__pos<this.m__len){
-		var t_ch=this.m__text.charCodeAt(this.m__pos);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<44>";
+		var t_ch=dbg_charCodeAt(this.m__text,this.m__pos);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<45>";
 		if(t_ch<=32){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<46>";
 			this.m__pos+=1;
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<47>";
 			continue;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<49>";
 		if(t_ch!=39){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<49>";
 			break;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<50>";
 		this.m__pos+=1;
-		while(this.m__pos<this.m__len && this.m__text.charCodeAt(this.m__pos)!=10){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<51>";
+		while(this.m__pos<this.m__len && dbg_charCodeAt(this.m__text,this.m__pos)!=10){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<52>";
 			this.m__pos+=1;
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<56>";
 	if(this.m__pos==this.m__len){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<57>";
 		this.m__toke="";
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<58>";
 		this.m__tokeType=0;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<59>";
+		pop_err();
 		return this.m__toke;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<62>";
 	var t_pos=this.m__pos;
-	var t_ch2=this.m__text.charCodeAt(this.m__pos);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<63>";
+	var t_ch2=dbg_charCodeAt(this.m__text,this.m__pos);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<64>";
 	this.m__pos+=1;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<66>";
 	if(bb_glslparser_IsAlpha(t_ch2) || t_ch2==95){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<68>";
 		while(this.m__pos<this.m__len){
-			var t_ch3=this.m__text.charCodeAt(this.m__pos);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<69>";
+			var t_ch3=dbg_charCodeAt(this.m__text,this.m__pos);
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<70>";
 			if(!bb_glslparser_IsIdent(t_ch3)){
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<70>";
 				break;
 			}
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<71>";
 			this.m__pos+=1;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<73>";
 		this.m__tokeType=1;
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<75>";
 		if(bb_glslparser_IsDigit(t_ch2)){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<77>";
 			while(this.m__pos<this.m__len){
-				if(!bb_glslparser_IsDigit(this.m__text.charCodeAt(this.m__pos))){
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<78>";
+				if(!bb_glslparser_IsDigit(dbg_charCodeAt(this.m__text,this.m__pos))){
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<78>";
 					break;
 				}
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<79>";
 				this.m__pos+=1;
 			}
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<81>";
 			this.m__tokeType=2;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<83>";
 			if(t_ch2==34){
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<85>";
 				while(this.m__pos<this.m__len){
-					var t_ch4=this.m__text.charCodeAt(this.m__pos);
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<86>";
+					var t_ch4=dbg_charCodeAt(this.m__text,this.m__pos);
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<87>";
 					if(t_ch4==34){
+						err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<87>";
 						break;
 					}
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<88>";
 					this.m__pos+=1;
 				}
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<90>";
 				if(this.m__pos==this.m__len){
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<90>";
 					error("String literal missing closing quote");
 				}
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<91>";
 				this.m__tokeType=4;
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<92>";
 				this.m__pos+=1;
 			}else{
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<95>";
 				var t_digraphs=[":="];
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<96>";
 				if(this.m__pos<this.m__len){
-					var t_ch5=this.m__text.charCodeAt(this.m__pos);
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<97>";
+					var t_ch5=dbg_charCodeAt(this.m__text,this.m__pos);
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<98>";
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<98>";
 					var t_=t_digraphs;
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<98>";
 					var t_2=0;
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<98>";
 					while(t_2<t_.length){
-						var t_t=t_[t_2];
+						err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<98>";
+						var t_t=dbg_array(t_,t_2)[dbg_index];
+						err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<98>";
 						t_2=t_2+1;
-						if(t_ch5==t_t.charCodeAt(1)){
+						err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<99>";
+						if(t_ch5==dbg_charCodeAt(t_t,1)){
+							err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<100>";
 							this.m__pos+=1;
+							err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<101>";
 							break;
 						}
 					}
 				}
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<105>";
 				this.m__tokeType=5;
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<108>";
 	this.m__toke=this.m__text.slice(t_pos,this.m__pos);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<110>";
+	pop_err();
 	return this.m__toke;
 }
 c_Parser.prototype.p_SetText=function(t_text){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<35>";
 	this.m__text=t_text;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<36>";
 	this.m__pos=0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<37>";
 	this.m__len=this.m__text.length;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<38>";
 	this.p_Bump();
+	pop_err();
 }
 c_Parser.m_new=function(t_text){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<31>";
 	this.p_SetText(t_text);
+	pop_err();
 	return this;
 }
 c_Parser.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<28>";
+	pop_err();
 	return this;
 }
 c_Parser.prototype.p_Toke=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<114>";
+	pop_err();
 	return this.m__toke;
 }
 c_Parser.prototype.p_CParse=function(t_toke){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<122>";
 	if(this.m__toke!=t_toke){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<122>";
+		pop_err();
 		return false;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<123>";
 	this.p_Bump();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<124>";
+	pop_err();
 	return true;
 }
 c_Parser.prototype.p_CParseIdent=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<128>";
 	if(this.m__tokeType!=1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<128>";
+		pop_err();
 		return "";
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<129>";
 	var t_id=this.m__toke;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<130>";
 	this.p_Bump();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<131>";
+	pop_err();
 	return t_id;
 }
 c_Parser.prototype.p_ParseIdent=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<152>";
 	var t_id=this.p_CParseIdent();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<153>";
 	if(!((t_id).length!=0)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<153>";
 		error("Expecting identifier");
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<154>";
+	pop_err();
 	return t_id;
 }
 c_Parser.prototype.p_Parse=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<142>";
 	var t_toke=this.m__toke;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<143>";
 	this.p_Bump();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<144>";
+	pop_err();
 	return t_toke;
 }
 c_Parser.prototype.p_Parse2=function(t_toke){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<148>";
 	if(!this.p_CParse(t_toke)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<148>";
 		error("Expecting '"+t_toke+"'");
 	}
+	pop_err();
 }
 function c_GlslParser(){
 	c_Parser.call(this);
 }
 c_GlslParser.prototype=extend_class(c_Parser);
 c_GlslParser.m_new=function(t_text){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<176>";
 	c_Parser.m_new.call(this,t_text);
+	pop_err();
 	return this;
 }
 c_GlslParser.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<173>";
 	c_Parser.m_new2.call(this);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<173>";
+	pop_err();
 	return this;
 }
 c_GlslParser.prototype.p_ParseType=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<180>";
 	var t_id=this.p_ParseIdent();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<181>";
+	pop_err();
 	return t_id;
 }
 function bb_glslparser_IsAlpha(t_ch){
-	return t_ch>=65 && t_ch<91 || t_ch>=97 && t_ch<123;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<21>";
+	var t_=t_ch>=65 && t_ch<91 || t_ch>=97 && t_ch<123;
+	pop_err();
+	return t_;
 }
 function bb_glslparser_IsIdent(t_ch){
-	return t_ch>=65 && t_ch<91 || t_ch>=97 && t_ch<123 || t_ch>=48 && t_ch<58 || t_ch==95;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<25>";
+	var t_=t_ch>=65 && t_ch<91 || t_ch>=97 && t_ch<123 || t_ch>=48 && t_ch<58 || t_ch==95;
+	pop_err();
+	return t_;
 }
 function bb_glslparser_IsDigit(t_ch){
-	return t_ch>=48 && t_ch<58;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glslparser.monkey<17>";
+	var t_=t_ch>=48 && t_ch<58;
+	pop_err();
+	return t_;
 }
 function c_KeyEnumerator(){
 	Object.call(this);
 	this.m_node=null;
 }
 c_KeyEnumerator.m_new=function(t_node){
-	this.m_node=t_node;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<459>";
+	dbg_object(this).m_node=t_node;
+	pop_err();
 	return this;
 }
 c_KeyEnumerator.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<456>";
+	pop_err();
 	return this;
 }
 c_KeyEnumerator.prototype.p_HasNext=function(){
-	return this.m_node!=null;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<463>";
+	var t_=this.m_node!=null;
+	pop_err();
+	return t_;
 }
 c_KeyEnumerator.prototype.p_NextObject=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<467>";
 	var t_t=this.m_node;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<468>";
 	this.m_node=this.m_node.p_NextNode();
-	return t_t.m_key;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<469>";
+	pop_err();
+	return dbg_object(t_t).m_key;
 }
 function c_MapKeys(){
 	Object.call(this);
 	this.m_map=null;
 }
 c_MapKeys.m_new=function(t_map){
-	this.m_map=t_map;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<503>";
+	dbg_object(this).m_map=t_map;
+	pop_err();
 	return this;
 }
 c_MapKeys.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<500>";
+	pop_err();
 	return this;
 }
 c_MapKeys.prototype.p_ObjectEnumerator=function(){
-	return c_KeyEnumerator.m_new.call(new c_KeyEnumerator,this.m_map.p_FirstNode());
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<507>";
+	var t_=c_KeyEnumerator.m_new.call(new c_KeyEnumerator,this.m_map.p_FirstNode());
+	pop_err();
+	return t_;
 }
 var bb_graphics2_fastShader=null;
 function c_BumpShader(){
@@ -4910,77 +6620,135 @@ function c_BumpShader(){
 }
 c_BumpShader.prototype=extend_class(c_Shader);
 c_BumpShader.m_new=function(t_source){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<793>";
 	c_Shader.m_new.call(this,t_source);
+	pop_err();
 	return this;
 }
 c_BumpShader.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<790>";
 	c_Shader.m_new2.call(this);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<790>";
+	pop_err();
 	return this;
 }
 c_BumpShader.prototype.p_OnInitMaterial=function(t_material){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<799>";
 	t_material.p_SetTexture("ColorTexture",c_Texture.m_White());
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<800>";
 	t_material.p_SetTexture("SpecularTexture",c_Texture.m_Black());
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<801>";
 	t_material.p_SetTexture("NormalTexture",c_Texture.m_Flat());
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<802>";
 	t_material.p_SetVector("AmbientColor",[1.0,1.0,1.0,1.0]);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<803>";
 	t_material.p_SetScalar("Roughness",1.0);
+	pop_err();
 }
 c_BumpShader.prototype.p_OnLoadMaterial=function(t_material,t_path,t_texFlags){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<808>";
 	var t_format=4;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<810>";
 	var t_ext=bb_filepath_ExtractExt(t_path);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<811>";
 	if((t_ext).length!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<811>";
 		t_path=bb_filepath_StripExt(t_path);
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<811>";
 		t_ext="png";
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<813>";
 	var t_colorTex=c_Texture.m_Load(t_path+"."+t_ext,t_format,t_texFlags);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<814>";
 	if(!((t_colorTex)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<814>";
 		t_colorTex=c_Texture.m_Load(t_path+"_d."+t_ext,t_format,t_texFlags);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<815>";
 	if(!((t_colorTex)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<815>";
 		t_colorTex=c_Texture.m_Load(t_path+"_diff."+t_ext,t_format,t_texFlags);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<816>";
 	if(!((t_colorTex)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<816>";
 		t_colorTex=c_Texture.m_Load(t_path+"_diffuse."+t_ext,t_format,t_texFlags);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<818>";
 	var t_specularTex=c_Texture.m_Load(t_path+"_s."+t_ext,t_format,t_texFlags);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<819>";
 	if(!((t_specularTex)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<819>";
 		t_specularTex=c_Texture.m_Load(t_path+"_spec."+t_ext,t_format,t_texFlags);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<820>";
 	if(!((t_specularTex)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<820>";
 		t_specularTex=c_Texture.m_Load(t_path+"_specular."+t_ext,t_format,t_texFlags);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<821>";
 	if(!((t_specularTex)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<821>";
 		t_specularTex=c_Texture.m_Load(t_path+"_SPECULAR."+t_ext,t_format,t_texFlags);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<823>";
 	var t_normalTex=c_Texture.m_Load(t_path+"_n."+t_ext,t_format,t_texFlags);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<824>";
 	if(!((t_normalTex)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<824>";
 		t_normalTex=c_Texture.m_Load(t_path+"_norm."+t_ext,t_format,t_texFlags);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<825>";
 	if(!((t_normalTex)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<825>";
 		t_normalTex=c_Texture.m_Load(t_path+"_normal."+t_ext,t_format,t_texFlags);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<826>";
 	if(!((t_normalTex)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<826>";
 		t_normalTex=c_Texture.m_Load(t_path+"_NORMALS."+t_ext,t_format,t_texFlags);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<828>";
 	if(!((t_colorTex)!=null) && !((t_specularTex)!=null) && !((t_normalTex)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<828>";
+		pop_err();
 		return null;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<830>";
 	t_material.p_SetTexture("ColorTexture",t_colorTex);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<831>";
 	t_material.p_SetTexture("SpecularTexture",t_specularTex);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<832>";
 	t_material.p_SetTexture("NormalTexture",t_normalTex);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<834>";
 	if(((t_specularTex)!=null) || ((t_normalTex)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<835>";
 		t_material.p_SetVector("AmbientColor",[0.0,0.0,0.0,1.0]);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<836>";
 		t_material.p_SetScalar("Roughness",.5);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<839>";
 	if((t_colorTex)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<839>";
 		t_colorTex.p_Release();
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<840>";
 	if((t_specularTex)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<840>";
 		t_specularTex.p_Release();
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<841>";
 	if((t_normalTex)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<841>";
 		t_normalTex.p_Release();
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<843>";
+	pop_err();
 	return t_material;
 }
 var bb_graphics2_bumpShader=null;
@@ -4989,17 +6757,29 @@ function c_MatteShader(){
 }
 c_MatteShader.prototype=extend_class(c_Shader);
 c_MatteShader.m_new=function(t_source){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<851>";
 	c_Shader.m_new.call(this,t_source);
+	pop_err();
 	return this;
 }
 c_MatteShader.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<848>";
 	c_Shader.m_new2.call(this);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<848>";
+	pop_err();
 	return this;
 }
 c_MatteShader.prototype.p_OnInitMaterial=function(t_material){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<857>";
 	t_material.p_SetTexture("ColorTexture",c_Texture.m_White());
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<858>";
 	t_material.p_SetVector("AmbientColor",[0.0,0.0,0.0,1.0]);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<859>";
 	t_material.p_SetScalar("Roughness",1.0);
+	pop_err();
 }
 var bb_graphics2_matteShader=null;
 var bb_graphics2_shadowShader=null;
@@ -5012,57 +6792,108 @@ function c_Font(){
 	this.m__height=.0;
 }
 c_Font.m_new=function(t_glyphs,t_firstChar,t_height){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1241>";
 	this.m__glyphs=t_glyphs;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1242>";
 	this.m__firstChar=t_firstChar;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1243>";
 	this.m__height=t_height;
+	pop_err();
 	return this;
 }
 c_Font.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1238>";
+	pop_err();
 	return this;
 }
 c_Font.m_Load=function(t_path,t_firstChar,t_numChars,t_padded){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1268>";
 	var t_image=c_Image2.m_Load(t_path,.5,.5,3,null);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1269>";
 	if(!((t_image)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1269>";
+		pop_err();
 		return null;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1271>";
 	var t_cellWidth=((t_image.p_Width()/t_numChars)|0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1272>";
 	var t_cellHeight=t_image.p_Height();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1273>";
 	var t_glyphX=0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1273>";
 	var t_glyphY=0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1273>";
 	var t_glyphWidth=t_cellWidth;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1273>";
 	var t_glyphHeight=t_cellHeight;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1274>";
 	if(t_padded){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1274>";
 		t_glyphX+=1;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1274>";
 		t_glyphY+=1;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1274>";
 		t_glyphWidth-=2;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1274>";
 		t_glyphHeight-=2;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1276>";
 	var t_w=((t_image.p_Width()/t_cellWidth)|0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1277>";
 	var t_h=((t_image.p_Height()/t_cellHeight)|0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1279>";
 	var t_glyphs=new_object_array(t_numChars);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1281>";
 	for(var t_i=0;t_i<t_numChars;t_i=t_i+1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1282>";
 		var t_y=((t_i/t_w)|0);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1283>";
 		var t_x=t_i % t_w;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1284>";
 		var t_glyph=c_Glyph.m_new.call(new c_Glyph,t_image,t_firstChar+t_i,t_x*t_cellWidth+t_glyphX,t_y*t_cellHeight+t_glyphY,t_glyphWidth,t_glyphHeight,(t_glyphWidth));
-		t_glyphs[t_i]=t_glyph;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1285>";
+		dbg_array(t_glyphs,t_i)[dbg_index]=t_glyph;
 	}
-	return c_Font.m_new.call(new c_Font,t_glyphs,t_firstChar,(t_glyphHeight));
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1288>";
+	var t_=c_Font.m_new.call(new c_Font,t_glyphs,t_firstChar,(t_glyphHeight));
+	pop_err();
+	return t_;
 }
 c_Font.m_Load2=function(t_path,t_cellWidth,t_cellHeight,t_glyphX,t_glyphY,t_glyphWidth,t_glyphHeight,t_firstChar,t_numChars){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1294>";
 	var t_image=c_Image2.m_Load(t_path,.5,.5,3,null);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1295>";
 	if(!((t_image)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1295>";
+		pop_err();
 		return null;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1297>";
 	var t_w=((t_image.p_Width()/t_cellWidth)|0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1298>";
 	var t_h=((t_image.p_Height()/t_cellHeight)|0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1300>";
 	var t_glyphs=new_object_array(t_numChars);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1302>";
 	for(var t_i=0;t_i<t_numChars;t_i=t_i+1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1303>";
 		var t_y=((t_i/t_w)|0);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1304>";
 		var t_x=t_i % t_w;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1305>";
 		var t_glyph=c_Glyph.m_new.call(new c_Glyph,t_image,t_firstChar+t_i,t_x*t_cellWidth+t_glyphX,t_y*t_cellHeight+t_glyphY,t_glyphWidth,t_glyphHeight,(t_glyphWidth));
-		t_glyphs[t_i]=t_glyph;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1306>";
+		dbg_array(t_glyphs,t_i)[dbg_index]=t_glyph;
 	}
-	return c_Font.m_new.call(new c_Font,t_glyphs,t_firstChar,(t_glyphHeight));
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1309>";
+	var t_=c_Font.m_new.call(new c_Font,t_glyphs,t_firstChar,(t_glyphHeight));
+	pop_err();
+	return t_;
 }
 function c_Image2(){
 	Object.call(this);
@@ -5083,99 +6914,188 @@ function c_Image2(){
 }
 c_Image2.m__flagsMask=0;
 c_Image2.prototype.p_SetHandle=function(t_xhandle,t_yhandle){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1135>";
 	this.m__x0=(this.m__width)*-t_xhandle;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1136>";
 	this.m__x1=(this.m__width)*(1.0-t_xhandle);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1137>";
 	this.m__y0=(this.m__height)*-t_yhandle;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1138>";
 	this.m__y1=(this.m__height)*(1.0-t_yhandle);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1139>";
 	this.m__s0=(this.m__x)/(this.m__material.p_Width());
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1140>";
 	this.m__t0=(this.m__y)/(this.m__material.p_Height());
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1141>";
 	this.m__s1=(this.m__x+this.m__width)/(this.m__material.p_Width());
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1142>";
 	this.m__t1=(this.m__y+this.m__height)/(this.m__material.p_Height());
+	pop_err();
 }
 c_Image2.m_new=function(t_width,t_height,t_xhandle,t_yhandle,t_flags){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1048>";
 	t_flags&=c_Image2.m__flagsMask;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1049>";
 	var t_texture=c_Texture.m_new.call(new c_Texture,t_width,t_height,4,t_flags|12|16);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1050>";
 	this.m__material=c_Material.m_new.call(new c_Material,bb_graphics2_fastShader);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1051>";
 	this.m__material.p_SetTexture("ColorTexture",t_texture);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1052>";
 	this.m__width=t_width;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1053>";
 	this.m__height=t_height;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1054>";
 	this.p_SetHandle(t_xhandle,t_yhandle);
+	pop_err();
 	return this;
 }
 c_Image2.m_new2=function(t_image,t_x,t_y,t_width,t_height,t_xhandle,t_yhandle){
-	this.m__material=t_image.m__material;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1058>";
+	this.m__material=dbg_object(t_image).m__material;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1059>";
 	this.m__material.p_Retain();
-	this.m__x=t_image.m__x+t_x;
-	this.m__y=t_image.m__y+t_y;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1060>";
+	this.m__x=dbg_object(t_image).m__x+t_x;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1061>";
+	this.m__y=dbg_object(t_image).m__y+t_y;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1062>";
 	this.m__width=t_width;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1063>";
 	this.m__height=t_height;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1064>";
 	this.p_SetHandle(t_xhandle,t_yhandle);
+	pop_err();
 	return this;
 }
 c_Image2.m_new3=function(t_material,t_xhandle,t_yhandle){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1068>";
 	var t_texture=t_material.p_ColorTexture();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1069>";
 	if(!((t_texture)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1069>";
 		error("Material has no ColorTexture");
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1070>";
 	this.m__material=t_material;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1071>";
 	this.m__material.p_Retain();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1072>";
 	this.m__width=this.m__material.p_Width();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1073>";
 	this.m__height=this.m__material.p_Height();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1074>";
 	this.p_SetHandle(t_xhandle,t_yhandle);
+	pop_err();
 	return this;
 }
 c_Image2.m_new4=function(t_material,t_x,t_y,t_width,t_height,t_xhandle,t_yhandle){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1078>";
 	var t_texture=t_material.p_ColorTexture();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1079>";
 	if(!((t_texture)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1079>";
 		error("Material has no ColorTexture");
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1080>";
 	this.m__material=t_material;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1081>";
 	this.m__material.p_Retain();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1082>";
 	this.m__x=t_x;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1083>";
 	this.m__y=t_y;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1084>";
 	this.m__width=t_width;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1085>";
 	this.m__height=t_height;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1086>";
 	this.p_SetHandle(t_xhandle,t_yhandle);
+	pop_err();
 	return this;
 }
 c_Image2.m_new5=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1041>";
+	pop_err();
 	return this;
 }
 c_Image2.m_Load=function(t_path,t_xhandle,t_yhandle,t_flags,t_shader){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1170>";
 	t_flags&=c_Image2.m__flagsMask;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1172>";
 	var t_material=c_Material.m_Load(t_path,t_flags|12,t_shader);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1173>";
 	if(!((t_material)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1173>";
+		pop_err();
 		return null;
 	}
-	return c_Image2.m_new3.call(new c_Image2,t_material,t_xhandle,t_yhandle);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1175>";
+	var t_=c_Image2.m_new3.call(new c_Image2,t_material,t_xhandle,t_yhandle);
+	pop_err();
+	return t_;
 }
 c_Image2.prototype.p_Width=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1115>";
+	pop_err();
 	return this.m__width;
 }
 c_Image2.prototype.p_Height=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1119>";
+	pop_err();
 	return this.m__height;
 }
 c_Image2.prototype.p_Material=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1095>";
+	pop_err();
 	return this.m__material;
 }
 c_Image2.m_LoadFrames=function(t_path,t_numFrames,t_padded,t_xhandle,t_yhandle,t_flags,t_shader){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1179>";
 	t_flags&=c_Image2.m__flagsMask;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1181>";
 	var t_material=c_Material.m_Load(t_path,t_flags|12,t_shader);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1182>";
 	if(!((t_material)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1182>";
+		pop_err();
 		return [];
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1184>";
 	var t_cellWidth=((t_material.p_Width()/t_numFrames)|0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1184>";
 	var t_cellHeight=t_material.p_Height();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1186>";
 	var t_x=0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1186>";
 	var t_width=t_cellWidth;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1187>";
 	if(t_padded){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1187>";
 		t_x+=1;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1187>";
 		t_width-=2;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1189>";
 	var t_frames=new_object_array(t_numFrames);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1191>";
 	for(var t_i=0;t_i<t_numFrames;t_i=t_i+1){
-		t_frames[t_i]=c_Image2.m_new4.call(new c_Image2,t_material,t_i*t_cellWidth+t_x,0,t_width,t_cellHeight,t_xhandle,t_yhandle);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1192>";
+		dbg_array(t_frames,t_i)[dbg_index]=c_Image2.m_new4.call(new c_Image2,t_material,t_i*t_cellWidth+t_x,0,t_width,t_cellHeight,t_xhandle,t_yhandle);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1195>";
+	pop_err();
 	return t_frames;
 }
 function c_RefCounted(){
@@ -5183,26 +7103,43 @@ function c_RefCounted(){
 	this.m__refs=1;
 }
 c_RefCounted.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<173>";
+	pop_err();
 	return this;
 }
 c_RefCounted.prototype.p_Retain=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<176>";
 	if(this.m__refs<=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<176>";
 		error("Internal error");
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<177>";
 	this.m__refs+=1;
+	pop_err();
 }
 c_RefCounted.prototype.p_Destroy=function(){
 }
 c_RefCounted.prototype.p_Release=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<181>";
 	if(this.m__refs<=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<181>";
 		error("Internal error");
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<182>";
 	this.m__refs-=1;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<183>";
 	if((this.m__refs)!=0){
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<184>";
 	this.m__refs=-1;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<185>";
 	this.p_Destroy();
+	pop_err();
 }
 function c_Texture(){
 	c_RefCounted.call(this);
@@ -5219,181 +7156,329 @@ c_Texture.prototype=extend_class(c_RefCounted);
 c_Texture.m__white=null;
 c_Texture.m__colors=null;
 c_Texture.prototype.p_Init3=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<449>";
 	this.m__seq=webglGraphicsSeq;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<451>";
 	this.m__glTexture=gl.createTexture();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<453>";
 	bb_glutil_glPushTexture2d(this.m__glTexture);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<455>";
 	if((this.m__flags&1)!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<456>";
 		gl.texParameteri(3553,10240,9729);
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<458>";
 		gl.texParameteri(3553,10240,9728);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<460>";
 	if(((this.m__flags&2)!=0) && ((this.m__flags&1)!=0)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<461>";
 		gl.texParameteri(3553,10241,9987);
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<462>";
 		if((this.m__flags&2)!=0){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<463>";
 			gl.texParameteri(3553,10241,9984);
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<464>";
 			if((this.m__flags&1)!=0){
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<465>";
 				gl.texParameteri(3553,10241,9729);
 			}else{
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<467>";
 				gl.texParameteri(3553,10241,9728);
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<470>";
 	if((this.m__flags&4)!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<470>";
 		gl.texParameteri(3553,10242,33071);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<471>";
 	if((this.m__flags&8)!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<471>";
 		gl.texParameteri(3553,10243,33071);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<473>";
 	_glTexImage2D(3553,0,6408,this.m__width,this.m__height,0,6408,5121,null);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<475>";
 	bb_glutil_glPopTexture2d();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<477>";
 	if((this.m__flags&16)!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<479>";
 		this.m__glFramebuffer=gl.createFramebuffer();
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<481>";
 		bb_glutil_glPushFramebuffer(this.m__glFramebuffer);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<483>";
 		_glBindFramebuffer(36160,this.m__glFramebuffer);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<484>";
 		gl.framebufferTexture2D(36160,36064,3553,this.m__glTexture,0);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<486>";
 		if(gl.checkFramebufferStatus(36160)!=36053){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<486>";
 			error("Incomplete framebuffer");
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<488>";
 		bb_glutil_glPopFramebuffer();
 	}
+	pop_err();
 }
 c_Texture.prototype.p_Init4=function(t_width,t_height,t_format,t_flags){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<425>";
 	bb_graphics2_InitMojo2();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<428>";
 	if(t_format!=4){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<428>";
 		error("Invalid texture format: "+String(t_format));
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<432>";
 	if(!bb_graphics2_IsPow2(t_width) || !bb_graphics2_IsPow2(t_height)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<432>";
 		t_flags&=-3;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<435>";
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<439>";
 	this.m__width=t_width;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<440>";
 	this.m__height=t_height;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<441>";
 	this.m__format=t_format;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<442>";
 	this.m__flags=t_flags;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<444>";
 	this.p_Init3();
+	pop_err();
 }
 c_Texture.m_new=function(t_width,t_height,t_format,t_flags){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<221>";
 	c_RefCounted.m_new.call(this);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<222>";
 	this.p_Init4(t_width,t_height,t_format,t_flags);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<224>";
 	if((this.m__flags&256)!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<225>";
 		var t_data=c_DataBuffer.m_new.call(new c_DataBuffer,t_width*t_height*4,false);
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<226>";
 		for(var t_i=0;t_i<t_width*t_height*4;t_i=t_i+4){
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<227>";
 			t_data.PokeInt(t_i,-65281);
 		}
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<229>";
 		this.m__data=(t_data);
 	}
+	pop_err();
 	return this;
 }
 c_Texture.prototype.p_Validate=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<240>";
 	if(this.m__seq==webglGraphicsSeq){
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<241>";
 	this.p_Init3();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<242>";
 	if((this.m__data)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<242>";
 		this.p_LoadData(this.m__data);
 	}
+	pop_err();
 }
 c_Texture.prototype.p_GLTexture=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<311>";
 	this.p_Validate();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<312>";
+	pop_err();
 	return this.m__glTexture;
 }
 c_Texture.prototype.p_UpdateMipmaps=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<291>";
 	if(!((this.m__flags&2)!=0)){
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<293>";
 	if(this.m__seq!=webglGraphicsSeq){
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<295>";
 	bb_glutil_glPushTexture2d(this.p_GLTexture());
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<297>";
 	_glGenerateMipmap(3553);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<299>";
 	bb_glutil_glPopTexture2d();
+	pop_err();
 }
 c_Texture.prototype.p_LoadData=function(t_data){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<494>";
 	bb_glutil_glPushTexture2d(this.p_GLTexture());
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<499>";
 	if((object_downcast((t_data),c_DataBuffer))!=null){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<500>";
 		_glTexImage2D(3553,0,6408,this.m__width,this.m__height,0,6408,5121,object_downcast((t_data),c_DataBuffer));
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<502>";
 		_glTexImage2D2(3553,0,6408,6408,5121,t_data);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<505>";
 	bb_glutil_glPopTexture2d();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<507>";
 	this.p_UpdateMipmaps();
+	pop_err();
 }
 c_Texture.m_new2=function(t_width,t_height,t_format,t_flags,t_data){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<414>";
 	c_RefCounted.m_new.call(this);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<415>";
 	this.p_Init4(t_width,t_height,t_format,t_flags);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<417>";
 	this.p_LoadData(t_data);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<419>";
 	if(true){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<420>";
 		this.m__data=t_data;
 	}
+	pop_err();
 	return this;
 }
 c_Texture.m_new3=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<210>";
 	c_RefCounted.m_new.call(this);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<210>";
+	pop_err();
 	return this;
 }
 c_Texture.m_Color=function(t_color){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<365>";
 	var t_tex=c_Texture.m__colors.p_Get(t_color);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<366>";
 	if((t_tex)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<366>";
+		pop_err();
 		return t_tex;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<367>";
 	var t_data=c_DataBuffer.m_new.call(new c_DataBuffer,4,false);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<368>";
 	t_data.PokeInt(0,t_color);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<369>";
 	t_tex=c_Texture.m_new2.call(new c_Texture,1,1,4,12,(t_data));
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<373>";
 	c_Texture.m__colors.p_Set3(t_color,t_tex);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<374>";
+	pop_err();
 	return t_tex;
 }
 c_Texture.m_White=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<383>";
 	if(!((c_Texture.m__white)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<383>";
 		c_Texture.m__white=c_Texture.m_Color(-1);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<384>";
+	pop_err();
 	return c_Texture.m__white;
 }
 c_Texture.m_Load=function(t_path,t_format,t_flags){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<330>";
 	var t_info=new_number_array(2);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<347>";
 	var t_data=bb_gles20_LoadStaticTexImage(bb_graphics2_KludgePath(t_path),t_info);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<350>";
 	if(!((t_data)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<352>";
+		pop_err();
 		return null;
 	}
-	var t_tex=c_Texture.m_new2.call(new c_Texture,t_info[0],t_info[1],t_format,t_flags,t_data);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<355>";
+	var t_tex=c_Texture.m_new2.call(new c_Texture,dbg_array(t_info,0)[dbg_index],dbg_array(t_info,1)[dbg_index],t_format,t_flags,t_data);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<361>";
+	pop_err();
 	return t_tex;
 }
 c_Texture.prototype.p_Loading=function(){
-	return BBTextureLoading(this.m__glTexture);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<304>";
+	var t_=BBTextureLoading(this.m__glTexture);
+	pop_err();
+	return t_;
 }
 c_Texture.prototype.p_GLFramebuffer=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<316>";
 	this.p_Validate();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<317>";
+	pop_err();
 	return this.m__glFramebuffer;
 }
 c_Texture.prototype.p_Flags=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<258>";
+	pop_err();
 	return this.m__flags;
 }
 c_Texture.prototype.p_Width=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<246>";
+	pop_err();
 	return this.m__width;
 }
 c_Texture.prototype.p_Height=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<250>";
+	pop_err();
 	return this.m__height;
 }
 c_Texture.m__black=null;
 c_Texture.m_Black=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<378>";
 	if(!((c_Texture.m__black)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<378>";
 		c_Texture.m__black=c_Texture.m_Color(-16777216);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<379>";
+	pop_err();
 	return c_Texture.m__black;
 }
 c_Texture.m__flat=null;
 c_Texture.m_Flat=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<393>";
 	if(!((c_Texture.m__flat)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<393>";
 		c_Texture.m__flat=c_Texture.m_Color(-7829368);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<394>";
+	pop_err();
 	return c_Texture.m__flat;
 }
 c_Texture.prototype.p_Destroy=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<234>";
 	if(this.m__seq==webglGraphicsSeq){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<234>";
 		gl.deleteTexture(this.m__glTexture);
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<235>";
 	this.m__glTexture=0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<236>";
 	this.m__glFramebuffer=0;
+	pop_err();
 }
 function c_Material(){
 	c_RefCounted.call(this);
@@ -5406,273 +7491,490 @@ function c_Material(){
 }
 c_Material.prototype=extend_class(c_RefCounted);
 c_Material.prototype.p_SetTexture=function(t_param,t_texture){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<922>";
 	if(!((t_texture)!=null)){
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<923>";
 	if(this.m__inited && !this.m__textures.p_Contains2(t_param)){
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<925>";
 	var t_old=this.m__textures.p_Get2(t_param);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<926>";
 	t_texture.p_Retain();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<927>";
 	this.m__textures.p_Set4(t_param,t_texture);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<928>";
 	if((t_old)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<928>";
 		t_old.p_Release();
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<930>";
 	if(t_param=="ColorTexture"){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<930>";
 		this.m__colorTexture=t_texture;
 	}
+	pop_err();
 }
 c_Material.m_new=function(t_shader){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<868>";
 	c_RefCounted.m_new.call(this);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<869>";
 	bb_graphics2_InitMojo2();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<871>";
 	if(!((t_shader)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<871>";
 		t_shader=bb_graphics2_defaultShader;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<872>";
 	this.m__shader=t_shader;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<873>";
 	this.m__shader.p_OnInitMaterial(this);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<874>";
 	this.m__inited=true;
+	pop_err();
 	return this;
 }
 c_Material.prototype.p_Shader=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<884>";
+	pop_err();
 	return this.m__shader;
 }
 c_Material.m_Load=function(t_path,t_texFlags,t_shader){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<950>";
 	var t_material=c_Material.m_new.call(new c_Material,t_shader);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<952>";
 	t_material=t_material.p_Shader().p_OnLoadMaterial(t_material,t_path,t_texFlags);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<954>";
+	pop_err();
 	return t_material;
 }
 c_Material.prototype.p_Width=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<892>";
 	if((this.m__colorTexture)!=null){
-		return this.m__colorTexture.m__width;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<892>";
+		pop_err();
+		return dbg_object(this.m__colorTexture).m__width;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<893>";
+	pop_err();
 	return 0;
 }
 c_Material.prototype.p_Height=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<897>";
 	if((this.m__colorTexture)!=null){
-		return this.m__colorTexture.m__height;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<897>";
+		pop_err();
+		return dbg_object(this.m__colorTexture).m__height;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<898>";
+	pop_err();
 	return 0;
 }
 c_Material.prototype.p_ColorTexture=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<888>";
+	pop_err();
 	return this.m__colorTexture;
 }
 c_Material.prototype.p_GetScalar=function(t_param,t_defValue){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<907>";
 	if(!this.m__scalars.p_Contains2(t_param)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<907>";
+		pop_err();
 		return t_defValue;
 	}
-	return this.m__scalars.p_Get2(t_param);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<908>";
+	var t_=this.m__scalars.p_Get2(t_param);
+	pop_err();
+	return t_;
 }
 c_Material.prototype.p_GetVector=function(t_param,t_defValue){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<917>";
 	if(!this.m__vectors.p_Contains2(t_param)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<917>";
+		pop_err();
 		return t_defValue;
 	}
-	return this.m__vectors.p_Get2(t_param);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<918>";
+	var t_=this.m__vectors.p_Get2(t_param);
+	pop_err();
+	return t_;
 }
 c_Material.prototype.p_GetTexture=function(t_param,t_defValue){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<935>";
 	if(!this.m__textures.p_Contains2(t_param)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<935>";
+		pop_err();
 		return t_defValue;
 	}
-	return this.m__textures.p_Get2(t_param);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<936>";
+	var t_=this.m__textures.p_Get2(t_param);
+	pop_err();
+	return t_;
 }
 c_Material.prototype.p_Bind=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<968>";
 	this.m__shader.p_Bind();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<970>";
 	if(bb_graphics2_rs_material==this){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<970>";
+		pop_err();
 		return true;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<972>";
 	bb_graphics2_rs_material=this;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<974>";
 	var t_texid=0;
-	var t_=bb_graphics2_rs_program.m_matuniforms;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<976>";
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<976>";
+	var t_=dbg_object(bb_graphics2_rs_program).m_matuniforms;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<976>";
 	var t_2=0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<976>";
 	while(t_2<t_.length){
-		var t_u=t_[t_2];
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<976>";
+		var t_u=dbg_array(t_,t_2)[dbg_index];
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<976>";
 		t_2=t_2+1;
-		var t_1=t_u.m_type;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<977>";
+		var t_1=dbg_object(t_u).m_type;
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<978>";
 		if(t_1==5126){
-			gl.uniform1f(t_u.m_location,this.p_GetScalar(t_u.m_name,1.0));
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<979>";
+			gl.uniform1f(dbg_object(t_u).m_location,this.p_GetScalar(dbg_object(t_u).m_name,1.0));
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<980>";
 			if(t_1==35666){
-				_glUniform4fv(t_u.m_location,1,this.p_GetVector(t_u.m_name,[1.0,1.0,1.0,1.0]));
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<981>";
+				_glUniform4fv(dbg_object(t_u).m_location,1,this.p_GetVector(dbg_object(t_u).m_name,[1.0,1.0,1.0,1.0]));
 			}else{
+				err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<982>";
 				if(t_1==35678){
-					var t_tex=this.p_GetTexture(t_u.m_name,null);
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<983>";
+					var t_tex=this.p_GetTexture(dbg_object(t_u).m_name,null);
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<984>";
 					if(t_tex.p_Loading()){
+						err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<985>";
 						bb_graphics2_rs_material=null;
+						err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<986>";
 						break;
 					}
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<988>";
 					gl.activeTexture(33984+t_texid);
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<989>";
 					_glBindTexture(3553,t_tex.p_GLTexture());
-					gl.uniform1i(t_u.m_location,t_texid);
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<990>";
+					gl.uniform1i(dbg_object(t_u).m_location,t_texid);
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<991>";
 					t_texid+=1;
 				}else{
-					error("Unsupported uniform type:"+String(t_u.m_type));
+					err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<993>";
+					error("Unsupported uniform type:"+String(dbg_object(t_u).m_type));
 				}
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<997>";
 	if((t_texid)!=0){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<997>";
 		gl.activeTexture(33984);
 	}
-	return bb_graphics2_rs_material==this;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<999>";
+	var t_3=bb_graphics2_rs_material==this;
+	pop_err();
+	return t_3;
 }
 c_Material.prototype.p_SetVector=function(t_param,t_vector){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<912>";
 	if(this.m__inited && !this.m__vectors.p_Contains2(t_param)){
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<913>";
 	this.m__vectors.p_Set6(t_param,t_vector);
+	pop_err();
 }
 c_Material.prototype.p_SetScalar=function(t_param,t_scalar){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<902>";
 	if(this.m__inited && !this.m__scalars.p_Contains2(t_param)){
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<903>";
 	this.m__scalars.p_Set5(t_param,t_scalar);
+	pop_err();
 }
 c_Material.prototype.p_Destroy=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<878>";
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<878>";
 	var t_=this.m__textures.p_ObjectEnumerator();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<878>";
 	while(t_.p_HasNext()){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<878>";
 		var t_tex=t_.p_NextObject();
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<879>";
 		t_tex.p_Value().p_Release();
 	}
+	pop_err();
 }
 function c_Map3(){
 	Object.call(this);
 	this.m_root=null;
 }
 c_Map3.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<7>";
+	pop_err();
 	return this;
 }
 c_Map3.prototype.p_Compare=function(t_lhs,t_rhs){
 }
 c_Map3.prototype.p_FindNode=function(t_key){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<157>";
 	var t_node=this.m_root;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<159>";
 	while((t_node)!=null){
-		var t_cmp=this.p_Compare(t_key,t_node.m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<160>";
+		var t_cmp=this.p_Compare(t_key,dbg_object(t_node).m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<161>";
 		if(t_cmp>0){
-			t_node=t_node.m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<162>";
+			t_node=dbg_object(t_node).m_right;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<163>";
 			if(t_cmp<0){
-				t_node=t_node.m_left;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<164>";
+				t_node=dbg_object(t_node).m_left;
 			}else{
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<166>";
+				pop_err();
 				return t_node;
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<169>";
+	pop_err();
 	return t_node;
 }
 c_Map3.prototype.p_Get=function(t_key){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<101>";
 	var t_node=this.p_FindNode(t_key);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<102>";
 	if((t_node)!=null){
-		return t_node.m_value;
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<102>";
+		pop_err();
+		return dbg_object(t_node).m_value;
 	}
+	pop_err();
 	return null;
 }
 c_Map3.prototype.p_RotateLeft3=function(t_node){
-	var t_child=t_node.m_right;
-	t_node.m_right=t_child.m_left;
-	if((t_child.m_left)!=null){
-		t_child.m_left.m_parent=t_node;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<251>";
+	var t_child=dbg_object(t_node).m_right;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<252>";
+	dbg_object(t_node).m_right=dbg_object(t_child).m_left;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<253>";
+	if((dbg_object(t_child).m_left)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<254>";
+		dbg_object(dbg_object(t_child).m_left).m_parent=t_node;
 	}
-	t_child.m_parent=t_node.m_parent;
-	if((t_node.m_parent)!=null){
-		if(t_node==t_node.m_parent.m_left){
-			t_node.m_parent.m_left=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<256>";
+	dbg_object(t_child).m_parent=dbg_object(t_node).m_parent;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<257>";
+	if((dbg_object(t_node).m_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<258>";
+		if(t_node==dbg_object(dbg_object(t_node).m_parent).m_left){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<259>";
+			dbg_object(dbg_object(t_node).m_parent).m_left=t_child;
 		}else{
-			t_node.m_parent.m_right=t_child;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<261>";
+			dbg_object(dbg_object(t_node).m_parent).m_right=t_child;
 		}
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<264>";
 		this.m_root=t_child;
 	}
-	t_child.m_left=t_node;
-	t_node.m_parent=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<266>";
+	dbg_object(t_child).m_left=t_node;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<267>";
+	dbg_object(t_node).m_parent=t_child;
+	pop_err();
 	return 0;
 }
 c_Map3.prototype.p_RotateRight3=function(t_node){
-	var t_child=t_node.m_left;
-	t_node.m_left=t_child.m_right;
-	if((t_child.m_right)!=null){
-		t_child.m_right.m_parent=t_node;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<271>";
+	var t_child=dbg_object(t_node).m_left;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<272>";
+	dbg_object(t_node).m_left=dbg_object(t_child).m_right;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<273>";
+	if((dbg_object(t_child).m_right)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<274>";
+		dbg_object(dbg_object(t_child).m_right).m_parent=t_node;
 	}
-	t_child.m_parent=t_node.m_parent;
-	if((t_node.m_parent)!=null){
-		if(t_node==t_node.m_parent.m_right){
-			t_node.m_parent.m_right=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<276>";
+	dbg_object(t_child).m_parent=dbg_object(t_node).m_parent;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<277>";
+	if((dbg_object(t_node).m_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<278>";
+		if(t_node==dbg_object(dbg_object(t_node).m_parent).m_right){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<279>";
+			dbg_object(dbg_object(t_node).m_parent).m_right=t_child;
 		}else{
-			t_node.m_parent.m_left=t_child;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<281>";
+			dbg_object(dbg_object(t_node).m_parent).m_left=t_child;
 		}
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<284>";
 		this.m_root=t_child;
 	}
-	t_child.m_right=t_node;
-	t_node.m_parent=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<286>";
+	dbg_object(t_child).m_right=t_node;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<287>";
+	dbg_object(t_node).m_parent=t_child;
+	pop_err();
 	return 0;
 }
 c_Map3.prototype.p_InsertFixup3=function(t_node){
-	while(((t_node.m_parent)!=null) && t_node.m_parent.m_color==-1 && ((t_node.m_parent.m_parent)!=null)){
-		if(t_node.m_parent==t_node.m_parent.m_parent.m_left){
-			var t_uncle=t_node.m_parent.m_parent.m_right;
-			if(((t_uncle)!=null) && t_uncle.m_color==-1){
-				t_node.m_parent.m_color=1;
-				t_uncle.m_color=1;
-				t_uncle.m_parent.m_color=-1;
-				t_node=t_uncle.m_parent;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<212>";
+	while(((dbg_object(t_node).m_parent)!=null) && dbg_object(dbg_object(t_node).m_parent).m_color==-1 && ((dbg_object(dbg_object(t_node).m_parent).m_parent)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<213>";
+		if(dbg_object(t_node).m_parent==dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_left){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<214>";
+			var t_uncle=dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<215>";
+			if(((t_uncle)!=null) && dbg_object(t_uncle).m_color==-1){
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<216>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<217>";
+				dbg_object(t_uncle).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<218>";
+				dbg_object(dbg_object(t_uncle).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<219>";
+				t_node=dbg_object(t_uncle).m_parent;
 			}else{
-				if(t_node==t_node.m_parent.m_right){
-					t_node=t_node.m_parent;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<221>";
+				if(t_node==dbg_object(dbg_object(t_node).m_parent).m_right){
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<222>";
+					t_node=dbg_object(t_node).m_parent;
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<223>";
 					this.p_RotateLeft3(t_node);
 				}
-				t_node.m_parent.m_color=1;
-				t_node.m_parent.m_parent.m_color=-1;
-				this.p_RotateRight3(t_node.m_parent.m_parent);
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<225>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<226>";
+				dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<227>";
+				this.p_RotateRight3(dbg_object(dbg_object(t_node).m_parent).m_parent);
 			}
 		}else{
-			var t_uncle2=t_node.m_parent.m_parent.m_left;
-			if(((t_uncle2)!=null) && t_uncle2.m_color==-1){
-				t_node.m_parent.m_color=1;
-				t_uncle2.m_color=1;
-				t_uncle2.m_parent.m_color=-1;
-				t_node=t_uncle2.m_parent;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<230>";
+			var t_uncle2=dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_left;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<231>";
+			if(((t_uncle2)!=null) && dbg_object(t_uncle2).m_color==-1){
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<232>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<233>";
+				dbg_object(t_uncle2).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<234>";
+				dbg_object(dbg_object(t_uncle2).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<235>";
+				t_node=dbg_object(t_uncle2).m_parent;
 			}else{
-				if(t_node==t_node.m_parent.m_left){
-					t_node=t_node.m_parent;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<237>";
+				if(t_node==dbg_object(dbg_object(t_node).m_parent).m_left){
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<238>";
+					t_node=dbg_object(t_node).m_parent;
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<239>";
 					this.p_RotateRight3(t_node);
 				}
-				t_node.m_parent.m_color=1;
-				t_node.m_parent.m_parent.m_color=-1;
-				this.p_RotateLeft3(t_node.m_parent.m_parent);
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<241>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<242>";
+				dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<243>";
+				this.p_RotateLeft3(dbg_object(dbg_object(t_node).m_parent).m_parent);
 			}
 		}
 	}
-	this.m_root.m_color=1;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<247>";
+	dbg_object(this.m_root).m_color=1;
+	pop_err();
 	return 0;
 }
 c_Map3.prototype.p_Set3=function(t_key,t_value){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<29>";
 	var t_node=this.m_root;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<30>";
 	var t_parent=null;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<30>";
 	var t_cmp=0;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<32>";
 	while((t_node)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<33>";
 		t_parent=t_node;
-		t_cmp=this.p_Compare(t_key,t_node.m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<34>";
+		t_cmp=this.p_Compare(t_key,dbg_object(t_node).m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<35>";
 		if(t_cmp>0){
-			t_node=t_node.m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<36>";
+			t_node=dbg_object(t_node).m_right;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<37>";
 			if(t_cmp<0){
-				t_node=t_node.m_left;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<38>";
+				t_node=dbg_object(t_node).m_left;
 			}else{
-				t_node.m_value=t_value;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<40>";
+				dbg_object(t_node).m_value=t_value;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<41>";
+				pop_err();
 				return false;
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<45>";
 	t_node=c_Node3.m_new.call(new c_Node3,t_key,t_value,-1,t_parent);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<47>";
 	if((t_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<48>";
 		if(t_cmp>0){
-			t_parent.m_right=t_node;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<49>";
+			dbg_object(t_parent).m_right=t_node;
 		}else{
-			t_parent.m_left=t_node;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<51>";
+			dbg_object(t_parent).m_left=t_node;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<53>";
 		this.p_InsertFixup3(t_node);
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<55>";
 		this.m_root=t_node;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<57>";
+	pop_err();
 	return true;
 }
 function c_IntMap2(){
@@ -5680,11 +7982,19 @@ function c_IntMap2(){
 }
 c_IntMap2.prototype=extend_class(c_Map3);
 c_IntMap2.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<534>";
 	c_Map3.m_new.call(this);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<534>";
+	pop_err();
 	return this;
 }
 c_IntMap2.prototype.p_Compare=function(t_lhs,t_rhs){
-	return t_lhs-t_rhs;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<537>";
+	var t_=t_lhs-t_rhs;
+	pop_err();
+	return t_;
 }
 function c_Node3(){
 	Object.call(this);
@@ -5696,200 +8006,353 @@ function c_Node3(){
 	this.m_parent=null;
 }
 c_Node3.m_new=function(t_key,t_value,t_color,t_parent){
-	this.m_key=t_key;
-	this.m_value=t_value;
-	this.m_color=t_color;
-	this.m_parent=t_parent;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<364>";
+	dbg_object(this).m_key=t_key;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<365>";
+	dbg_object(this).m_value=t_value;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<366>";
+	dbg_object(this).m_color=t_color;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<367>";
+	dbg_object(this).m_parent=t_parent;
+	pop_err();
 	return this;
 }
 c_Node3.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<361>";
+	pop_err();
 	return this;
 }
 function bb_graphics2_IsPow2(t_sz){
-	return (t_sz&t_sz-1)==0;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<98>";
+	var t_=(t_sz&t_sz-1)==0;
+	pop_err();
+	return t_;
 }
 function bb_glutil_glPushTexture2d(t_tex){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<17>";
 	_glGetIntegerv(32873,bb_glutil_tmpi);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<18>";
 	_glBindTexture(3553,t_tex);
+	pop_err();
 }
 function bb_glutil_glPopTexture2d(){
-	_glBindTexture(3553,bb_glutil_tmpi[0]);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<22>";
+	_glBindTexture(3553,dbg_array(bb_glutil_tmpi,0)[dbg_index]);
+	pop_err();
 }
 function bb_glutil_glPushFramebuffer(t_framebuf){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<26>";
 	_glGetIntegerv(36006,bb_glutil_tmpi);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<27>";
 	_glBindFramebuffer(36160,t_framebuf);
+	pop_err();
 }
 function bb_glutil_glPopFramebuffer(){
-	_glBindFramebuffer(36160,bb_glutil_tmpi[0]);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/glutil.monkey<31>";
+	_glBindFramebuffer(36160,dbg_array(bb_glutil_tmpi,0)[dbg_index]);
+	pop_err();
 }
 function c_Map4(){
 	Object.call(this);
 	this.m_root=null;
 }
 c_Map4.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<7>";
+	pop_err();
 	return this;
 }
 c_Map4.prototype.p_Compare2=function(t_lhs,t_rhs){
 }
 c_Map4.prototype.p_FindNode2=function(t_key){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<157>";
 	var t_node=this.m_root;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<159>";
 	while((t_node)!=null){
-		var t_cmp=this.p_Compare2(t_key,t_node.m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<160>";
+		var t_cmp=this.p_Compare2(t_key,dbg_object(t_node).m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<161>";
 		if(t_cmp>0){
-			t_node=t_node.m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<162>";
+			t_node=dbg_object(t_node).m_right;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<163>";
 			if(t_cmp<0){
-				t_node=t_node.m_left;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<164>";
+				t_node=dbg_object(t_node).m_left;
 			}else{
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<166>";
+				pop_err();
 				return t_node;
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<169>";
+	pop_err();
 	return t_node;
 }
 c_Map4.prototype.p_Contains2=function(t_key){
-	return this.p_FindNode2(t_key)!=null;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<25>";
+	var t_=this.p_FindNode2(t_key)!=null;
+	pop_err();
+	return t_;
 }
 c_Map4.prototype.p_Get2=function(t_key){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<101>";
 	var t_node=this.p_FindNode2(t_key);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<102>";
 	if((t_node)!=null){
-		return t_node.m_value;
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<102>";
+		pop_err();
+		return dbg_object(t_node).m_value;
 	}
+	pop_err();
 	return null;
 }
 c_Map4.prototype.p_RotateLeft4=function(t_node){
-	var t_child=t_node.m_right;
-	t_node.m_right=t_child.m_left;
-	if((t_child.m_left)!=null){
-		t_child.m_left.m_parent=t_node;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<251>";
+	var t_child=dbg_object(t_node).m_right;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<252>";
+	dbg_object(t_node).m_right=dbg_object(t_child).m_left;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<253>";
+	if((dbg_object(t_child).m_left)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<254>";
+		dbg_object(dbg_object(t_child).m_left).m_parent=t_node;
 	}
-	t_child.m_parent=t_node.m_parent;
-	if((t_node.m_parent)!=null){
-		if(t_node==t_node.m_parent.m_left){
-			t_node.m_parent.m_left=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<256>";
+	dbg_object(t_child).m_parent=dbg_object(t_node).m_parent;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<257>";
+	if((dbg_object(t_node).m_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<258>";
+		if(t_node==dbg_object(dbg_object(t_node).m_parent).m_left){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<259>";
+			dbg_object(dbg_object(t_node).m_parent).m_left=t_child;
 		}else{
-			t_node.m_parent.m_right=t_child;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<261>";
+			dbg_object(dbg_object(t_node).m_parent).m_right=t_child;
 		}
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<264>";
 		this.m_root=t_child;
 	}
-	t_child.m_left=t_node;
-	t_node.m_parent=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<266>";
+	dbg_object(t_child).m_left=t_node;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<267>";
+	dbg_object(t_node).m_parent=t_child;
+	pop_err();
 	return 0;
 }
 c_Map4.prototype.p_RotateRight4=function(t_node){
-	var t_child=t_node.m_left;
-	t_node.m_left=t_child.m_right;
-	if((t_child.m_right)!=null){
-		t_child.m_right.m_parent=t_node;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<271>";
+	var t_child=dbg_object(t_node).m_left;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<272>";
+	dbg_object(t_node).m_left=dbg_object(t_child).m_right;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<273>";
+	if((dbg_object(t_child).m_right)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<274>";
+		dbg_object(dbg_object(t_child).m_right).m_parent=t_node;
 	}
-	t_child.m_parent=t_node.m_parent;
-	if((t_node.m_parent)!=null){
-		if(t_node==t_node.m_parent.m_right){
-			t_node.m_parent.m_right=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<276>";
+	dbg_object(t_child).m_parent=dbg_object(t_node).m_parent;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<277>";
+	if((dbg_object(t_node).m_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<278>";
+		if(t_node==dbg_object(dbg_object(t_node).m_parent).m_right){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<279>";
+			dbg_object(dbg_object(t_node).m_parent).m_right=t_child;
 		}else{
-			t_node.m_parent.m_left=t_child;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<281>";
+			dbg_object(dbg_object(t_node).m_parent).m_left=t_child;
 		}
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<284>";
 		this.m_root=t_child;
 	}
-	t_child.m_right=t_node;
-	t_node.m_parent=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<286>";
+	dbg_object(t_child).m_right=t_node;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<287>";
+	dbg_object(t_node).m_parent=t_child;
+	pop_err();
 	return 0;
 }
 c_Map4.prototype.p_InsertFixup4=function(t_node){
-	while(((t_node.m_parent)!=null) && t_node.m_parent.m_color==-1 && ((t_node.m_parent.m_parent)!=null)){
-		if(t_node.m_parent==t_node.m_parent.m_parent.m_left){
-			var t_uncle=t_node.m_parent.m_parent.m_right;
-			if(((t_uncle)!=null) && t_uncle.m_color==-1){
-				t_node.m_parent.m_color=1;
-				t_uncle.m_color=1;
-				t_uncle.m_parent.m_color=-1;
-				t_node=t_uncle.m_parent;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<212>";
+	while(((dbg_object(t_node).m_parent)!=null) && dbg_object(dbg_object(t_node).m_parent).m_color==-1 && ((dbg_object(dbg_object(t_node).m_parent).m_parent)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<213>";
+		if(dbg_object(t_node).m_parent==dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_left){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<214>";
+			var t_uncle=dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<215>";
+			if(((t_uncle)!=null) && dbg_object(t_uncle).m_color==-1){
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<216>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<217>";
+				dbg_object(t_uncle).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<218>";
+				dbg_object(dbg_object(t_uncle).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<219>";
+				t_node=dbg_object(t_uncle).m_parent;
 			}else{
-				if(t_node==t_node.m_parent.m_right){
-					t_node=t_node.m_parent;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<221>";
+				if(t_node==dbg_object(dbg_object(t_node).m_parent).m_right){
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<222>";
+					t_node=dbg_object(t_node).m_parent;
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<223>";
 					this.p_RotateLeft4(t_node);
 				}
-				t_node.m_parent.m_color=1;
-				t_node.m_parent.m_parent.m_color=-1;
-				this.p_RotateRight4(t_node.m_parent.m_parent);
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<225>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<226>";
+				dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<227>";
+				this.p_RotateRight4(dbg_object(dbg_object(t_node).m_parent).m_parent);
 			}
 		}else{
-			var t_uncle2=t_node.m_parent.m_parent.m_left;
-			if(((t_uncle2)!=null) && t_uncle2.m_color==-1){
-				t_node.m_parent.m_color=1;
-				t_uncle2.m_color=1;
-				t_uncle2.m_parent.m_color=-1;
-				t_node=t_uncle2.m_parent;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<230>";
+			var t_uncle2=dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_left;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<231>";
+			if(((t_uncle2)!=null) && dbg_object(t_uncle2).m_color==-1){
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<232>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<233>";
+				dbg_object(t_uncle2).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<234>";
+				dbg_object(dbg_object(t_uncle2).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<235>";
+				t_node=dbg_object(t_uncle2).m_parent;
 			}else{
-				if(t_node==t_node.m_parent.m_left){
-					t_node=t_node.m_parent;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<237>";
+				if(t_node==dbg_object(dbg_object(t_node).m_parent).m_left){
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<238>";
+					t_node=dbg_object(t_node).m_parent;
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<239>";
 					this.p_RotateRight4(t_node);
 				}
-				t_node.m_parent.m_color=1;
-				t_node.m_parent.m_parent.m_color=-1;
-				this.p_RotateLeft4(t_node.m_parent.m_parent);
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<241>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<242>";
+				dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<243>";
+				this.p_RotateLeft4(dbg_object(dbg_object(t_node).m_parent).m_parent);
 			}
 		}
 	}
-	this.m_root.m_color=1;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<247>";
+	dbg_object(this.m_root).m_color=1;
+	pop_err();
 	return 0;
 }
 c_Map4.prototype.p_Set4=function(t_key,t_value){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<29>";
 	var t_node=this.m_root;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<30>";
 	var t_parent=null;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<30>";
 	var t_cmp=0;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<32>";
 	while((t_node)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<33>";
 		t_parent=t_node;
-		t_cmp=this.p_Compare2(t_key,t_node.m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<34>";
+		t_cmp=this.p_Compare2(t_key,dbg_object(t_node).m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<35>";
 		if(t_cmp>0){
-			t_node=t_node.m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<36>";
+			t_node=dbg_object(t_node).m_right;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<37>";
 			if(t_cmp<0){
-				t_node=t_node.m_left;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<38>";
+				t_node=dbg_object(t_node).m_left;
 			}else{
-				t_node.m_value=t_value;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<40>";
+				dbg_object(t_node).m_value=t_value;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<41>";
+				pop_err();
 				return false;
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<45>";
 	t_node=c_Node4.m_new.call(new c_Node4,t_key,t_value,-1,t_parent);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<47>";
 	if((t_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<48>";
 		if(t_cmp>0){
-			t_parent.m_right=t_node;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<49>";
+			dbg_object(t_parent).m_right=t_node;
 		}else{
-			t_parent.m_left=t_node;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<51>";
+			dbg_object(t_parent).m_left=t_node;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<53>";
 		this.p_InsertFixup4(t_node);
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<55>";
 		this.m_root=t_node;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<57>";
+	pop_err();
 	return true;
 }
 c_Map4.prototype.p_FirstNode=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<125>";
 	if(!((this.m_root)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<125>";
+		pop_err();
 		return null;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<127>";
 	var t_node=this.m_root;
-	while((t_node.m_left)!=null){
-		t_node=t_node.m_left;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<128>";
+	while((dbg_object(t_node).m_left)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<129>";
+		t_node=dbg_object(t_node).m_left;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<131>";
+	pop_err();
 	return t_node;
 }
 c_Map4.prototype.p_ObjectEnumerator=function(){
-	return c_NodeEnumerator.m_new.call(new c_NodeEnumerator,this.p_FirstNode());
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<121>";
+	var t_=c_NodeEnumerator.m_new.call(new c_NodeEnumerator,this.p_FirstNode());
+	pop_err();
+	return t_;
 }
 function c_StringMap2(){
 	c_Map4.call(this);
 }
 c_StringMap2.prototype=extend_class(c_Map4);
 c_StringMap2.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<551>";
 	c_Map4.m_new.call(this);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<551>";
+	pop_err();
 	return this;
 }
 c_StringMap2.prototype.p_Compare2=function(t_lhs,t_rhs){
-	return string_compare(t_lhs,t_rhs);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<554>";
+	var t_=string_compare(t_lhs,t_rhs);
+	pop_err();
+	return t_;
 }
 function c_Node4(){
 	Object.call(this);
@@ -5901,47 +8364,89 @@ function c_Node4(){
 	this.m_parent=null;
 }
 c_Node4.m_new=function(t_key,t_value,t_color,t_parent){
-	this.m_key=t_key;
-	this.m_value=t_value;
-	this.m_color=t_color;
-	this.m_parent=t_parent;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<364>";
+	dbg_object(this).m_key=t_key;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<365>";
+	dbg_object(this).m_value=t_value;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<366>";
+	dbg_object(this).m_color=t_color;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<367>";
+	dbg_object(this).m_parent=t_parent;
+	pop_err();
 	return this;
 }
 c_Node4.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<361>";
+	pop_err();
 	return this;
 }
 c_Node4.prototype.p_NextNode=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<385>";
 	var t_node=null;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<386>";
 	if((this.m_right)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<387>";
 		t_node=this.m_right;
-		while((t_node.m_left)!=null){
-			t_node=t_node.m_left;
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<388>";
+		while((dbg_object(t_node).m_left)!=null){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<389>";
+			t_node=dbg_object(t_node).m_left;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<391>";
+		pop_err();
 		return t_node;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<393>";
 	t_node=this;
-	var t_parent=this.m_parent;
-	while(((t_parent)!=null) && t_node==t_parent.m_right){
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<394>";
+	var t_parent=dbg_object(this).m_parent;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<395>";
+	while(((t_parent)!=null) && t_node==dbg_object(t_parent).m_right){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<396>";
 		t_node=t_parent;
-		t_parent=t_parent.m_parent;
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<397>";
+		t_parent=dbg_object(t_parent).m_parent;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<399>";
+	pop_err();
 	return t_parent;
 }
 c_Node4.prototype.p_Value=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<381>";
+	pop_err();
 	return this.m_value;
 }
 function bb_graphics2_KludgePath(t_path){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<196>";
 	if(string_startswith(t_path,".") || string_startswith(t_path,"/")){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<196>";
+		pop_err();
 		return t_path;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<197>";
 	var t_i=t_path.indexOf(":/",0);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<198>";
 	if(t_i!=-1 && t_path.indexOf("/",0)==t_i+1){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<198>";
+		pop_err();
 		return t_path;
 	}
-	return "monkey://data/"+t_path;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<199>";
+	var t_="monkey://data/"+t_path;
+	pop_err();
+	return t_;
 }
 function bb_gles20_LoadStaticTexImage(t_path,t_info){
-	return BBLoadStaticTexImage(t_path,t_info);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/opengl/gles20.monkey<957>";
+	var t_=BBLoadStaticTexImage(t_path,t_info);
+	pop_err();
+	return t_;
 }
 function c_Glyph(){
 	Object.call(this);
@@ -5954,43 +8459,78 @@ function c_Glyph(){
 	this.m_advance=.0;
 }
 c_Glyph.m_new=function(t_image,t_char,t_x,t_y,t_width,t_height,t_advance){
-	this.m_image=t_image;
-	this.m_char=t_char;
-	this.m_x=t_x;
-	this.m_y=t_y;
-	this.m_width=t_width;
-	this.m_height=t_height;
-	this.m_advance=t_advance;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1228>";
+	dbg_object(this).m_image=t_image;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1229>";
+	dbg_object(this).m_char=t_char;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1230>";
+	dbg_object(this).m_x=t_x;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1231>";
+	dbg_object(this).m_y=t_y;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1232>";
+	dbg_object(this).m_width=t_width;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1233>";
+	dbg_object(this).m_height=t_height;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1234>";
+	dbg_object(this).m_advance=t_advance;
+	pop_err();
 	return this;
 }
 c_Glyph.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1218>";
+	pop_err();
 	return this;
 }
 var bb_graphics2_defaultFont=null;
 function bb_math3d_Mat4New(){
-	return [1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0];
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<17>";
+	var t_=[1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0];
+	pop_err();
+	return t_;
 }
 var bb_graphics2_flipYMatrix=[];
 function bb_graphics2_InitMojo2(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<150>";
 	if(bb_graphics2_inited){
+		pop_err();
 		return;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<151>";
 	bb_graphics2_inited=true;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<153>";
 	bb_graphics2_InitVbos();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<155>";
 	_glGetIntegerv(36006,bb_graphics2_tmpi);
-	bb_graphics2_defaultFbo=bb_graphics2_tmpi[0];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<156>";
+	bb_graphics2_defaultFbo=dbg_array(bb_graphics2_tmpi,0)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<158>";
 	bb_graphics2_mainShader=bb_app_LoadString("monkey://data/mojo2_program.glsl");
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<160>";
 	bb_graphics2_fastShader=c_Shader.m_new.call(new c_Shader,bb_app_LoadString("monkey://data/mojo2_fastshader.glsl"));
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<161>";
 	bb_graphics2_bumpShader=(c_BumpShader.m_new.call(new c_BumpShader,bb_app_LoadString("monkey://data/mojo2_bumpshader.glsl")));
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<162>";
 	bb_graphics2_matteShader=(c_MatteShader.m_new.call(new c_MatteShader,bb_app_LoadString("monkey://data/mojo2_matteshader.glsl")));
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<163>";
 	bb_graphics2_shadowShader=c_Shader.m_new.call(new c_Shader,bb_app_LoadString("monkey://data/mojo2_shadowshader.glsl"));
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<164>";
 	bb_graphics2_lightMapShader=c_Shader.m_new.call(new c_Shader,bb_app_LoadString("monkey://data/mojo2_lightmapshader.glsl"));
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<165>";
 	bb_graphics2_defaultShader=bb_graphics2_bumpShader;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<167>";
 	bb_graphics2_defaultFont=c_Font.m_Load("monkey://data/mojo2_font.png",32,96,true);
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<168>";
 	if(!((bb_graphics2_defaultFont)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<168>";
 		error("Can't load default font");
 	}
-	bb_graphics2_flipYMatrix[5]=-1.0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<170>";
+	dbg_array(bb_graphics2_flipYMatrix,5)[dbg_index]=-1.0;
+	pop_err();
 }
 function c_LightData(){
 	Object.call(this);
@@ -6001,6 +8541,9 @@ function c_LightData(){
 	this.m_range=10.0;
 }
 c_LightData.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<101>";
+	pop_err();
 	return this;
 }
 function c_DrawOp(){
@@ -6011,6 +8554,9 @@ function c_DrawOp(){
 	this.m_count=0;
 }
 c_DrawOp.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/graphics.monkey<1322>";
+	pop_err();
 	return this;
 }
 var bb_graphics2_rs_program=null;
@@ -6030,144 +8576,249 @@ function c_Map5(){
 	this.m_root=null;
 }
 c_Map5.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<7>";
+	pop_err();
 	return this;
 }
 c_Map5.prototype.p_Compare2=function(t_lhs,t_rhs){
 }
 c_Map5.prototype.p_FindNode2=function(t_key){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<157>";
 	var t_node=this.m_root;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<159>";
 	while((t_node)!=null){
-		var t_cmp=this.p_Compare2(t_key,t_node.m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<160>";
+		var t_cmp=this.p_Compare2(t_key,dbg_object(t_node).m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<161>";
 		if(t_cmp>0){
-			t_node=t_node.m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<162>";
+			t_node=dbg_object(t_node).m_right;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<163>";
 			if(t_cmp<0){
-				t_node=t_node.m_left;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<164>";
+				t_node=dbg_object(t_node).m_left;
 			}else{
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<166>";
+				pop_err();
 				return t_node;
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<169>";
+	pop_err();
 	return t_node;
 }
 c_Map5.prototype.p_Contains2=function(t_key){
-	return this.p_FindNode2(t_key)!=null;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<25>";
+	var t_=this.p_FindNode2(t_key)!=null;
+	pop_err();
+	return t_;
 }
 c_Map5.prototype.p_Get2=function(t_key){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<101>";
 	var t_node=this.p_FindNode2(t_key);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<102>";
 	if((t_node)!=null){
-		return t_node.m_value;
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<102>";
+		pop_err();
+		return dbg_object(t_node).m_value;
 	}
+	pop_err();
 	return 0;
 }
 c_Map5.prototype.p_RotateLeft5=function(t_node){
-	var t_child=t_node.m_right;
-	t_node.m_right=t_child.m_left;
-	if((t_child.m_left)!=null){
-		t_child.m_left.m_parent=t_node;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<251>";
+	var t_child=dbg_object(t_node).m_right;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<252>";
+	dbg_object(t_node).m_right=dbg_object(t_child).m_left;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<253>";
+	if((dbg_object(t_child).m_left)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<254>";
+		dbg_object(dbg_object(t_child).m_left).m_parent=t_node;
 	}
-	t_child.m_parent=t_node.m_parent;
-	if((t_node.m_parent)!=null){
-		if(t_node==t_node.m_parent.m_left){
-			t_node.m_parent.m_left=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<256>";
+	dbg_object(t_child).m_parent=dbg_object(t_node).m_parent;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<257>";
+	if((dbg_object(t_node).m_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<258>";
+		if(t_node==dbg_object(dbg_object(t_node).m_parent).m_left){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<259>";
+			dbg_object(dbg_object(t_node).m_parent).m_left=t_child;
 		}else{
-			t_node.m_parent.m_right=t_child;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<261>";
+			dbg_object(dbg_object(t_node).m_parent).m_right=t_child;
 		}
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<264>";
 		this.m_root=t_child;
 	}
-	t_child.m_left=t_node;
-	t_node.m_parent=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<266>";
+	dbg_object(t_child).m_left=t_node;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<267>";
+	dbg_object(t_node).m_parent=t_child;
+	pop_err();
 	return 0;
 }
 c_Map5.prototype.p_RotateRight5=function(t_node){
-	var t_child=t_node.m_left;
-	t_node.m_left=t_child.m_right;
-	if((t_child.m_right)!=null){
-		t_child.m_right.m_parent=t_node;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<271>";
+	var t_child=dbg_object(t_node).m_left;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<272>";
+	dbg_object(t_node).m_left=dbg_object(t_child).m_right;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<273>";
+	if((dbg_object(t_child).m_right)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<274>";
+		dbg_object(dbg_object(t_child).m_right).m_parent=t_node;
 	}
-	t_child.m_parent=t_node.m_parent;
-	if((t_node.m_parent)!=null){
-		if(t_node==t_node.m_parent.m_right){
-			t_node.m_parent.m_right=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<276>";
+	dbg_object(t_child).m_parent=dbg_object(t_node).m_parent;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<277>";
+	if((dbg_object(t_node).m_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<278>";
+		if(t_node==dbg_object(dbg_object(t_node).m_parent).m_right){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<279>";
+			dbg_object(dbg_object(t_node).m_parent).m_right=t_child;
 		}else{
-			t_node.m_parent.m_left=t_child;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<281>";
+			dbg_object(dbg_object(t_node).m_parent).m_left=t_child;
 		}
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<284>";
 		this.m_root=t_child;
 	}
-	t_child.m_right=t_node;
-	t_node.m_parent=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<286>";
+	dbg_object(t_child).m_right=t_node;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<287>";
+	dbg_object(t_node).m_parent=t_child;
+	pop_err();
 	return 0;
 }
 c_Map5.prototype.p_InsertFixup5=function(t_node){
-	while(((t_node.m_parent)!=null) && t_node.m_parent.m_color==-1 && ((t_node.m_parent.m_parent)!=null)){
-		if(t_node.m_parent==t_node.m_parent.m_parent.m_left){
-			var t_uncle=t_node.m_parent.m_parent.m_right;
-			if(((t_uncle)!=null) && t_uncle.m_color==-1){
-				t_node.m_parent.m_color=1;
-				t_uncle.m_color=1;
-				t_uncle.m_parent.m_color=-1;
-				t_node=t_uncle.m_parent;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<212>";
+	while(((dbg_object(t_node).m_parent)!=null) && dbg_object(dbg_object(t_node).m_parent).m_color==-1 && ((dbg_object(dbg_object(t_node).m_parent).m_parent)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<213>";
+		if(dbg_object(t_node).m_parent==dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_left){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<214>";
+			var t_uncle=dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<215>";
+			if(((t_uncle)!=null) && dbg_object(t_uncle).m_color==-1){
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<216>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<217>";
+				dbg_object(t_uncle).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<218>";
+				dbg_object(dbg_object(t_uncle).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<219>";
+				t_node=dbg_object(t_uncle).m_parent;
 			}else{
-				if(t_node==t_node.m_parent.m_right){
-					t_node=t_node.m_parent;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<221>";
+				if(t_node==dbg_object(dbg_object(t_node).m_parent).m_right){
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<222>";
+					t_node=dbg_object(t_node).m_parent;
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<223>";
 					this.p_RotateLeft5(t_node);
 				}
-				t_node.m_parent.m_color=1;
-				t_node.m_parent.m_parent.m_color=-1;
-				this.p_RotateRight5(t_node.m_parent.m_parent);
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<225>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<226>";
+				dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<227>";
+				this.p_RotateRight5(dbg_object(dbg_object(t_node).m_parent).m_parent);
 			}
 		}else{
-			var t_uncle2=t_node.m_parent.m_parent.m_left;
-			if(((t_uncle2)!=null) && t_uncle2.m_color==-1){
-				t_node.m_parent.m_color=1;
-				t_uncle2.m_color=1;
-				t_uncle2.m_parent.m_color=-1;
-				t_node=t_uncle2.m_parent;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<230>";
+			var t_uncle2=dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_left;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<231>";
+			if(((t_uncle2)!=null) && dbg_object(t_uncle2).m_color==-1){
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<232>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<233>";
+				dbg_object(t_uncle2).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<234>";
+				dbg_object(dbg_object(t_uncle2).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<235>";
+				t_node=dbg_object(t_uncle2).m_parent;
 			}else{
-				if(t_node==t_node.m_parent.m_left){
-					t_node=t_node.m_parent;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<237>";
+				if(t_node==dbg_object(dbg_object(t_node).m_parent).m_left){
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<238>";
+					t_node=dbg_object(t_node).m_parent;
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<239>";
 					this.p_RotateRight5(t_node);
 				}
-				t_node.m_parent.m_color=1;
-				t_node.m_parent.m_parent.m_color=-1;
-				this.p_RotateLeft5(t_node.m_parent.m_parent);
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<241>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<242>";
+				dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<243>";
+				this.p_RotateLeft5(dbg_object(dbg_object(t_node).m_parent).m_parent);
 			}
 		}
 	}
-	this.m_root.m_color=1;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<247>";
+	dbg_object(this.m_root).m_color=1;
+	pop_err();
 	return 0;
 }
 c_Map5.prototype.p_Set5=function(t_key,t_value){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<29>";
 	var t_node=this.m_root;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<30>";
 	var t_parent=null;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<30>";
 	var t_cmp=0;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<32>";
 	while((t_node)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<33>";
 		t_parent=t_node;
-		t_cmp=this.p_Compare2(t_key,t_node.m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<34>";
+		t_cmp=this.p_Compare2(t_key,dbg_object(t_node).m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<35>";
 		if(t_cmp>0){
-			t_node=t_node.m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<36>";
+			t_node=dbg_object(t_node).m_right;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<37>";
 			if(t_cmp<0){
-				t_node=t_node.m_left;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<38>";
+				t_node=dbg_object(t_node).m_left;
 			}else{
-				t_node.m_value=t_value;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<40>";
+				dbg_object(t_node).m_value=t_value;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<41>";
+				pop_err();
 				return false;
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<45>";
 	t_node=c_Node5.m_new.call(new c_Node5,t_key,t_value,-1,t_parent);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<47>";
 	if((t_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<48>";
 		if(t_cmp>0){
-			t_parent.m_right=t_node;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<49>";
+			dbg_object(t_parent).m_right=t_node;
 		}else{
-			t_parent.m_left=t_node;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<51>";
+			dbg_object(t_parent).m_left=t_node;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<53>";
 		this.p_InsertFixup5(t_node);
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<55>";
 		this.m_root=t_node;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<57>";
+	pop_err();
 	return true;
 }
 function c_StringMap3(){
@@ -6175,11 +8826,19 @@ function c_StringMap3(){
 }
 c_StringMap3.prototype=extend_class(c_Map5);
 c_StringMap3.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<551>";
 	c_Map5.m_new.call(this);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<551>";
+	pop_err();
 	return this;
 }
 c_StringMap3.prototype.p_Compare2=function(t_lhs,t_rhs){
-	return string_compare(t_lhs,t_rhs);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<554>";
+	var t_=string_compare(t_lhs,t_rhs);
+	pop_err();
+	return t_;
 }
 function c_Node5(){
 	Object.call(this);
@@ -6191,13 +8850,22 @@ function c_Node5(){
 	this.m_parent=null;
 }
 c_Node5.m_new=function(t_key,t_value,t_color,t_parent){
-	this.m_key=t_key;
-	this.m_value=t_value;
-	this.m_color=t_color;
-	this.m_parent=t_parent;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<364>";
+	dbg_object(this).m_key=t_key;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<365>";
+	dbg_object(this).m_value=t_value;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<366>";
+	dbg_object(this).m_color=t_color;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<367>";
+	dbg_object(this).m_parent=t_parent;
+	pop_err();
 	return this;
 }
 c_Node5.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<361>";
+	pop_err();
 	return this;
 }
 function c_Map6(){
@@ -6205,144 +8873,249 @@ function c_Map6(){
 	this.m_root=null;
 }
 c_Map6.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<7>";
+	pop_err();
 	return this;
 }
 c_Map6.prototype.p_Compare2=function(t_lhs,t_rhs){
 }
 c_Map6.prototype.p_FindNode2=function(t_key){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<157>";
 	var t_node=this.m_root;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<159>";
 	while((t_node)!=null){
-		var t_cmp=this.p_Compare2(t_key,t_node.m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<160>";
+		var t_cmp=this.p_Compare2(t_key,dbg_object(t_node).m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<161>";
 		if(t_cmp>0){
-			t_node=t_node.m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<162>";
+			t_node=dbg_object(t_node).m_right;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<163>";
 			if(t_cmp<0){
-				t_node=t_node.m_left;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<164>";
+				t_node=dbg_object(t_node).m_left;
 			}else{
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<166>";
+				pop_err();
 				return t_node;
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<169>";
+	pop_err();
 	return t_node;
 }
 c_Map6.prototype.p_Contains2=function(t_key){
-	return this.p_FindNode2(t_key)!=null;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<25>";
+	var t_=this.p_FindNode2(t_key)!=null;
+	pop_err();
+	return t_;
 }
 c_Map6.prototype.p_Get2=function(t_key){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<101>";
 	var t_node=this.p_FindNode2(t_key);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<102>";
 	if((t_node)!=null){
-		return t_node.m_value;
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<102>";
+		pop_err();
+		return dbg_object(t_node).m_value;
 	}
+	pop_err();
 	return [];
 }
 c_Map6.prototype.p_RotateLeft6=function(t_node){
-	var t_child=t_node.m_right;
-	t_node.m_right=t_child.m_left;
-	if((t_child.m_left)!=null){
-		t_child.m_left.m_parent=t_node;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<251>";
+	var t_child=dbg_object(t_node).m_right;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<252>";
+	dbg_object(t_node).m_right=dbg_object(t_child).m_left;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<253>";
+	if((dbg_object(t_child).m_left)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<254>";
+		dbg_object(dbg_object(t_child).m_left).m_parent=t_node;
 	}
-	t_child.m_parent=t_node.m_parent;
-	if((t_node.m_parent)!=null){
-		if(t_node==t_node.m_parent.m_left){
-			t_node.m_parent.m_left=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<256>";
+	dbg_object(t_child).m_parent=dbg_object(t_node).m_parent;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<257>";
+	if((dbg_object(t_node).m_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<258>";
+		if(t_node==dbg_object(dbg_object(t_node).m_parent).m_left){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<259>";
+			dbg_object(dbg_object(t_node).m_parent).m_left=t_child;
 		}else{
-			t_node.m_parent.m_right=t_child;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<261>";
+			dbg_object(dbg_object(t_node).m_parent).m_right=t_child;
 		}
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<264>";
 		this.m_root=t_child;
 	}
-	t_child.m_left=t_node;
-	t_node.m_parent=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<266>";
+	dbg_object(t_child).m_left=t_node;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<267>";
+	dbg_object(t_node).m_parent=t_child;
+	pop_err();
 	return 0;
 }
 c_Map6.prototype.p_RotateRight6=function(t_node){
-	var t_child=t_node.m_left;
-	t_node.m_left=t_child.m_right;
-	if((t_child.m_right)!=null){
-		t_child.m_right.m_parent=t_node;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<271>";
+	var t_child=dbg_object(t_node).m_left;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<272>";
+	dbg_object(t_node).m_left=dbg_object(t_child).m_right;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<273>";
+	if((dbg_object(t_child).m_right)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<274>";
+		dbg_object(dbg_object(t_child).m_right).m_parent=t_node;
 	}
-	t_child.m_parent=t_node.m_parent;
-	if((t_node.m_parent)!=null){
-		if(t_node==t_node.m_parent.m_right){
-			t_node.m_parent.m_right=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<276>";
+	dbg_object(t_child).m_parent=dbg_object(t_node).m_parent;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<277>";
+	if((dbg_object(t_node).m_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<278>";
+		if(t_node==dbg_object(dbg_object(t_node).m_parent).m_right){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<279>";
+			dbg_object(dbg_object(t_node).m_parent).m_right=t_child;
 		}else{
-			t_node.m_parent.m_left=t_child;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<281>";
+			dbg_object(dbg_object(t_node).m_parent).m_left=t_child;
 		}
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<284>";
 		this.m_root=t_child;
 	}
-	t_child.m_right=t_node;
-	t_node.m_parent=t_child;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<286>";
+	dbg_object(t_child).m_right=t_node;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<287>";
+	dbg_object(t_node).m_parent=t_child;
+	pop_err();
 	return 0;
 }
 c_Map6.prototype.p_InsertFixup6=function(t_node){
-	while(((t_node.m_parent)!=null) && t_node.m_parent.m_color==-1 && ((t_node.m_parent.m_parent)!=null)){
-		if(t_node.m_parent==t_node.m_parent.m_parent.m_left){
-			var t_uncle=t_node.m_parent.m_parent.m_right;
-			if(((t_uncle)!=null) && t_uncle.m_color==-1){
-				t_node.m_parent.m_color=1;
-				t_uncle.m_color=1;
-				t_uncle.m_parent.m_color=-1;
-				t_node=t_uncle.m_parent;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<212>";
+	while(((dbg_object(t_node).m_parent)!=null) && dbg_object(dbg_object(t_node).m_parent).m_color==-1 && ((dbg_object(dbg_object(t_node).m_parent).m_parent)!=null)){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<213>";
+		if(dbg_object(t_node).m_parent==dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_left){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<214>";
+			var t_uncle=dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<215>";
+			if(((t_uncle)!=null) && dbg_object(t_uncle).m_color==-1){
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<216>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<217>";
+				dbg_object(t_uncle).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<218>";
+				dbg_object(dbg_object(t_uncle).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<219>";
+				t_node=dbg_object(t_uncle).m_parent;
 			}else{
-				if(t_node==t_node.m_parent.m_right){
-					t_node=t_node.m_parent;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<221>";
+				if(t_node==dbg_object(dbg_object(t_node).m_parent).m_right){
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<222>";
+					t_node=dbg_object(t_node).m_parent;
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<223>";
 					this.p_RotateLeft6(t_node);
 				}
-				t_node.m_parent.m_color=1;
-				t_node.m_parent.m_parent.m_color=-1;
-				this.p_RotateRight6(t_node.m_parent.m_parent);
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<225>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<226>";
+				dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<227>";
+				this.p_RotateRight6(dbg_object(dbg_object(t_node).m_parent).m_parent);
 			}
 		}else{
-			var t_uncle2=t_node.m_parent.m_parent.m_left;
-			if(((t_uncle2)!=null) && t_uncle2.m_color==-1){
-				t_node.m_parent.m_color=1;
-				t_uncle2.m_color=1;
-				t_uncle2.m_parent.m_color=-1;
-				t_node=t_uncle2.m_parent;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<230>";
+			var t_uncle2=dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_left;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<231>";
+			if(((t_uncle2)!=null) && dbg_object(t_uncle2).m_color==-1){
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<232>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<233>";
+				dbg_object(t_uncle2).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<234>";
+				dbg_object(dbg_object(t_uncle2).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<235>";
+				t_node=dbg_object(t_uncle2).m_parent;
 			}else{
-				if(t_node==t_node.m_parent.m_left){
-					t_node=t_node.m_parent;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<237>";
+				if(t_node==dbg_object(dbg_object(t_node).m_parent).m_left){
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<238>";
+					t_node=dbg_object(t_node).m_parent;
+					err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<239>";
 					this.p_RotateRight6(t_node);
 				}
-				t_node.m_parent.m_color=1;
-				t_node.m_parent.m_parent.m_color=-1;
-				this.p_RotateLeft6(t_node.m_parent.m_parent);
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<241>";
+				dbg_object(dbg_object(t_node).m_parent).m_color=1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<242>";
+				dbg_object(dbg_object(dbg_object(t_node).m_parent).m_parent).m_color=-1;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<243>";
+				this.p_RotateLeft6(dbg_object(dbg_object(t_node).m_parent).m_parent);
 			}
 		}
 	}
-	this.m_root.m_color=1;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<247>";
+	dbg_object(this.m_root).m_color=1;
+	pop_err();
 	return 0;
 }
 c_Map6.prototype.p_Set6=function(t_key,t_value){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<29>";
 	var t_node=this.m_root;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<30>";
 	var t_parent=null;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<30>";
 	var t_cmp=0;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<32>";
 	while((t_node)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<33>";
 		t_parent=t_node;
-		t_cmp=this.p_Compare2(t_key,t_node.m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<34>";
+		t_cmp=this.p_Compare2(t_key,dbg_object(t_node).m_key);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<35>";
 		if(t_cmp>0){
-			t_node=t_node.m_right;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<36>";
+			t_node=dbg_object(t_node).m_right;
 		}else{
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<37>";
 			if(t_cmp<0){
-				t_node=t_node.m_left;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<38>";
+				t_node=dbg_object(t_node).m_left;
 			}else{
-				t_node.m_value=t_value;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<40>";
+				dbg_object(t_node).m_value=t_value;
+				err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<41>";
+				pop_err();
 				return false;
 			}
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<45>";
 	t_node=c_Node6.m_new.call(new c_Node6,t_key,t_value,-1,t_parent);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<47>";
 	if((t_parent)!=null){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<48>";
 		if(t_cmp>0){
-			t_parent.m_right=t_node;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<49>";
+			dbg_object(t_parent).m_right=t_node;
 		}else{
-			t_parent.m_left=t_node;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<51>";
+			dbg_object(t_parent).m_left=t_node;
 		}
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<53>";
 		this.p_InsertFixup6(t_node);
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<55>";
 		this.m_root=t_node;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<57>";
+	pop_err();
 	return true;
 }
 function c_StringMap4(){
@@ -6350,11 +9123,19 @@ function c_StringMap4(){
 }
 c_StringMap4.prototype=extend_class(c_Map6);
 c_StringMap4.m_new=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<551>";
 	c_Map6.m_new.call(this);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<551>";
+	pop_err();
 	return this;
 }
 c_StringMap4.prototype.p_Compare2=function(t_lhs,t_rhs){
-	return string_compare(t_lhs,t_rhs);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<554>";
+	var t_=string_compare(t_lhs,t_rhs);
+	pop_err();
+	return t_;
 }
 function c_Node6(){
 	Object.call(this);
@@ -6366,13 +9147,22 @@ function c_Node6(){
 	this.m_parent=null;
 }
 c_Node6.m_new=function(t_key,t_value,t_color,t_parent){
-	this.m_key=t_key;
-	this.m_value=t_value;
-	this.m_color=t_color;
-	this.m_parent=t_parent;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<364>";
+	dbg_object(this).m_key=t_key;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<365>";
+	dbg_object(this).m_value=t_value;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<366>";
+	dbg_object(this).m_color=t_color;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<367>";
+	dbg_object(this).m_parent=t_parent;
+	pop_err();
 	return this;
 }
 c_Node6.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<361>";
+	pop_err();
 	return this;
 }
 var bb_graphics2_rs_blend=0;
@@ -6385,69 +9175,125 @@ function c_Stack3(){
 	this.m_length=0;
 }
 c_Stack3.m_new=function(){
+	push_err();
+	pop_err();
 	return this;
 }
 c_Stack3.m_new2=function(t_data){
-	this.m_data=t_data.slice(0);
-	this.m_length=t_data.length;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<13>";
+	dbg_object(this).m_data=t_data.slice(0);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<14>";
+	dbg_object(this).m_length=t_data.length;
+	pop_err();
 	return this;
 }
 c_Stack3.prototype.p_Data=function(){
-	return this.m_data;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<41>";
+	pop_err();
+	return dbg_object(this).m_data;
 }
 c_Stack3.m_NIL=null;
 c_Stack3.prototype.p_Length=function(t_newlength){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<45>";
 	if(t_newlength<this.m_length){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<46>";
 		for(var t_i=t_newlength;t_i<this.m_length;t_i=t_i+1){
-			this.m_data[t_i]=c_Stack3.m_NIL;
+			err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<47>";
+			dbg_array(this.m_data,t_i)[dbg_index]=c_Stack3.m_NIL;
 		}
 	}else{
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<49>";
 		if(t_newlength>this.m_data.length){
+			err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<50>";
 			this.m_data=resize_object_array(this.m_data,bb_math_Max(this.m_length*2+10,t_newlength));
 		}
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<52>";
 	this.m_length=t_newlength;
+	pop_err();
 }
 c_Stack3.prototype.p_Length2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<56>";
+	pop_err();
 	return this.m_length;
 }
 c_Stack3.prototype.p_Push7=function(t_value){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<71>";
 	if(this.m_length==this.m_data.length){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<72>";
 		this.m_data=resize_object_array(this.m_data,this.m_length*2+10);
 	}
-	this.m_data[this.m_length]=t_value;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<74>";
+	dbg_array(this.m_data,this.m_length)[dbg_index]=t_value;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<75>";
 	this.m_length+=1;
+	pop_err();
 }
 c_Stack3.prototype.p_Push8=function(t_values,t_offset,t_count){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<83>";
 	for(var t_i=0;t_i<t_count;t_i=t_i+1){
-		this.p_Push7(t_values[t_offset+t_i]);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<84>";
+		this.p_Push7(dbg_array(t_values,t_offset+t_i)[dbg_index]);
 	}
+	pop_err();
 }
 c_Stack3.prototype.p_Push9=function(t_values,t_offset){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<79>";
 	this.p_Push8(t_values,t_offset,t_values.length-t_offset);
+	pop_err();
 }
 c_Stack3.prototype.p_Clear2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<34>";
 	for(var t_i=0;t_i<this.m_length;t_i=t_i+1){
-		this.m_data[t_i]=c_Stack3.m_NIL;
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<35>";
+		dbg_array(this.m_data,t_i)[dbg_index]=c_Stack3.m_NIL;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<37>";
 	this.m_length=0;
+	pop_err();
 }
 c_Stack3.prototype.p_Pop=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<89>";
 	this.m_length-=1;
-	var t_v=this.m_data[this.m_length];
-	this.m_data[this.m_length]=c_Stack3.m_NIL;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<90>";
+	var t_v=dbg_array(this.m_data,this.m_length)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<91>";
+	dbg_array(this.m_data,this.m_length)[dbg_index]=c_Stack3.m_NIL;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<92>";
+	pop_err();
 	return t_v;
 }
 function bb_math_Max(t_x,t_y){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<56>";
 	if(t_x>t_y){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<56>";
+		pop_err();
 		return t_x;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<57>";
+	pop_err();
 	return t_y;
 }
 function bb_math_Max2(t_x,t_y){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<83>";
 	if(t_x>t_y){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<83>";
+		pop_err();
 		return t_x;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<84>";
+	pop_err();
 	return t_y;
 }
 var bb_graphics2_freeOps=null;
@@ -6462,34 +9308,58 @@ function c_Stack4(){
 	this.m_length=0;
 }
 c_Stack4.m_new=function(){
+	push_err();
+	pop_err();
 	return this;
 }
 c_Stack4.m_new2=function(t_data){
-	this.m_data=t_data.slice(0);
-	this.m_length=t_data.length;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<13>";
+	dbg_object(this).m_data=t_data.slice(0);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<14>";
+	dbg_object(this).m_length=t_data.length;
+	pop_err();
 	return this;
 }
 c_Stack4.m_NIL=null;
 c_Stack4.prototype.p_Clear2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<34>";
 	for(var t_i=0;t_i<this.m_length;t_i=t_i+1){
-		this.m_data[t_i]=c_Stack4.m_NIL;
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<35>";
+		dbg_array(this.m_data,t_i)[dbg_index]=c_Stack4.m_NIL;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<37>";
 	this.m_length=0;
+	pop_err();
 }
 c_Stack4.prototype.p_Push10=function(t_value){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<71>";
 	if(this.m_length==this.m_data.length){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<72>";
 		this.m_data=resize_object_array(this.m_data,this.m_length*2+10);
 	}
-	this.m_data[this.m_length]=t_value;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<74>";
+	dbg_array(this.m_data,this.m_length)[dbg_index]=t_value;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<75>";
 	this.m_length+=1;
+	pop_err();
 }
 c_Stack4.prototype.p_Push11=function(t_values,t_offset,t_count){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<83>";
 	for(var t_i=0;t_i<t_count;t_i=t_i+1){
-		this.p_Push10(t_values[t_offset+t_i]);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<84>";
+		this.p_Push10(dbg_array(t_values,t_offset+t_i)[dbg_index]);
 	}
+	pop_err();
 }
 c_Stack4.prototype.p_Push12=function(t_values,t_offset){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<79>";
 	this.p_Push11(t_values,t_offset,t_values.length-t_offset);
+	pop_err();
 }
 function c_Stack5(){
 	Object.call(this);
@@ -6497,134 +9367,252 @@ function c_Stack5(){
 	this.m_length=0;
 }
 c_Stack5.m_new=function(){
+	push_err();
+	pop_err();
 	return this;
 }
 c_Stack5.m_new2=function(t_data){
-	this.m_data=t_data.slice(0);
-	this.m_length=t_data.length;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<13>";
+	dbg_object(this).m_data=t_data.slice(0);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<14>";
+	dbg_object(this).m_length=t_data.length;
+	pop_err();
 	return this;
 }
 c_Stack5.m_NIL=0;
 c_Stack5.prototype.p_Clear2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<34>";
 	for(var t_i=0;t_i<this.m_length;t_i=t_i+1){
-		this.m_data[t_i]=c_Stack5.m_NIL;
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<35>";
+		dbg_array(this.m_data,t_i)[dbg_index]=c_Stack5.m_NIL;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<37>";
 	this.m_length=0;
+	pop_err();
 }
 c_Stack5.prototype.p_Push13=function(t_value){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<71>";
 	if(this.m_length==this.m_data.length){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<72>";
 		this.m_data=resize_number_array(this.m_data,this.m_length*2+10);
 	}
-	this.m_data[this.m_length]=t_value;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<74>";
+	dbg_array(this.m_data,this.m_length)[dbg_index]=t_value;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<75>";
 	this.m_length+=1;
+	pop_err();
 }
 c_Stack5.prototype.p_Push14=function(t_values,t_offset,t_count){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<83>";
 	for(var t_i=0;t_i<t_count;t_i=t_i+1){
-		this.p_Push13(t_values[t_offset+t_i]);
+		err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<84>";
+		this.p_Push13(dbg_array(t_values,t_offset+t_i)[dbg_index]);
 	}
+	pop_err();
 }
 c_Stack5.prototype.p_Push15=function(t_values,t_offset){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<79>";
 	this.p_Push14(t_values,t_offset,t_values.length-t_offset);
+	pop_err();
 }
 function c_FloatStack(){
 	c_Stack5.call(this);
 }
 c_FloatStack.prototype=extend_class(c_Stack5);
 c_FloatStack.m_new=function(t_data){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<338>";
 	c_Stack5.m_new2.call(this,t_data);
+	pop_err();
 	return this;
 }
 c_FloatStack.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<335>";
 	c_Stack5.m_new.call(this);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/stack.monkey<335>";
+	pop_err();
 	return this;
 }
 var bb_graphics2_rs_projMatrix=[];
 function bb_math3d_Mat4Copy(t_m,t_r){
-	t_r[0]=t_m[0];
-	t_r[1]=t_m[1];
-	t_r[2]=t_m[2];
-	t_r[3]=t_m[3];
-	t_r[4]=t_m[4];
-	t_r[5]=t_m[5];
-	t_r[6]=t_m[6];
-	t_r[7]=t_m[7];
-	t_r[8]=t_m[8];
-	t_r[9]=t_m[9];
-	t_r[10]=t_m[10];
-	t_r[11]=t_m[11];
-	t_r[12]=t_m[12];
-	t_r[13]=t_m[13];
-	t_r[14]=t_m[14];
-	t_r[15]=t_m[15];
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<39>";
+	dbg_array(t_r,0)[dbg_index]=dbg_array(t_m,0)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<39>";
+	dbg_array(t_r,1)[dbg_index]=dbg_array(t_m,1)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<39>";
+	dbg_array(t_r,2)[dbg_index]=dbg_array(t_m,2)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<39>";
+	dbg_array(t_r,3)[dbg_index]=dbg_array(t_m,3)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<40>";
+	dbg_array(t_r,4)[dbg_index]=dbg_array(t_m,4)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<40>";
+	dbg_array(t_r,5)[dbg_index]=dbg_array(t_m,5)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<40>";
+	dbg_array(t_r,6)[dbg_index]=dbg_array(t_m,6)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<40>";
+	dbg_array(t_r,7)[dbg_index]=dbg_array(t_m,7)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<41>";
+	dbg_array(t_r,8)[dbg_index]=dbg_array(t_m,8)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<41>";
+	dbg_array(t_r,9)[dbg_index]=dbg_array(t_m,9)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<41>";
+	dbg_array(t_r,10)[dbg_index]=dbg_array(t_m,10)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<41>";
+	dbg_array(t_r,11)[dbg_index]=dbg_array(t_m,11)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<42>";
+	dbg_array(t_r,12)[dbg_index]=dbg_array(t_m,12)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<42>";
+	dbg_array(t_r,13)[dbg_index]=dbg_array(t_m,13)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<42>";
+	dbg_array(t_r,14)[dbg_index]=dbg_array(t_m,14)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<42>";
+	dbg_array(t_r,15)[dbg_index]=dbg_array(t_m,15)[dbg_index];
+	pop_err();
 }
 function bb_math3d_Mat4Init(t_ix,t_jy,t_kz,t_tw,t_r){
-	t_r[0]=t_ix;
-	t_r[1]=0.0;
-	t_r[2]=0.0;
-	t_r[3]=0.0;
-	t_r[4]=0.0;
-	t_r[5]=t_jy;
-	t_r[6]=0.0;
-	t_r[7]=0.0;
-	t_r[8]=0.0;
-	t_r[9]=0.0;
-	t_r[10]=t_kz;
-	t_r[11]=0.0;
-	t_r[12]=0.0;
-	t_r[13]=0.0;
-	t_r[14]=0.0;
-	t_r[15]=t_tw;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<21>";
+	dbg_array(t_r,0)[dbg_index]=t_ix;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<21>";
+	dbg_array(t_r,1)[dbg_index]=0.0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<21>";
+	dbg_array(t_r,2)[dbg_index]=0.0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<21>";
+	dbg_array(t_r,3)[dbg_index]=0.0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<22>";
+	dbg_array(t_r,4)[dbg_index]=0.0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<22>";
+	dbg_array(t_r,5)[dbg_index]=t_jy;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<22>";
+	dbg_array(t_r,6)[dbg_index]=0.0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<22>";
+	dbg_array(t_r,7)[dbg_index]=0.0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<23>";
+	dbg_array(t_r,8)[dbg_index]=0.0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<23>";
+	dbg_array(t_r,9)[dbg_index]=0.0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<23>";
+	dbg_array(t_r,10)[dbg_index]=t_kz;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<23>";
+	dbg_array(t_r,11)[dbg_index]=0.0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<24>";
+	dbg_array(t_r,12)[dbg_index]=0.0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<24>";
+	dbg_array(t_r,13)[dbg_index]=0.0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<24>";
+	dbg_array(t_r,14)[dbg_index]=0.0;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<24>";
+	dbg_array(t_r,15)[dbg_index]=t_tw;
+	pop_err();
 }
 function bb_math3d_Mat4Init2(t_ix,t_iy,t_iz,t_iw,t_jx,t_jy,t_jz,t_jw,t_kx,t_ky,t_kz,t_kw,t_tx,t_ty,t_tz,t_tw,t_r){
-	t_r[0]=t_ix;
-	t_r[1]=t_iy;
-	t_r[2]=t_iz;
-	t_r[3]=t_iw;
-	t_r[4]=t_jx;
-	t_r[5]=t_jy;
-	t_r[6]=t_jz;
-	t_r[7]=t_jw;
-	t_r[8]=t_kx;
-	t_r[9]=t_ky;
-	t_r[10]=t_kz;
-	t_r[11]=t_kw;
-	t_r[12]=t_tx;
-	t_r[13]=t_ty;
-	t_r[14]=t_tz;
-	t_r[15]=t_tw;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<28>";
+	dbg_array(t_r,0)[dbg_index]=t_ix;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<28>";
+	dbg_array(t_r,1)[dbg_index]=t_iy;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<28>";
+	dbg_array(t_r,2)[dbg_index]=t_iz;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<28>";
+	dbg_array(t_r,3)[dbg_index]=t_iw;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<29>";
+	dbg_array(t_r,4)[dbg_index]=t_jx;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<29>";
+	dbg_array(t_r,5)[dbg_index]=t_jy;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<29>";
+	dbg_array(t_r,6)[dbg_index]=t_jz;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<29>";
+	dbg_array(t_r,7)[dbg_index]=t_jw;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<30>";
+	dbg_array(t_r,8)[dbg_index]=t_kx;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<30>";
+	dbg_array(t_r,9)[dbg_index]=t_ky;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<30>";
+	dbg_array(t_r,10)[dbg_index]=t_kz;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<30>";
+	dbg_array(t_r,11)[dbg_index]=t_kw;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<31>";
+	dbg_array(t_r,12)[dbg_index]=t_tx;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<31>";
+	dbg_array(t_r,13)[dbg_index]=t_ty;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<31>";
+	dbg_array(t_r,14)[dbg_index]=t_tz;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<31>";
+	dbg_array(t_r,15)[dbg_index]=t_tw;
+	pop_err();
 }
 function bb_math3d_Mat4Init3(t_r){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<35>";
 	bb_math3d_Mat4Init(1.0,1.0,1.0,1.0,t_r);
+	pop_err();
 }
 function bb_math3d_Mat4Multiply(t_m,t_n,t_r){
-	bb_math3d_Mat4Init2(t_m[0]*t_n[0]+t_m[4]*t_n[1]+t_m[8]*t_n[2]+t_m[12]*t_n[3],t_m[1]*t_n[0]+t_m[5]*t_n[1]+t_m[9]*t_n[2]+t_m[13]*t_n[3],t_m[2]*t_n[0]+t_m[6]*t_n[1]+t_m[10]*t_n[2]+t_m[14]*t_n[3],t_m[3]*t_n[0]+t_m[7]*t_n[1]+t_m[11]*t_n[2]+t_m[15]*t_n[3],t_m[0]*t_n[4]+t_m[4]*t_n[5]+t_m[8]*t_n[6]+t_m[12]*t_n[7],t_m[1]*t_n[4]+t_m[5]*t_n[5]+t_m[9]*t_n[6]+t_m[13]*t_n[7],t_m[2]*t_n[4]+t_m[6]*t_n[5]+t_m[10]*t_n[6]+t_m[14]*t_n[7],t_m[3]*t_n[4]+t_m[7]*t_n[5]+t_m[11]*t_n[6]+t_m[15]*t_n[7],t_m[0]*t_n[8]+t_m[4]*t_n[9]+t_m[8]*t_n[10]+t_m[12]*t_n[11],t_m[1]*t_n[8]+t_m[5]*t_n[9]+t_m[9]*t_n[10]+t_m[13]*t_n[11],t_m[2]*t_n[8]+t_m[6]*t_n[9]+t_m[10]*t_n[10]+t_m[14]*t_n[11],t_m[3]*t_n[8]+t_m[7]*t_n[9]+t_m[11]*t_n[10]+t_m[15]*t_n[11],t_m[0]*t_n[12]+t_m[4]*t_n[13]+t_m[8]*t_n[14]+t_m[12]*t_n[15],t_m[1]*t_n[12]+t_m[5]*t_n[13]+t_m[9]*t_n[14]+t_m[13]*t_n[15],t_m[2]*t_n[12]+t_m[6]*t_n[13]+t_m[10]*t_n[14]+t_m[14]*t_n[15],t_m[3]*t_n[12]+t_m[7]*t_n[13]+t_m[11]*t_n[14]+t_m[15]*t_n[15],t_r);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<87>";
+	bb_math3d_Mat4Init2(dbg_array(t_m,0)[dbg_index]*dbg_array(t_n,0)[dbg_index]+dbg_array(t_m,4)[dbg_index]*dbg_array(t_n,1)[dbg_index]+dbg_array(t_m,8)[dbg_index]*dbg_array(t_n,2)[dbg_index]+dbg_array(t_m,12)[dbg_index]*dbg_array(t_n,3)[dbg_index],dbg_array(t_m,1)[dbg_index]*dbg_array(t_n,0)[dbg_index]+dbg_array(t_m,5)[dbg_index]*dbg_array(t_n,1)[dbg_index]+dbg_array(t_m,9)[dbg_index]*dbg_array(t_n,2)[dbg_index]+dbg_array(t_m,13)[dbg_index]*dbg_array(t_n,3)[dbg_index],dbg_array(t_m,2)[dbg_index]*dbg_array(t_n,0)[dbg_index]+dbg_array(t_m,6)[dbg_index]*dbg_array(t_n,1)[dbg_index]+dbg_array(t_m,10)[dbg_index]*dbg_array(t_n,2)[dbg_index]+dbg_array(t_m,14)[dbg_index]*dbg_array(t_n,3)[dbg_index],dbg_array(t_m,3)[dbg_index]*dbg_array(t_n,0)[dbg_index]+dbg_array(t_m,7)[dbg_index]*dbg_array(t_n,1)[dbg_index]+dbg_array(t_m,11)[dbg_index]*dbg_array(t_n,2)[dbg_index]+dbg_array(t_m,15)[dbg_index]*dbg_array(t_n,3)[dbg_index],dbg_array(t_m,0)[dbg_index]*dbg_array(t_n,4)[dbg_index]+dbg_array(t_m,4)[dbg_index]*dbg_array(t_n,5)[dbg_index]+dbg_array(t_m,8)[dbg_index]*dbg_array(t_n,6)[dbg_index]+dbg_array(t_m,12)[dbg_index]*dbg_array(t_n,7)[dbg_index],dbg_array(t_m,1)[dbg_index]*dbg_array(t_n,4)[dbg_index]+dbg_array(t_m,5)[dbg_index]*dbg_array(t_n,5)[dbg_index]+dbg_array(t_m,9)[dbg_index]*dbg_array(t_n,6)[dbg_index]+dbg_array(t_m,13)[dbg_index]*dbg_array(t_n,7)[dbg_index],dbg_array(t_m,2)[dbg_index]*dbg_array(t_n,4)[dbg_index]+dbg_array(t_m,6)[dbg_index]*dbg_array(t_n,5)[dbg_index]+dbg_array(t_m,10)[dbg_index]*dbg_array(t_n,6)[dbg_index]+dbg_array(t_m,14)[dbg_index]*dbg_array(t_n,7)[dbg_index],dbg_array(t_m,3)[dbg_index]*dbg_array(t_n,4)[dbg_index]+dbg_array(t_m,7)[dbg_index]*dbg_array(t_n,5)[dbg_index]+dbg_array(t_m,11)[dbg_index]*dbg_array(t_n,6)[dbg_index]+dbg_array(t_m,15)[dbg_index]*dbg_array(t_n,7)[dbg_index],dbg_array(t_m,0)[dbg_index]*dbg_array(t_n,8)[dbg_index]+dbg_array(t_m,4)[dbg_index]*dbg_array(t_n,9)[dbg_index]+dbg_array(t_m,8)[dbg_index]*dbg_array(t_n,10)[dbg_index]+dbg_array(t_m,12)[dbg_index]*dbg_array(t_n,11)[dbg_index],dbg_array(t_m,1)[dbg_index]*dbg_array(t_n,8)[dbg_index]+dbg_array(t_m,5)[dbg_index]*dbg_array(t_n,9)[dbg_index]+dbg_array(t_m,9)[dbg_index]*dbg_array(t_n,10)[dbg_index]+dbg_array(t_m,13)[dbg_index]*dbg_array(t_n,11)[dbg_index],dbg_array(t_m,2)[dbg_index]*dbg_array(t_n,8)[dbg_index]+dbg_array(t_m,6)[dbg_index]*dbg_array(t_n,9)[dbg_index]+dbg_array(t_m,10)[dbg_index]*dbg_array(t_n,10)[dbg_index]+dbg_array(t_m,14)[dbg_index]*dbg_array(t_n,11)[dbg_index],dbg_array(t_m,3)[dbg_index]*dbg_array(t_n,8)[dbg_index]+dbg_array(t_m,7)[dbg_index]*dbg_array(t_n,9)[dbg_index]+dbg_array(t_m,11)[dbg_index]*dbg_array(t_n,10)[dbg_index]+dbg_array(t_m,15)[dbg_index]*dbg_array(t_n,11)[dbg_index],dbg_array(t_m,0)[dbg_index]*dbg_array(t_n,12)[dbg_index]+dbg_array(t_m,4)[dbg_index]*dbg_array(t_n,13)[dbg_index]+dbg_array(t_m,8)[dbg_index]*dbg_array(t_n,14)[dbg_index]+dbg_array(t_m,12)[dbg_index]*dbg_array(t_n,15)[dbg_index],dbg_array(t_m,1)[dbg_index]*dbg_array(t_n,12)[dbg_index]+dbg_array(t_m,5)[dbg_index]*dbg_array(t_n,13)[dbg_index]+dbg_array(t_m,9)[dbg_index]*dbg_array(t_n,14)[dbg_index]+dbg_array(t_m,13)[dbg_index]*dbg_array(t_n,15)[dbg_index],dbg_array(t_m,2)[dbg_index]*dbg_array(t_n,12)[dbg_index]+dbg_array(t_m,6)[dbg_index]*dbg_array(t_n,13)[dbg_index]+dbg_array(t_m,10)[dbg_index]*dbg_array(t_n,14)[dbg_index]+dbg_array(t_m,14)[dbg_index]*dbg_array(t_n,15)[dbg_index],dbg_array(t_m,3)[dbg_index]*dbg_array(t_n,12)[dbg_index]+dbg_array(t_m,7)[dbg_index]*dbg_array(t_n,13)[dbg_index]+dbg_array(t_m,11)[dbg_index]*dbg_array(t_n,14)[dbg_index]+dbg_array(t_m,15)[dbg_index]*dbg_array(t_n,15)[dbg_index],t_r);
+	pop_err();
 }
 function bb_math3d_Vec4Copy(t_v,t_r){
-	t_r[0]=t_v[0];
-	t_r[1]=t_v[1];
-	t_r[2]=t_v[2];
-	t_r[3]=t_v[3];
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<9>";
+	dbg_array(t_r,0)[dbg_index]=dbg_array(t_v,0)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<9>";
+	dbg_array(t_r,1)[dbg_index]=dbg_array(t_v,1)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<9>";
+	dbg_array(t_r,2)[dbg_index]=dbg_array(t_v,2)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<9>";
+	dbg_array(t_r,3)[dbg_index]=dbg_array(t_v,3)[dbg_index];
+	pop_err();
 }
 function bb_math3d_Vec4Copy2(t_v,t_r,t_src,t_dst){
-	t_r[0+t_dst]=t_v[0+t_src];
-	t_r[1+t_dst]=t_v[1+t_src];
-	t_r[2+t_dst]=t_v[2+t_src];
-	t_r[3+t_dst]=t_v[3+t_src];
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<13>";
+	dbg_array(t_r,0+t_dst)[dbg_index]=dbg_array(t_v,0+t_src)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<13>";
+	dbg_array(t_r,1+t_dst)[dbg_index]=dbg_array(t_v,1+t_src)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<13>";
+	dbg_array(t_r,2+t_dst)[dbg_index]=dbg_array(t_v,2+t_src)[dbg_index];
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<13>";
+	dbg_array(t_r,3+t_dst)[dbg_index]=dbg_array(t_v,3+t_src)[dbg_index];
+	pop_err();
 }
 function bb_math3d_Vec4Init(t_x,t_y,t_z,t_w,t_r){
-	t_r[0]=t_x;
-	t_r[1]=t_y;
-	t_r[2]=t_z;
-	t_r[3]=t_w;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<5>";
+	dbg_array(t_r,0)[dbg_index]=t_x;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<5>";
+	dbg_array(t_r,1)[dbg_index]=t_y;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<5>";
+	dbg_array(t_r,2)[dbg_index]=t_z;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<5>";
+	dbg_array(t_r,3)[dbg_index]=t_w;
+	pop_err();
 }
 function bb_math3d_Mat4Transform(t_m,t_v,t_r){
-	bb_math3d_Vec4Init(t_m[0]*t_v[0]+t_m[4]*t_v[1]+t_m[8]*t_v[2]+t_m[12]*t_v[3],t_m[1]*t_v[0]+t_m[5]*t_v[1]+t_m[9]*t_v[2]+t_m[13]*t_v[3],t_m[2]*t_v[0]+t_m[6]*t_v[1]+t_m[10]*t_v[2]+t_m[14]*t_v[3],t_m[3]*t_v[0]+t_m[7]*t_v[1]+t_m[11]*t_v[2]+t_m[15]*t_v[3],t_r);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<95>";
+	bb_math3d_Vec4Init(dbg_array(t_m,0)[dbg_index]*dbg_array(t_v,0)[dbg_index]+dbg_array(t_m,4)[dbg_index]*dbg_array(t_v,1)[dbg_index]+dbg_array(t_m,8)[dbg_index]*dbg_array(t_v,2)[dbg_index]+dbg_array(t_m,12)[dbg_index]*dbg_array(t_v,3)[dbg_index],dbg_array(t_m,1)[dbg_index]*dbg_array(t_v,0)[dbg_index]+dbg_array(t_m,5)[dbg_index]*dbg_array(t_v,1)[dbg_index]+dbg_array(t_m,9)[dbg_index]*dbg_array(t_v,2)[dbg_index]+dbg_array(t_m,13)[dbg_index]*dbg_array(t_v,3)[dbg_index],dbg_array(t_m,2)[dbg_index]*dbg_array(t_v,0)[dbg_index]+dbg_array(t_m,6)[dbg_index]*dbg_array(t_v,1)[dbg_index]+dbg_array(t_m,10)[dbg_index]*dbg_array(t_v,2)[dbg_index]+dbg_array(t_m,14)[dbg_index]*dbg_array(t_v,3)[dbg_index],dbg_array(t_m,3)[dbg_index]*dbg_array(t_v,0)[dbg_index]+dbg_array(t_m,7)[dbg_index]*dbg_array(t_v,1)[dbg_index]+dbg_array(t_m,11)[dbg_index]*dbg_array(t_v,2)[dbg_index]+dbg_array(t_m,15)[dbg_index]*dbg_array(t_v,3)[dbg_index],t_r);
+	pop_err();
 }
 function bb_math3d_Mat4Ortho(t_left,t_right,t_bottom,t_top,t_znear,t_zfar,t_r){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<46>";
 	var t_w=t_right-t_left;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<46>";
 	var t_h=t_top-t_bottom;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<46>";
 	var t_d=t_zfar-t_znear;
+	err_info="F:/progs/gamedev/monkey/modules/mojo2/math3d.monkey<47>";
 	bb_math3d_Mat4Init2(2.0/t_w,0.0,0.0,0.0,0.0,2.0/t_h,0.0,0.0,0.0,0.0,2.0/t_d,0.0,-(t_right+t_left)/t_w,-(t_top+t_bottom)/t_h,-(t_zfar+t_znear)/t_d,1.0,t_r);
+	pop_err();
 }
 function c_Menu(){
 	Object.call(this);
@@ -6634,29 +9622,52 @@ function c_Menu(){
 	this.implments={c_Scene:1};
 }
 c_Menu.m_new=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/menu.monkey<21>";
 	this.m_title=c_Image2.m_Load("monkey://data/title.png",.0,.0,0,null);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/menu.monkey<22>";
 	this.m_pressSpace=c_Image2.m_Load("monkey://data/press_space.png",.5,.5,0,null);
+	pop_err();
 	return this;
 }
 c_Menu.prototype.p_Start=function(){
+	push_err();
+	pop_err();
 }
 c_Menu.prototype.p_Update=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/menu.monkey<29>";
 	if((bb_input2_KeyDown(32))!=0){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/menu.monkey<29>";
+		pop_err();
 		return 2;
 	}
-	this.m_alpha+=c_Time.m_instance.m_lastFrame*1.5/1000.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/menu.monkey<31>";
+	this.m_alpha+=dbg_object(c_Time.m_instance).m_lastFrame*1.5/1000.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/menu.monkey<32>";
 	if(this.m_alpha>1.0){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/menu.monkey<32>";
 		this.m_alpha=-1.0;
 	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/menu.monkey<33>";
+	pop_err();
 	return 0;
 }
 c_Menu.prototype.p_Draw=function(t_canvas){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/menu.monkey<37>";
 	t_canvas.p_SetBlendMode(1);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/menu.monkey<38>";
 	t_canvas.p_SetColor2(1.0,1.0,1.0,1.0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/menu.monkey<39>";
 	t_canvas.p_DrawImage4(this.m_title,0.0,0.0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/menu.monkey<40>";
 	t_canvas.p_SetAlpha(bb_math_Abs2(this.m_alpha));
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/menu.monkey<41>";
 	t_canvas.p_DrawImage4(this.m_pressSpace,32.0,48.0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/menu.monkey<42>";
 	t_canvas.p_Flush();
+	pop_err();
 }
 function c_Game(){
 	Object.call(this);
@@ -6665,44 +9676,75 @@ function c_Game(){
 	this.implments={c_Scene:1};
 }
 c_Game.m_new=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/game.monkey<19>";
 	c_AssetBox.m_Initialize();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/game.monkey<20>";
 	c_Tileset.m_Initialize();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/game.monkey<21>";
 	c_Animator.m_Initialize();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/game.monkey<22>";
 	this.m_levels=new_object_array(1);
-	this.m_levels[0]=(c_Level.m_new.call(new c_Level,(c_TestMap.m_new.call(new c_TestMap))));
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/game.monkey<23>";
+	dbg_array(this.m_levels,0)[dbg_index]=(c_Level.m_new.call(new c_Level,(c_TestMap.m_new.call(new c_TestMap))));
+	pop_err();
 	return this;
 }
 c_Game.prototype.p_Start=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/game.monkey<27>";
 	this.m_currentLevel=0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/game.monkey<28>";
+	dbg_array(this.m_levels,this.m_currentLevel)[dbg_index].p_Start();
+	pop_err();
 }
 c_Game.prototype.p_Update=function(){
-	var t_status=this.m_levels[this.m_currentLevel].p_Update();
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/game.monkey<32>";
+	var t_status=dbg_array(this.m_levels,this.m_currentLevel)[dbg_index].p_Update();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/game.monkey<33>";
 	if(t_status==2){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/game.monkey<34>";
 		this.m_currentLevel+=1;
-		this.m_levels[this.m_currentLevel].p_Start();
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/game.monkey<35>";
+		dbg_array(this.m_levels,this.m_currentLevel)[dbg_index].p_Start();
 	}else{
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/game.monkey<36>";
 		if(t_status==1){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/game.monkey<37>";
+			pop_err();
 			return 1;
 		}
 	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/game.monkey<39>";
+	pop_err();
 	return 0;
 }
 c_Game.prototype.p_Draw=function(t_canvas){
-	this.m_levels[this.m_currentLevel].p_Draw(t_canvas);
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/game.monkey<43>";
+	dbg_array(this.m_levels,this.m_currentLevel)[dbg_index].p_Draw(t_canvas);
+	pop_err();
 }
 function c_AssetBox(){
 	Object.call(this);
 }
 c_AssetBox.m_GfxCharacter=[];
 c_AssetBox.m_Initialize=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/assetbox.monkey<13>";
 	c_AssetBox.m_GfxCharacter=c_Image2.m_LoadFrames("monkey://data/character.png",64,false,.5,1.0,0,null);
+	pop_err();
 }
 function c_Tileset(){
 	Object.call(this);
 }
 c_Tileset.m_Tiles=[];
 c_Tileset.m_Initialize=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/tileset.monkey<27>";
 	c_Tileset.m_Tiles=c_Image2.m_LoadFrames("monkey://data/tileset.png",64,false,.0,.0,0,null);
+	pop_err();
 }
 c_Tileset.m_TileType=[];
 function c_Animator(){
@@ -6713,43 +9755,81 @@ function c_Animator(){
 }
 c_Animator.m_anims=[];
 c_Animator.m_Initialize=function(){
-	c_Animator.m_anims[0]=[c_AnimStep.m_new.call(new c_AnimStep,0,500)];
-	c_Animator.m_anims[1]=[c_AnimStep.m_new.call(new c_AnimStep,1,120),c_AnimStep.m_new.call(new c_AnimStep,2,90),c_AnimStep.m_new.call(new c_AnimStep,3,120),c_AnimStep.m_new.call(new c_AnimStep,2,90)];
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<33>";
+	dbg_array(c_Animator.m_anims,0)[dbg_index]=[c_AnimStep.m_new.call(new c_AnimStep,0,500)];
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<34>";
+	dbg_array(c_Animator.m_anims,1)[dbg_index]=[c_AnimStep.m_new.call(new c_AnimStep,1,120),c_AnimStep.m_new.call(new c_AnimStep,2,90),c_AnimStep.m_new.call(new c_AnimStep,3,120),c_AnimStep.m_new.call(new c_AnimStep,2,90)];
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<35>";
+	dbg_array(c_Animator.m_anims,2)[dbg_index]=[c_AnimStep.m_new.call(new c_AnimStep,4,500)];
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<36>";
+	dbg_array(c_Animator.m_anims,3)[dbg_index]=[c_AnimStep.m_new.call(new c_AnimStep,5,600)];
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<37>";
+	dbg_array(c_Animator.m_anims,4)[dbg_index]=[c_AnimStep.m_new.call(new c_AnimStep,6,300)];
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<38>";
+	dbg_array(c_Animator.m_anims,5)[dbg_index]=[c_AnimStep.m_new.call(new c_AnimStep,7,90),c_AnimStep.m_new.call(new c_AnimStep,8,90),c_AnimStep.m_new.call(new c_AnimStep,9,90),c_AnimStep.m_new.call(new c_AnimStep,10,90)];
+	pop_err();
 }
 c_Animator.m_new=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<28>";
+	pop_err();
 	return this;
 }
 c_Animator.prototype.p_Animate=function(t_currentStatus,t_directionX,t_directionY){
-	var t_time=c_Time.m_instance.m_actTime;
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<46>";
+	var t_time=dbg_object(c_Time.m_instance).m_actTime;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<47>";
 	var t_ended=false;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<48>";
 	if(this.m_status!=t_currentStatus){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<49>";
 		this.m_currentStep=0;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<50>";
 		this.m_status=t_currentStatus;
-		this.m_stepEnd=t_time+(c_Animator.m_anims[this.m_status][this.m_currentStep].m_timeMs)*bb_random_Rnd2(70.0,130.0)/100.0;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<51>";
+		this.m_stepEnd=t_time+(dbg_object(dbg_array(dbg_array(c_Animator.m_anims,this.m_status)[dbg_index],this.m_currentStep)[dbg_index]).m_timeMs)*bb_random_Rnd2(70.0,130.0)/100.0;
 	}else{
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<52>";
 		if(t_time>=this.m_stepEnd){
-			if(this.m_currentStep==c_Animator.m_anims[this.m_status].length-1){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<53>";
+			if(this.m_currentStep==dbg_array(c_Animator.m_anims,this.m_status)[dbg_index].length-1){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<54>";
 				this.m_currentStep=0;
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<55>";
 				t_ended=true;
 			}else{
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<57>";
 				this.m_currentStep+=1;
 			}
-			this.m_stepEnd=t_time+(c_Animator.m_anims[this.m_status][this.m_currentStep].m_timeMs)*bb_random_Rnd2(70.0,130.0)/100.0;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<59>";
+			this.m_stepEnd=t_time+(dbg_object(dbg_array(dbg_array(c_Animator.m_anims,this.m_status)[dbg_index],this.m_currentStep)[dbg_index]).m_timeMs)*bb_random_Rnd2(70.0,130.0)/100.0;
 		}
 	}
-	var t_graph=c_Animator.m_anims[this.m_status][this.m_currentStep].m_graph;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<62>";
+	var t_graph=dbg_object(dbg_array(dbg_array(c_Animator.m_anims,this.m_status)[dbg_index],this.m_currentStep)[dbg_index]).m_graph;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<63>";
 	if(t_directionX<0){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<64>";
 		t_graph+=32;
 	}else{
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<65>";
 		if(t_directionX>0){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<66>";
 			t_graph+=48;
 		}else{
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<67>";
 			if(t_directionY<0){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<68>";
 				t_graph+=16;
 			}
 		}
 	}
-	return c_AnimResult.m_new.call(new c_AnimResult,t_graph,t_ended);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<71>";
+	var t_=c_AnimResult.m_new.call(new c_AnimResult,t_graph,t_ended);
+	pop_err();
+	return t_;
 }
 function c_AnimStep(){
 	Object.call(this);
@@ -6757,11 +9837,18 @@ function c_AnimStep(){
 	this.m_timeMs=0;
 }
 c_AnimStep.m_new=function(t_graph,t_timeMs){
-	this.m_graph=t_graph;
-	this.m_timeMs=t_timeMs;
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<13>";
+	dbg_object(this).m_graph=t_graph;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<14>";
+	dbg_object(this).m_timeMs=t_timeMs;
+	pop_err();
 	return this;
 }
 c_AnimStep.m_new2=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<8>";
+	pop_err();
 	return this;
 }
 function c_Actor(){
@@ -6772,161 +9859,511 @@ function c_Actor(){
 	this.m_directionY=0;
 }
 c_Actor.m_new=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/actor.monkey<8>";
+	pop_err();
 	return this;
 }
 c_Actor.prototype.p_Update=function(){
+	push_err();
+	pop_err();
 }
 c_Actor.prototype.p_Draw2=function(t_canvas,t_camera){
+	push_err();
+	pop_err();
 }
 function c_Character(){
 	c_Actor.call(this);
 	this.m_atlas=[];
 	this.m_animator=c_Animator.m_new.call(new c_Animator);
 	this.m_map=null;
+	this.m_status=0;
 	this.m_inputMoveDown=false;
 	this.m_inputMoveLeft=false;
 	this.m_inputMoveRight=false;
 	this.m_inputMoveUp=false;
+	this.m_inputDrift=false;
 	this.m_inputShoot=false;
+	this.m_inputJump=false;
+	this.m_timeToShoot=-1;
 	this.m_collisionX=0;
 	this.m_collisionY=0;
-	this.m_status=0;
 	this.m_velx=.0;
 	this.m_vely=.0;
 	this.m_img=0;
 }
 c_Character.prototype=extend_class(c_Actor);
 c_Character.m_new=function(t_map){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<51>";
 	c_Actor.m_new.call(this);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<52>";
 	this.m_atlas=c_AssetBox.m_GfxCharacter;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<53>";
 	this.m_animator.p_Animate(0,0,1);
-	this.m_map=t_map;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<54>";
+	dbg_object(this).m_map=t_map;
+	pop_err();
 	return this;
 }
 c_Character.m_new2=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<12>";
 	c_Actor.m_new.call(this);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<12>";
+	pop_err();
 	return this;
 }
 c_Character.prototype.p_IA=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<142>";
 	this.m_inputMoveDown=false;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<143>";
 	this.m_inputMoveLeft=false;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<144>";
 	this.m_inputMoveRight=false;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<145>";
 	this.m_inputMoveUp=false;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<146>";
+	this.m_inputDrift=false;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<147>";
 	this.m_inputShoot=false;
-	if((bb_input2_KeyDown(38))!=0){
-		this.m_inputMoveUp=true;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<148>";
+	this.m_inputJump=false;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<149>";
+	if(((bb_input2_KeyDown(32))!=0) && (this.m_status==0 || this.m_status==1 || this.m_status==2)){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<150>";
+		if(this.m_timeToShoot==-1){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<150>";
+			this.m_timeToShoot=dbg_object(c_Time.m_instance).m_realActTime+400;
+		}
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<151>";
+		if(dbg_object(c_Time.m_instance).m_realActTime>=this.m_timeToShoot){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<152>";
+			this.m_inputShoot=true;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<153>";
+			this.m_timeToShoot=-1;
+		}else{
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<155>";
+			this.m_inputDrift=true;
+		}
 	}else{
-		if((bb_input2_KeyDown(40))!=0){
-			this.m_inputMoveDown=true;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<158>";
+		if(this.m_timeToShoot!=-1 && this.m_status==2){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<159>";
+			this.m_inputJump=true;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<160>";
+			this.m_timeToShoot=-1;
+		}else{
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<162>";
+			this.m_timeToShoot=-1;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<163>";
+			if((bb_input2_KeyDown(38))!=0){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<164>";
+				this.m_inputMoveUp=true;
+			}else{
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<165>";
+				if((bb_input2_KeyDown(40))!=0){
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<166>";
+					this.m_inputMoveDown=true;
+				}
+			}
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<168>";
+			if((bb_input2_KeyDown(37))!=0){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<169>";
+				this.m_inputMoveLeft=true;
+			}else{
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<170>";
+				if((bb_input2_KeyDown(39))!=0){
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<171>";
+					this.m_inputMoveRight=true;
+				}
+			}
 		}
 	}
-	if((bb_input2_KeyDown(37))!=0){
-		this.m_inputMoveLeft=true;
-	}else{
-		if((bb_input2_KeyDown(39))!=0){
-			this.m_inputMoveRight=true;
-		}
-	}
-	if((bb_input2_KeyDown(32))!=0){
-		this.m_inputShoot=true;
-	}
+	pop_err();
 }
 c_Character.prototype.p_GetCurrentTile=function(t_dispX,t_dispY){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<122>";
 	var t_i=((Math.floor((this.m_y+t_dispY-0.5)/8.0))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<123>";
 	var t_j=((Math.floor((this.m_x+t_dispX+0.5)/8.0))|0);
-	return this.m_map.m_tiles[t_i*this.m_map.m_width+t_j];
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<124>";
+	var t_=dbg_array(dbg_object(this.m_map).m_tiles,t_i*dbg_object(this.m_map).m_width+t_j)[dbg_index];
+	pop_err();
+	return t_;
 }
-c_Character.prototype.p_Update=function(){
-	var t_delta=c_Time.m_instance.m_lastFrame;
-	var t_vel=.0;
-	var t_animResult=null;
+c_Character.prototype.p_DoDrift=function(t_delta){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<226>";
+	var t_decel=t_delta*0.002;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<227>";
 	var t_tile=0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<228>";
 	var t_increase=.0;
-	this.p_IA();
-	this.m_collisionX=0;
-	this.m_collisionY=0;
-	var t_1=this.m_status;
-	if(t_1==0 || t_1==1){
-		if(this.m_inputMoveDown || this.m_inputMoveLeft || this.m_inputMoveRight || this.m_inputMoveUp){
-			this.m_status=1;
-			this.m_directionX=0;
-			this.m_directionY=0;
-			this.m_velx=0.0;
-			this.m_vely=0.0;
-			if((bb_input2_KeyDown(38))!=0){
-				t_vel=32.0;
-				this.m_vely=-1.0;
-				this.m_directionY=-1;
-			}else{
-				if((bb_input2_KeyDown(40))!=0){
-					t_vel=32.0;
-					this.m_vely=1.0;
-					this.m_directionY=1;
-				}
-			}
-			if((bb_input2_KeyDown(37))!=0){
-				if(t_vel>0.0){
-					t_vel=22.63;
-				}else{
-					t_vel=32.0;
-				}
-				this.m_velx=-1.0;
-				this.m_directionX=-1;
-			}else{
-				if((bb_input2_KeyDown(39))!=0){
-					if(t_vel>0.0){
-						t_vel=22.63;
-					}else{
-						t_vel=32.0;
-					}
-					this.m_velx=1.0;
-					this.m_directionX=1;
-				}
-			}
-			t_vel=t_vel*t_delta/1000.0;
-			this.m_velx*=t_vel;
-			this.m_vely*=t_vel;
-			this.m_x+=this.m_velx;
-			t_increase=bb_math_Sgn2(this.m_velx);
-			t_tile=this.p_GetCurrentTile(t_increase*2.0,0.0);
-			while(c_Tileset.m_TileType[t_tile]==2 || c_Tileset.m_TileType[t_tile]==4){
-				this.m_x-=t_increase;
-				t_tile=this.p_GetCurrentTile(t_increase*2.0,0.0);
-				this.m_collisionX=((t_increase)|0);
-			}
-			this.m_y+=this.m_vely;
-			t_increase=bb_math_Sgn2(this.m_vely);
-			t_tile=this.p_GetCurrentTile(0.0,t_increase*2.0);
-			while(c_Tileset.m_TileType[t_tile]==2 || c_Tileset.m_TileType[t_tile]==4){
-				this.m_y-=t_increase;
-				t_tile=this.p_GetCurrentTile(0.0,t_increase*2.0);
-				this.m_collisionY=((t_increase)|0);
-			}
-		}else{
-			this.m_status=0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<229>";
+	if(bb_math_Abs2(this.m_velx)<t_decel){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<230>";
+		this.m_velx=0.0;
+	}else{
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<232>";
+		this.m_velx-=t_decel*bb_math_Sgn2(this.m_velx);
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<234>";
+	if(bb_math_Abs2(this.m_vely)<t_decel){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<235>";
+		this.m_vely=0.0;
+	}else{
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<237>";
+		this.m_vely-=t_decel*bb_math_Sgn2(this.m_vely);
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<241>";
+	this.m_x+=this.m_velx*t_delta/1000.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<242>";
+	t_increase=bb_math_Sgn2(this.m_velx);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<243>";
+	t_tile=this.p_GetCurrentTile(t_increase*2.0,0.0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<244>";
+	while(dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==2 || dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==4){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<245>";
+		this.m_x-=t_increase;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<246>";
+		t_tile=this.p_GetCurrentTile(t_increase*2.0,0.0);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<247>";
+		this.m_collisionX=((t_increase)|0);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<248>";
+		this.m_status=0;
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<250>";
+	this.m_y+=this.m_vely*t_delta/1000.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<251>";
+	t_increase=bb_math_Sgn2(this.m_vely);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<252>";
+	t_tile=this.p_GetCurrentTile(0.0,t_increase*2.0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<253>";
+	while(dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==2 || dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==4){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<254>";
+		this.m_y-=t_increase;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<255>";
+		t_tile=this.p_GetCurrentTile(0.0,t_increase*2.0);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<256>";
+		this.m_collisionY=((t_increase)|0);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<257>";
+		this.m_status=0;
+	}
+	pop_err();
+}
+c_Character.prototype.p_DoRun=function(t_delta){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<178>";
+	var t_tile=0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<179>";
+	var t_increase=.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<180>";
+	var t_vel=.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<181>";
+	this.m_status=1;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<182>";
+	this.m_directionX=0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<183>";
+	this.m_directionY=0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<184>";
+	this.m_velx=0.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<185>";
+	this.m_vely=0.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<186>";
+	if(this.m_inputMoveUp){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<187>";
+		t_vel=45.0;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<188>";
+		this.m_vely=-1.0;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<189>";
+		this.m_directionY=-1;
+	}else{
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<190>";
+		if(this.m_inputMoveDown){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<191>";
+			t_vel=45.0;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<192>";
+			this.m_vely=1.0;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<193>";
+			this.m_directionY=1;
 		}
 	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<195>";
+	if(this.m_inputMoveLeft){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<196>";
+		if(t_vel>0.0){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<196>";
+			t_vel=31.82;
+		}else{
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<196>";
+			t_vel=45.0;
+		}
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<197>";
+		this.m_velx=-1.0;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<198>";
+		this.m_directionX=-1;
+	}else{
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<199>";
+		if(this.m_inputMoveRight){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<200>";
+			if(t_vel>0.0){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<200>";
+				t_vel=31.82;
+			}else{
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<200>";
+				t_vel=45.0;
+			}
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<201>";
+			this.m_velx=1.0;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<202>";
+			this.m_directionX=1;
+		}
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<204>";
+	this.m_velx*=t_vel;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<205>";
+	this.m_vely*=t_vel;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<207>";
+	this.m_x+=this.m_velx*t_delta/1000.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<208>";
+	t_increase=bb_math_Sgn2(this.m_velx);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<209>";
+	t_tile=this.p_GetCurrentTile(t_increase*2.0,0.0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<210>";
+	while(dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==2 || dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==4){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<211>";
+		this.m_x-=t_increase;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<212>";
+		t_tile=this.p_GetCurrentTile(t_increase*2.0,0.0);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<213>";
+		this.m_collisionX=((t_increase)|0);
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<215>";
+	this.m_y+=this.m_vely*t_delta/1000.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<216>";
+	t_increase=bb_math_Sgn2(this.m_vely);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<217>";
+	t_tile=this.p_GetCurrentTile(0.0,t_increase*2.0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<218>";
+	while(dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==2 || dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==4){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<219>";
+		this.m_y-=t_increase;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<220>";
+		t_tile=this.p_GetCurrentTile(0.0,t_increase*2.0);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<221>";
+		this.m_collisionY=((t_increase)|0);
+	}
+	pop_err();
+}
+c_Character.prototype.p_StopJump=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<290>";
+	if(dbg_array(c_Tileset.m_TileType,this.p_GetCurrentTile(0.0,0.0))[dbg_index]==4){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<291>";
+		if(this.m_velx!=0.0 && this.m_vely!=0.0){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<292>";
+			this.m_velx=bb_math_Sgn2(this.m_velx)*7.07;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<293>";
+			this.m_vely=bb_math_Sgn2(this.m_vely)*7.07;
+		}else{
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<295>";
+			this.m_velx=bb_math_Sgn2(this.m_velx)*10.0;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<296>";
+			this.m_vely=bb_math_Sgn2(this.m_vely)*10.0;
+		}
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<298>";
+		this.m_status=5;
+	}else{
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<300>";
+		this.m_status=0;
+	}
+	pop_err();
+}
+c_Character.prototype.p_DoJump=function(t_delta){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<263>";
+	var t_tile=0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<264>";
+	var t_increase=.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<267>";
+	this.m_x+=this.m_velx*t_delta/1000.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<268>";
+	t_increase=bb_math_Sgn2(this.m_velx);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<269>";
+	t_tile=this.p_GetCurrentTile(t_increase*2.0,0.0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<270>";
+	while(dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==2){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<271>";
+		this.m_x-=t_increase;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<272>";
+		t_tile=this.p_GetCurrentTile(t_increase*2.0,0.0);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<273>";
+		this.m_collisionX=((t_increase)|0);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<274>";
+		this.m_status=0;
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<276>";
+	this.m_y+=this.m_vely*t_delta/1000.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<277>";
+	t_increase=bb_math_Sgn2(this.m_vely);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<278>";
+	t_tile=this.p_GetCurrentTile(0.0,t_increase*2.0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<279>";
+	while(dbg_array(c_Tileset.m_TileType,t_tile)[dbg_index]==2){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<280>";
+		this.m_y-=t_increase;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<281>";
+		t_tile=this.p_GetCurrentTile(0.0,t_increase*2.0);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<282>";
+		this.m_collisionY=((t_increase)|0);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<283>";
+		this.m_status=0;
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<286>";
+	if(((this.m_collisionX)!=0) || ((this.m_collisionY)!=0)){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<286>";
+		this.p_StopJump();
+	}
+	pop_err();
+}
+c_Character.prototype.p_Update=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<58>";
+	var t_delta=dbg_object(c_Time.m_instance).m_lastFrame;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<59>";
+	var t_animResult=null;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<62>";
+	if((bb_input2_KeyDown(82))!=0){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<63>";
+		this.m_status=0;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<64>";
+		this.m_x=(dbg_object(this.m_map).m_width)*8.0/2.0;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<65>";
+		this.m_y=(dbg_object(this.m_map).m_height)*8.0/2.0;
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<69>";
+	this.p_IA();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<70>";
+	this.m_collisionX=0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<71>";
+	this.m_collisionY=0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<72>";
+	var t_1=this.m_status;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<73>";
+	if(t_1==0 || t_1==1){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<74>";
+		if(this.m_inputDrift){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<75>";
+			this.m_status=2;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<76>";
+			this.p_DoDrift(t_delta);
+		}else{
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<77>";
+			if(this.m_inputMoveDown || this.m_inputMoveLeft || this.m_inputMoveRight || this.m_inputMoveUp){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<78>";
+				this.p_DoRun(t_delta);
+			}else{
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<80>";
+				this.m_status=0;
+			}
+		}
+	}else{
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<82>";
+		if(t_1==2){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<83>";
+			if(this.m_inputJump){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<84>";
+				this.m_status=3;
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<85>";
+				if(this.m_velx!=0.0 && this.m_vely!=0.0){
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<86>";
+					this.m_velx=bb_math_Sgn2(this.m_velx)*14.14;
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<87>";
+					this.m_vely=bb_math_Sgn2(this.m_vely)*14.14;
+				}else{
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<89>";
+					this.m_velx=bb_math_Sgn2(this.m_velx)*20.0;
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<90>";
+					this.m_vely=bb_math_Sgn2(this.m_vely)*20.0;
+				}
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<92>";
+				this.p_DoJump(t_delta);
+			}else{
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<93>";
+				if(this.m_inputShoot){
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<94>";
+					this.m_status=4;
+				}else{
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<95>";
+					if(this.m_inputDrift){
+						err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<96>";
+						this.p_DoDrift(t_delta);
+					}else{
+						err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<98>";
+						this.m_status=0;
+					}
+				}
+			}
+		}else{
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<100>";
+			if(t_1==3){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<101>";
+				this.p_DoJump(t_delta);
+			}
+		}
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<104>";
 	this.m_x=((Math.floor(this.m_x+0.5))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<105>";
 	this.m_y=((Math.floor(this.m_y+0.5))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<107>";
 	t_animResult=this.m_animator.p_Animate(this.m_status,this.m_directionX,this.m_directionY);
-	if(t_animResult.m_ended){
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<108>";
+	if(dbg_object(t_animResult).m_ended){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<109>";
 		var t_2=this.m_status;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<110>";
 		if(t_2==4){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<111>";
 			this.m_status=0;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<112>";
 			t_animResult=this.m_animator.p_Animate(this.m_status,this.m_directionX,this.m_directionY);
 		}else{
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<113>";
 			if(t_2==3){
-				this.m_status=0;
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<114>";
+				this.p_StopJump();
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<115>";
 				t_animResult=this.m_animator.p_Animate(this.m_status,this.m_directionX,this.m_directionY);
 			}
 		}
 	}
-	this.m_img=t_animResult.m_graph;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<118>";
+	this.m_img=dbg_object(t_animResult).m_graph;
+	pop_err();
 }
 c_Character.prototype.p_Draw2=function(t_canvas,t_camera){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<128>";
 	t_canvas.p_SetColor2(1.0,1.0,1.0,1.0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<130>";
+	var t_i=((Math.floor((this.m_y+0.5)/8.0))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<131>";
+	var t_j=((Math.floor((this.m_x+0.5)/8.0))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<132>";
+	t_canvas.p_SetBlendMode(3);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<133>";
+	var t_tile=dbg_array(dbg_object(this.m_map).m_tiles,t_i*dbg_object(this.m_map).m_width+t_j)[dbg_index];
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<134>";
+	t_canvas.p_DrawImage4(dbg_array(c_Tileset.m_Tiles,t_tile)[dbg_index],(t_j)*8.0-(dbg_object(t_camera).m_x0),(t_i)*8.0-(dbg_object(t_camera).m_y0));
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<137>";
 	t_canvas.p_SetBlendMode(1);
-	t_canvas.p_DrawImage4(this.m_atlas[this.m_img],this.m_x-(t_camera.m_x0),this.m_y-(t_camera.m_y0));
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<138>";
+	t_canvas.p_DrawImage4(dbg_array(this.m_atlas,this.m_img)[dbg_index],this.m_x-(dbg_object(t_camera).m_x0),this.m_y-(dbg_object(t_camera).m_y0));
+	pop_err();
 }
 function c_Level(){
 	Object.call(this);
@@ -6936,34 +10373,60 @@ function c_Level(){
 	this.implments={c_Scene:1};
 }
 c_Level.m_new=function(t_map){
-	this.m_map=t_map;
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<23>";
+	dbg_object(this).m_map=t_map;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<25>";
 	if(true){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<29>";
 		this.m_chr=c_Character.m_new.call(new c_Character,t_map);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<30>";
 		this.m_camera=c_Camera.m_new.call(new c_Camera,(this.m_chr));
 	}
-	this.m_chr.m_x=(((t_map.m_width)*8.0/2.0+0.5)|0);
-	this.m_chr.m_y=(((t_map.m_height)*8.0/2.0+0.5)|0);
-	this.m_camera.m_x=this.m_chr.m_x;
-	this.m_camera.m_y=this.m_chr.m_y;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<32>";
+	dbg_object(this.m_chr).m_x=(((dbg_object(t_map).m_width)*8.0/2.0+0.5)|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<33>";
+	dbg_object(this.m_chr).m_y=(((dbg_object(t_map).m_height)*8.0/2.0+0.5)|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<34>";
+	dbg_object(this.m_camera).m_x=dbg_object(this.m_chr).m_x;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<35>";
+	dbg_object(this.m_camera).m_y=dbg_object(this.m_chr).m_y;
+	pop_err();
 	return this;
 }
 c_Level.m_new2=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<16>";
+	pop_err();
 	return this;
 }
+c_Level.prototype.p_Start=function(){
+	push_err();
+	pop_err();
+}
 c_Level.prototype.p_Update=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<42>";
 	this.m_chr.p_Update();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<43>";
 	this.m_camera.p_Update();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<44>";
+	pop_err();
 	return 0;
 }
-c_Level.prototype.p_Start=function(){
-	this.p_Update();
-}
 c_Level.prototype.p_Draw=function(t_canvas){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<48>";
 	t_canvas.p_SetBlendMode(1);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<49>";
 	t_canvas.p_SetColor2(1.0,1.0,1.0,1.0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<51>";
 	this.m_map.p_Draw2(t_canvas,this.m_camera);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<52>";
 	this.m_chr.p_Draw2(t_canvas,this.m_camera);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/scenes/level.monkey<53>";
 	this.m_camera.p_Draw2(t_canvas,this.m_camera);
+	pop_err();
 }
 function c_GameMap(){
 	Object.call(this);
@@ -6972,39 +10435,66 @@ function c_GameMap(){
 	this.m_tiles=[];
 }
 c_GameMap.m_new=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<11>";
+	pop_err();
 	return this;
 }
 c_GameMap.prototype.p_Draw2=function(t_canvas,t_camera){
-	var t_x0=((-((t_camera.m_x0) % 8.0))|0);
-	var t_y=((-((t_camera.m_y0) % 8.0))|0);
-	var t_tileI0=(((t_camera.m_y0)/8.0)|0);
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<19>";
+	var t_x0=((-((dbg_object(t_camera).m_x0) % 8.0))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<20>";
+	var t_y=((-((dbg_object(t_camera).m_y0) % 8.0))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<22>";
+	var t_tileI0=(((dbg_object(t_camera).m_y0)/8.0)|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<23>";
 	var t_tileI1=(((t_tileI0)+8.0)|0);
-	var t_tileJ0=(((t_camera.m_x0)/8.0)|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<24>";
+	var t_tileJ0=(((dbg_object(t_camera).m_x0)/8.0)|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<25>";
 	var t_tileJ1=(((t_tileJ0)+8.0)|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<27>";
 	for(var t_i=t_tileI0;t_i<=t_tileI1;t_i=t_i+1){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<28>";
 		if(t_i>=0 && t_i<this.m_height){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<29>";
 			var t_x=t_x0;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<30>";
 			for(var t_j=t_tileJ0;t_j<=t_tileJ1;t_j=t_j+1){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<31>";
 				if(t_j>=0 && t_j<this.m_width){
-					var t_imgN=this.m_tiles[t_i*this.m_width+t_j];
-					var t_img=c_Tileset.m_Tiles[t_imgN];
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<32>";
+					var t_imgN=dbg_array(this.m_tiles,t_i*this.m_width+t_j)[dbg_index];
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<33>";
+					var t_img=dbg_array(c_Tileset.m_Tiles,t_imgN)[dbg_index];
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<34>";
 					t_canvas.p_DrawImage4(t_img,(t_x),(t_y));
 				}
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<36>";
 				t_x=(((t_x)+8.0)|0);
 			}
 		}
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/gamemap.monkey<39>";
 		t_y=(((t_y)+8.0)|0);
 	}
+	pop_err();
 }
 function c_TestMap(){
 	c_GameMap.call(this);
 }
 c_TestMap.prototype=extend_class(c_GameMap);
 c_TestMap.m_new=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/testmap.monkey<10>";
 	c_GameMap.m_new.call(this);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/testmap.monkey<11>";
 	this.m_width=48;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/testmap.monkey<12>";
 	this.m_height=48;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/maps/testmap.monkey<61>";
 	this.m_tiles=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,17,20,16,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,20,19,16,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,20,17,18,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,19,19,20,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,17,19,16,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,16,18,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,17,20,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,16,20,19,4,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,19,17,19,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,17,18,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,19,17,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,1,4,0,0,0,3,0,4,0,0,0,18,19,19,1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,2,0,0,0,2,2,1,0,3,2,0,1,0,4,4,2,3,0,0,0,4,19,17,20,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,2,4,3,1,0,0,1,0,4,51,50,50,50,0,0,2,4,4,0,3,16,16,18,0,0,0,0,0,0,0,0,3,3,54,54,55,0,0,0,0,0,0,0,0,1,3,0,0,4,4,1,2,2,3,2,3,3,50,50,50,50,1,3,3,1,3,4,3,16,20,18,4,0,0,0,0,0,0,0,11,1,34,34,34,0,0,0,0,0,0,0,0,1,1,3,4,0,0,1,2,2,4,2,0,0,46,46,46,46,2,3,0,1,1,0,3,17,16,16,0,0,0,0,0,0,0,0,0,2,34,34,34,0,0,1,3,1,3,0,0,0,2,3,3,0,2,2,0,3,2,3,1,4,44,47,47,44,1,4,52,52,52,52,3,19,18,17,4,0,0,0,0,0,0,0,3,14,34,34,34,2,3,0,1,4,2,4,1,0,2,4,3,1,3,52,52,52,0,3,2,4,44,45,45,44,4,0,42,38,34,46,4,17,18,19,4,0,0,0,0,0,0,0,2,0,32,33,32,3,16,18,20,20,17,54,54,54,54,54,54,3,3,46,47,46,2,2,11,10,1,2,0,14,0,3,43,39,35,46,0,20,16,18,3,0,0,0,0,0,0,0,1,1,0,3,1,2,0,9,17,15,15,54,54,54,54,54,54,3,2,44,45,44,0,4,3,1,2,4,0,4,3,0,40,36,32,44,4,20,19,18,3,3,0,0,0,0,0,0,0,10,4,0,1,4,18,23,19,23,16,42,42,43,42,42,43,3,0,15,16,10,2,4,9,1,48,48,48,49,1,2,4,13,13,3,4,20,18,16,2,2,0,0,0,0,0,0,48,48,49,48,49,48,0,3,19,2,15,42,42,40,42,42,43,2,1,2,16,4,13,13,2,3,48,48,48,49,4,3,3,3,2,4,2,22,22,22,0,1,0,0,0,0,0,0,48,48,49,48,49,48,16,23,20,23,16,42,42,43,42,42,40,1,3,2,16,2,2,0,0,1,34,35,34,34,4,1,50,51,50,50,2,19,16,17,2,3,0,0,0,0,0,0,46,46,47,47,47,44,4,2,18,3,0,40,40,40,40,40,40,3,3,0,20,3,2,1,3,1,34,35,34,34,0,2,38,39,38,36,2,16,16,16,3,0,0,0,0,0,0,0,46,46,45,44,45,46,10,4,16,3,14,40,41,40,40,41,40,12,10,2,19,2,12,12,2,1,32,32,33,32,1,3,36,36,37,36,15,19,19,19,0,0,0,0,0,0,0,0,14,3,19,12,4,12,3,8,20,7,0,2,1,4,2,2,4,0,3,8,18,7,1,0,3,3,0,14,4,3,1,4,2,1,4,1,8,24,24,24,2,0,0,0,0,0,0,0,2,9,18,18,18,19,19,16,20,17,19,19,19,18,18,18,18,16,17,20,18,16,19,21,21,19,16,17,16,16,18,17,16,16,21,17,23,20,20,17,3,0,0,0,0,0,0,0,0,0,1,1,1,0,1,0,0,4,0,1,2,6,18,19,16,19,16,18,19,17,16,21,21,20,18,16,18,19,20,18,20,20,21,20,23,17,18,17,4,0,0,0,0,0,0,0,0,3,3,1,1,0,0,0,0,0,0,3,3,3,19,16,5,48,48,55,54,54,4,3,2,3,3,4,4,2,4,3,0,1,3,3,6,24,24,24,4,0,0,0,0,0,0,0,0,4,1,0,2,0,0,0,0,0,0,1,1,3,16,18,2,46,47,42,42,42,1,2,3,12,12,12,1,4,12,12,12,12,0,9,0,19,17,17,0,0,0,0,0,0,0,0,4,3,3,1,0,0,0,0,0,0,1,4,4,3,16,16,14,46,45,40,41,40,3,1,4,2,1,10,0,2,3,0,0,0,0,0,0,22,22,22,3,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,2,0,1,0,17,19,1,1,0,0,0,3,3,13,13,3,2,4,3,0,3,0,0,4,3,4,0,22,22,22,0,0,0,0,0,0,0,0,0,4,0,2,0,4,0,1,0,3,3,0,1,2,22,22,0,0,3,3,0,4,0,2,0,0,9,2,13,13,3,4,11,13,13,1,0,19,16,18,0,0,0,0,0,0,0,0,3,0,4,0,0,2,1,0,2,3,0,3,0,1,16,18,0,50,50,50,51,1,3,2,1,4,3,0,3,3,4,2,3,10,4,0,0,16,16,19,0,0,0,0,0,0,0,0,1,0,3,0,1,0,4,1,2,2,1,0,0,1,18,17,14,34,33,35,34,10,1,0,15,1,1,1,2,4,0,4,3,1,3,3,12,17,18,16,0,0,0,0,0,0,0,0,3,3,0,1,3,3,1,1,0,3,1,2,4,8,24,24,7,4,3,0,1,2,0,4,2,1,4,12,12,12,12,1,4,12,12,12,12,24,24,24,4,0,3,0,2,0,0,0,16,17,18,18,18,17,16,17,17,16,21,21,21,23,16,19,16,16,17,17,16,18,20,18,20,19,19,18,16,20,16,21,21,18,19,19,23,18,16,16,23,20,21,19,19,19,19,16,18,19,18,17,16,19,19,19,16,19,21,21,21,23,16,19,20,16,19,17,19,18,18,17,20,20,16,16,17,17,19,21,21,16,18,16,23,20,18,20,23,20,21,19,18,20,20,16,16,18,16,20,19,16,18,20,17,20,21,21,21,23,18,17,18,19,16,20,18,16,20,16,16,20,17,17,19,20,16,21,21,18,19,20,23,20,19,17,0,0,0,0,0,4,0,0,17,16,19,18,19,16,19,16,17,20,21,21,21,23,20,17,17,16,19,19,16,19,17,18,18,18,17,18,16,17,18,21,21,16,19,16,23,17,20,16,0,0,0,0,0,3,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,4,1,0,0,0,2,4,0,4,2,2,0,0,0,0,3,3,0,0,0,24,24,24,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,3,0,0,0,22,22,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,20,16,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,16,18,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,16,17,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,16,20,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,16,20,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,16,16,16,0,0,0,0,0,0,0,0];
+	pop_err();
 	return this;
 }
 function c_Camera(){
@@ -7017,35 +10507,62 @@ function c_Camera(){
 }
 c_Camera.prototype=extend_class(c_Actor);
 c_Camera.m_new=function(t_cameraOwner){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<24>";
 	c_Actor.m_new.call(this);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<25>";
 	this.m_owner=t_cameraOwner;
+	pop_err();
 	return this;
 }
 c_Camera.m_new2=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<9>";
 	c_Actor.m_new.call(this);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<9>";
+	pop_err();
 	return this;
 }
 c_Camera.prototype.p_Update=function(){
-	this.m_destX=((Math.floor(this.m_owner.m_x+18.285714285714285*(this.m_owner.m_directionX)+0.5))|0);
-	this.m_destY=((Math.floor(this.m_owner.m_y+18.285714285714285*(this.m_owner.m_directionY)+0.5))|0);
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<29>";
+	this.m_destX=((Math.floor(dbg_object(this.m_owner).m_x+18.285714285714285*(dbg_object(this.m_owner).m_directionX)+0.5))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<30>";
+	this.m_destY=((Math.floor(dbg_object(this.m_owner).m_y+18.285714285714285*(dbg_object(this.m_owner).m_directionY)+0.5))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<32>";
 	if(this.m_x!=(this.m_destX) || this.m_y!=(this.m_destY)){
-		var t_vel=64.0*c_Time.m_instance.m_lastFrame/1000.0;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<33>";
+		var t_vel=80.0*dbg_object(c_Time.m_instance).m_lastFrame/1000.0;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<34>";
 		var t_dist=Math.sqrt(Math.pow((this.m_destX)-this.m_x,2.0)+Math.pow((this.m_destY)-this.m_y,2.0));
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<35>";
 		var t_angle=(Math.atan2((this.m_destY)-this.m_y,(this.m_destX)-this.m_x)*R2D);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<36>";
 		if(t_dist<t_vel){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<37>";
 			this.m_x=(this.m_destX);
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<38>";
 			this.m_y=(this.m_destY);
 		}else{
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<40>";
 			var t_velX=t_vel*Math.cos((t_angle)*D2R);
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<41>";
 			var t_velY=t_vel*Math.sin((t_angle)*D2R);
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<42>";
 			this.m_x=this.m_x+t_velX;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<43>";
 			this.m_y=this.m_y+t_velY;
 		}
 	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<46>";
 	this.m_x=((Math.floor(this.m_x+0.5))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<47>";
 	this.m_y=((Math.floor(this.m_y+0.5))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<48>";
 	this.m_x0=((Math.floor(this.m_x-32.0+0.5))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/camera.monkey<49>";
 	this.m_y0=((Math.floor(this.m_y-32.0+0.5))|0);
+	pop_err();
 }
 function c_CameraEditor(){
 	c_Camera.call(this);
@@ -7054,123 +10571,208 @@ function c_CameraEditor(){
 }
 c_CameraEditor.prototype=extend_class(c_Camera);
 c_CameraEditor.m_new=function(t_map){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<21>";
 	c_Camera.m_new2.call(this);
-	this.m_map=t_map;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<22>";
+	dbg_object(this).m_map=t_map;
+	pop_err();
 	return this;
 }
 c_CameraEditor.m_new2=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<9>";
 	c_Camera.m_new2.call(this);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<9>";
+	pop_err();
 	return this;
 }
 c_CameraEditor.prototype.p_Update=function(){
-	var t_vel=32.0*c_Time.m_instance.m_realLastFrame/1000.0;
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<26>";
+	var t_vel=32.0*dbg_object(c_Time.m_instance).m_realLastFrame/1000.0;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<27>";
 	if((bb_input2_KeyDown(32))!=0){
-		this.m_x=(((this.m_map.m_width)*8.0/2.0+0.5)|0);
-		this.m_y=(((this.m_map.m_height)*8.0/2.0+0.5)|0);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<28>";
+		this.m_x=(((dbg_object(this.m_map).m_width)*8.0/2.0+0.5)|0);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<29>";
+		this.m_y=(((dbg_object(this.m_map).m_height)*8.0/2.0+0.5)|0);
 	}else{
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<31>";
 		if((bb_input2_KeyDown(16))!=0){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<31>";
 			t_vel*=2.0;
 		}
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<32>";
 		if((bb_input2_KeyDown(17))!=0){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<32>";
 			t_vel*=4.0;
 		}
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<33>";
 		if((bb_input2_KeyDown(38))!=0){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<34>";
 			this.m_y-=t_vel;
 		}else{
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<35>";
 			if((bb_input2_KeyDown(40))!=0){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<36>";
 				this.m_y+=t_vel;
 			}
 		}
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<38>";
 		if((bb_input2_KeyDown(37))!=0){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<39>";
 			this.m_x-=t_vel;
 		}else{
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<40>";
 			if((bb_input2_KeyDown(39))!=0){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<41>";
 				this.m_x+=t_vel;
 			}
 		}
 	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<45>";
 	var t_mx=bb_input_TMouseX();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<46>";
 	var t_my=bb_input_TMouseY();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<48>";
 	if(t_my>=54.0){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<49>";
 		if(((bb_input_MouseHitLeft)!=0) || ((bb_input_MouseHitRight)!=0)){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<50>";
 			var t_offset=((Math.floor((t_mx-28.0)/9.0))|0);
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<51>";
 			this.m_currentTile+=t_offset;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<52>";
 			if(this.m_currentTile<0){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<52>";
 				this.m_currentTile=0;
 			}
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<53>";
 			if(this.m_currentTile>c_Tileset.m_Tiles.length){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<53>";
 				this.m_currentTile=c_Tileset.m_Tiles.length-1;
 			}
 		}
 	}else{
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<56>";
 		var t_screenX0=this.m_x-32.0;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<57>";
 		var t_screenY0=this.m_y-32.0;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<58>";
 		var t_i=((Math.floor((t_my+t_screenY0)/8.0))|0);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<59>";
 		var t_j=((Math.floor((t_mx+t_screenX0)/8.0))|0);
-		if(t_i>=0 && t_j>=0 && t_i<this.m_map.m_height && t_j<this.m_map.m_width){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<60>";
+		if(t_i>=0 && t_j>=0 && t_i<dbg_object(this.m_map).m_height && t_j<dbg_object(this.m_map).m_width){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<61>";
 			if((bb_input_MouseDownLeft)!=0){
-				this.m_map.m_tiles[t_i*this.m_map.m_width+t_j]=this.m_currentTile;
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<62>";
+				dbg_array(dbg_object(this.m_map).m_tiles,t_i*dbg_object(this.m_map).m_width+t_j)[dbg_index]=this.m_currentTile;
 			}else{
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<63>";
 				if((bb_input_MouseDownRight)!=0){
-					this.m_currentTile=this.m_map.m_tiles[t_i*this.m_map.m_width+t_j];
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<64>";
+					this.m_currentTile=dbg_array(dbg_object(this.m_map).m_tiles,t_i*dbg_object(this.m_map).m_width+t_j)[dbg_index];
 				}
 			}
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<66>";
 			if((bb_input2_KeyDown(96))!=0){
-				var t_tile=this.m_map.m_tiles[t_i*this.m_map.m_width+t_j];
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<67>";
+				var t_tile=dbg_array(dbg_object(this.m_map).m_tiles,t_i*dbg_object(this.m_map).m_width+t_j)[dbg_index];
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<68>";
 				if(t_tile>=0 && t_tile<=4){
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<69>";
 					t_tile=((bb_random_Rnd2(0.0,5.0))|0);
 				}else{
+					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<70>";
 					if(t_tile>=16 && t_tile<=20){
+						err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<71>";
 						t_tile=((bb_random_Rnd2(16.0,21.0))|0);
 					}
 				}
-				this.m_map.m_tiles[t_i*this.m_map.m_width+t_j]=t_tile;
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<73>";
+				dbg_array(dbg_object(this.m_map).m_tiles,t_i*dbg_object(this.m_map).m_width+t_j)[dbg_index]=t_tile;
 			}
 		}
 	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<78>";
 	if((bb_input2_KeyHit(80))!=0){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<79>";
 		for(var t_i2=1;t_i2<=100;t_i2=t_i2+1){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<80>";
 			print("");
 		}
-		for(var t_i3=0;t_i3<=this.m_map.m_height-1;t_i3=t_i3+1){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<82>";
+		for(var t_i3=0;t_i3<=dbg_object(this.m_map).m_height-1;t_i3=t_i3+1){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<83>";
 			var t_line="";
-			var t_offset2=t_i3*this.m_map.m_width;
-			for(var t_j2=0;t_j2<=this.m_map.m_width-1;t_j2=t_j2+1){
-				t_line=t_line+(String(this.m_map.m_tiles[t_offset2])+",");
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<84>";
+			var t_offset2=t_i3*dbg_object(this.m_map).m_width;
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<85>";
+			for(var t_j2=0;t_j2<=dbg_object(this.m_map).m_width-1;t_j2=t_j2+1){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<86>";
+				t_line=t_line+(String(dbg_array(dbg_object(this.m_map).m_tiles,t_offset2)[dbg_index])+",");
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<87>";
 				t_offset2+=1;
 			}
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<89>";
 			print(t_line);
 		}
 	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<93>";
 	this.m_x0=((this.m_x-32.0+0.5)|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<94>";
 	this.m_y0=((this.m_y-32.0+0.5)|0);
+	pop_err();
 }
 c_CameraEditor.prototype.p_Draw2=function(t_canvas,t_camera){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<98>";
 	t_canvas.p_SetColor2(0.1,0.1,0.1,1.0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<99>";
 	t_canvas.p_DrawRect(0.0,54.0,64.0,10.0,null,0.0,0.0,1.0,1.0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<100>";
 	t_canvas.p_SetColor2(1.0,0.1,0.1,1.0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<101>";
 	t_canvas.p_DrawRect(27.0,54.0,10.0,10.0,null,0.0,0.0,1.0,1.0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<103>";
 	t_canvas.p_SetColor2(1.0,1.0,1.0,1.0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<105>";
 	var t_y=55;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<106>";
 	var t_tile=this.m_currentTile-4;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<108>";
 	var t_x=-8;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<109>";
 	while((t_x)<64.0){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<110>";
 		if(t_tile>=0 && t_tile<c_Tileset.m_Tiles.length){
-			t_canvas.p_DrawImage4(c_Tileset.m_Tiles[t_tile],(t_x),(t_y));
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<111>";
+			t_canvas.p_DrawImage4(dbg_array(c_Tileset.m_Tiles,t_tile)[dbg_index],(t_x),(t_y));
 		}
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<113>";
 		t_tile+=1;
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/cameraeditor.monkey<114>";
 		t_x=(((t_x)+9.0)|0);
 	}
+	pop_err();
 }
 function c_DummyCharacter(){
 	c_Character.call(this);
 }
 c_DummyCharacter.prototype=extend_class(c_Character);
 c_DummyCharacter.m_new=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/dummycharacter.monkey<7>";
 	c_Character.m_new2.call(this);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/dummycharacter.monkey<7>";
+	pop_err();
 	return this;
 }
 c_DummyCharacter.prototype.p_Update=function(){
+	push_err();
+	pop_err();
 }
 function c_AnimResult(){
 	Object.call(this);
@@ -7178,26 +10780,57 @@ function c_AnimResult(){
 	this.m_ended=false;
 }
 c_AnimResult.m_new=function(t_graph,t_ended){
-	this.m_graph=t_graph;
-	this.m_ended=t_ended;
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<23>";
+	dbg_object(this).m_graph=t_graph;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<24>";
+	dbg_object(this).m_ended=t_ended;
+	pop_err();
 	return this;
 }
 c_AnimResult.m_new2=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/animator.monkey<18>";
+	pop_err();
 	return this;
 }
 var bb_random_Seed=0;
 function bb_random_Rnd(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/random.monkey<21>";
 	bb_random_Seed=bb_random_Seed*1664525+1013904223|0;
-	return (bb_random_Seed>>8&16777215)/16777216.0;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/random.monkey<22>";
+	var t_=(bb_random_Seed>>8&16777215)/16777216.0;
+	pop_err();
+	return t_;
 }
 function bb_random_Rnd2(t_low,t_high){
-	return bb_random_Rnd3(t_high-t_low)+t_low;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/random.monkey<30>";
+	var t_=bb_random_Rnd3(t_high-t_low)+t_low;
+	pop_err();
+	return t_;
 }
 function bb_random_Rnd3(t_range){
-	return bb_random_Rnd()*t_range;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/random.monkey<26>";
+	var t_=bb_random_Rnd()*t_range;
+	pop_err();
+	return t_;
+}
+function bb_input2_KeyDown(t_key){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/input.monkey<40>";
+	var t_=((bb_input2_device.p_KeyDown(t_key))?1:0);
+	pop_err();
+	return t_;
 }
 function bb_input2_MouseDown(t_button){
-	return ((bb_input2_device.p_KeyDown(1+t_button))?1:0);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/input.monkey<66>";
+	var t_=((bb_input2_device.p_KeyDown(1+t_button))?1:0);
+	pop_err();
+	return t_;
 }
 var bb_input_MouseDownLeft=0;
 var bb_input_MouseDownRight=0;
@@ -7206,49 +10839,85 @@ var bb_input_MouseHitLeftUp=0;
 var bb_input_MouseHitRight=0;
 var bb_input_MouseHitRightUp=0;
 function bb_input_UpdateMouse(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<18>";
 	bb_input_MouseDownLeft=bb_input2_MouseDown(0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<19>";
 	bb_input_MouseDownRight=bb_input2_MouseDown(1);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<20>";
 	if((bb_input_MouseHitLeft)!=0){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<21>";
 		bb_input_MouseHitLeft=0;
 	}else{
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<22>";
 		if(!((bb_input_MouseHitLeftUp)!=0)){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<23>";
 			if(!((bb_input_MouseDownLeft)!=0)){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<23>";
 				bb_input_MouseHitLeftUp=1;
 			}
 		}else{
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<24>";
 			if((bb_input_MouseDownLeft)!=0){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<25>";
 				bb_input_MouseHitLeft=1;
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<26>";
 				bb_input_MouseHitLeftUp=0;
 			}
 		}
 	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<28>";
 	if((bb_input_MouseHitRight)!=0){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<29>";
 		bb_input_MouseHitRight=0;
 	}else{
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<30>";
 		if(!((bb_input_MouseHitRightUp)!=0)){
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<31>";
 			if(!((bb_input_MouseDownRight)!=0)){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<31>";
 				bb_input_MouseHitRightUp=1;
 			}
 		}else{
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<32>";
 			if((bb_input_MouseDownRight)!=0){
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<33>";
 				bb_input_MouseHitRight=1;
+				err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<34>";
 				bb_input_MouseHitRightUp=0;
 			}
 		}
 	}
+	pop_err();
 }
 function bb_filepath_ExtractExt(t_path){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/brl/filepath.monkey<22>";
 	var t_i=t_path.lastIndexOf(".");
+	err_info="F:/progs/gamedev/monkey/modules/brl/filepath.monkey<23>";
 	if(t_i!=-1 && t_path.indexOf("/",t_i+1)==-1 && t_path.indexOf("\\",t_i+1)==-1){
-		return t_path.slice(t_i+1);
+		err_info="F:/progs/gamedev/monkey/modules/brl/filepath.monkey<23>";
+		var t_=t_path.slice(t_i+1);
+		pop_err();
+		return t_;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/brl/filepath.monkey<24>";
+	pop_err();
 	return "";
 }
 function bb_filepath_StripExt(t_path){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/brl/filepath.monkey<16>";
 	var t_i=t_path.lastIndexOf(".");
+	err_info="F:/progs/gamedev/monkey/modules/brl/filepath.monkey<17>";
 	if(t_i!=-1 && t_path.indexOf("/",t_i+1)==-1 && t_path.indexOf("\\",t_i+1)==-1){
-		return t_path.slice(0,t_i);
+		err_info="F:/progs/gamedev/monkey/modules/brl/filepath.monkey<17>";
+		var t_=t_path.slice(0,t_i);
+		pop_err();
+		return t_;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/brl/filepath.monkey<18>";
+	pop_err();
 	return t_path;
 }
 function c_NodeEnumerator(){
@@ -7256,64 +10925,126 @@ function c_NodeEnumerator(){
 	this.m_node=null;
 }
 c_NodeEnumerator.m_new=function(t_node){
-	this.m_node=t_node;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<437>";
+	dbg_object(this).m_node=t_node;
+	pop_err();
 	return this;
 }
 c_NodeEnumerator.m_new2=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<434>";
+	pop_err();
 	return this;
 }
 c_NodeEnumerator.prototype.p_HasNext=function(){
-	return this.m_node!=null;
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<441>";
+	var t_=this.m_node!=null;
+	pop_err();
+	return t_;
 }
 c_NodeEnumerator.prototype.p_NextObject=function(){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<445>";
 	var t_t=this.m_node;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<446>";
 	this.m_node=this.m_node.p_NextNode();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/map.monkey<447>";
+	pop_err();
 	return t_t;
 }
-function bb_input2_KeyDown(t_key){
-	return ((bb_input2_device.p_KeyDown(t_key))?1:0);
-}
 function bb_math_Abs(t_x){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<46>";
 	if(t_x>=0){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<46>";
+		pop_err();
 		return t_x;
 	}
-	return -t_x;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<47>";
+	var t_=-t_x;
+	pop_err();
+	return t_;
 }
 function bb_math_Abs2(t_x){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<73>";
 	if(t_x>=0.0){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<73>";
+		pop_err();
 		return t_x;
 	}
-	return -t_x;
+	err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<74>";
+	var t_=-t_x;
+	pop_err();
+	return t_;
 }
 function bb_math_Sgn(t_x){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<41>";
 	if(t_x<0){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<41>";
+		pop_err();
 		return -1;
 	}
-	return ((t_x>0)?1:0);
+	err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<42>";
+	var t_=((t_x>0)?1:0);
+	pop_err();
+	return t_;
 }
 function bb_math_Sgn2(t_x){
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<67>";
 	if(t_x<0.0){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<67>";
+		pop_err();
 		return -1.0;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<68>";
 	if(t_x>0.0){
+		err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<68>";
+		pop_err();
 		return 1.0;
 	}
+	err_info="F:/progs/gamedev/monkey/modules/monkey/math.monkey<69>";
+	pop_err();
 	return 0.0;
 }
 function bb_input2_MouseX(){
-	return bb_input2_device.p_MouseX();
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/input.monkey<58>";
+	var t_=bb_input2_device.p_MouseX();
+	pop_err();
+	return t_;
 }
 function bb_input_TMouseX(){
-	return bb_input2_MouseX()*64.0/640.0;
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<39>";
+	var t_=bb_input2_MouseX()*64.0/640.0;
+	pop_err();
+	return t_;
 }
 function bb_input2_MouseY(){
-	return bb_input2_device.p_MouseY();
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/input.monkey<62>";
+	var t_=bb_input2_device.p_MouseY();
+	pop_err();
+	return t_;
 }
 function bb_input_TMouseY(){
-	return bb_input2_MouseY()*64.0/640.0;
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/input.monkey<43>";
+	var t_=bb_input2_MouseY()*64.0/640.0;
+	pop_err();
+	return t_;
 }
 function bb_input2_KeyHit(t_key){
-	return bb_input2_device.p_KeyHit(t_key);
+	push_err();
+	err_info="F:/progs/gamedev/monkey/modules/mojo/input.monkey<44>";
+	var t_=bb_input2_device.p_KeyHit(t_key);
+	pop_err();
+	return t_;
 }
 function bbInit(){
 	bb_app__app=null;
@@ -7371,7 +11102,7 @@ function bbInit(){
 	bb_graphics2_rs_projMatrix=bb_math3d_Mat4New();
 	c_AssetBox.m_GfxCharacter=[];
 	c_Tileset.m_Tiles=[];
-	c_Animator.m_anims=new_array_array(2);
+	c_Animator.m_anims=new_array_array(6);
 	bb_random_Seed=1234;
 	bb_input_MouseDownLeft=0;
 	bb_input_MouseDownRight=0;

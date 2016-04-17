@@ -36,7 +36,6 @@ Class Level Implements Scene
 	End Method
 	
 	Method Start:Void()
-		Update()
 	End Method
 
 	Method Update:Int()
