@@ -46,7 +46,7 @@ Public
 		Local my:Float = TMouseY()
 		
 		If (my >= MarginStart)
-			If (MouseHit(MOUSE_LEFT) Or MouseHit(MOUSE_RIGHT))
+			If (MouseHitLeft Or MouseHitRight)
 				Local offset:Int = Floor((mx - SelectedTileX) / (TileSize + 1.0))
 				currentTile += offset
 				If (currentTile < 0) Then currentTile = 0
@@ -58,9 +58,9 @@ Public
 			Local i:Int = Floor((my + screenY0) / TileSize)
 			Local j:Int = Floor((mx + screenX0) / TileSize)
 			If (i >= 0 And j >= 0 And i < map.height And j < map.width)
-				If (MouseDown(MOUSE_LEFT))
+				If (MouseDownLeft)
 					map.tiles[i * map.width + j] = currentTile
-				Else If (MouseDown(MOUSE_RIGHT))
+				Else If (MouseDownRight)
 					currentTile = map.tiles[i * map.width + j]
 				End If
 			End If

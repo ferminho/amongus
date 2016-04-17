@@ -39,6 +39,7 @@ Private
 		Local time:Int = Millisecs()
 
 		If (time >= nextExpectedFrame)
+			UpdateMouse()
 			nextExpectedFrame = time + FrameTime
 			Time.instance.Update()
 			Local status:Int = scenes[currentScene].Update()

@@ -37,9 +37,9 @@ Public
 		
 		If (lastFpsTime = -1.0)
 			lastFpsTime = temp
-		Else If ((temp - lastFpsTime) >= 3000)
+		Else If ((temp - lastFpsTime) >= 5000)
 			lastFpsTime = temp
-			fps = (frames + 1) / 3
+			fps = (frames + 1) / 5
 			frames = 0
 			Print(fps)
 		Else

@@ -2645,6 +2645,7 @@ c_AmongUs.prototype.p_OnCreate=function(){
 c_AmongUs.prototype.p_OnUpdate=function(){
 	var t_time=bb_app_Millisecs();
 	if(t_time>=this.m_nextExpectedFrame){
+		bb_input_UpdateMouse();
 		this.m_nextExpectedFrame=t_time+20;
 		c_Time.m_instance.p_Update();
 		var t_status=this.m_scenes[this.m_currentScene].p_Update();
@@ -3463,9 +3464,9 @@ c_Time.prototype.p_Update=function(){
 	if((this.m_lastFpsTime)==-1.0){
 		this.m_lastFpsTime=t_temp;
 	}else{
-		if(t_temp-this.m_lastFpsTime>=3000){
+		if(t_temp-this.m_lastFpsTime>=5000){
 			this.m_lastFpsTime=t_temp;
-			this.m_fps=(((this.m_frames+1)/3)|0);
+			this.m_fps=(((this.m_frames+1)/5)|0);
 			this.m_frames=0;
 			print(String(this.m_fps));
 		}else{
@@ -7005,7 +7006,7 @@ c_CameraEditor.prototype.p_Update=function(){
 	var t_mx=bb_input_TMouseX();
 	var t_my=bb_input_TMouseY();
 	if(t_my>=54.0){
-		if(((bb_input2_MouseHit(0))!=0) || ((bb_input2_MouseHit(1))!=0)){
+		if(((bb_input_MouseHitLeft)!=0) || ((bb_input_MouseHitRight)!=0)){
 			var t_offset=((Math.floor((t_mx-28.0)/9.0))|0);
 			this.m_currentTile+=t_offset;
 			if(this.m_currentTile<0){
@@ -7021,10 +7022,10 @@ c_CameraEditor.prototype.p_Update=function(){
 		var t_i=((Math.floor((t_my+t_screenY0)/8.0))|0);
 		var t_j=((Math.floor((t_mx+t_screenX0)/8.0))|0);
 		if(t_i>=0 && t_j>=0 && t_i<this.m_map.m_height && t_j<this.m_map.m_width){
-			if((bb_input2_MouseDown(0))!=0){
+			if((bb_input_MouseDownLeft)!=0){
 				this.m_map.m_tiles[t_i*this.m_map.m_width+t_j]=this.m_currentTile;
 			}else{
-				if((bb_input2_MouseDown(1))!=0){
+				if((bb_input_MouseDownRight)!=0){
 					this.m_currentTile=this.m_map.m_tiles[t_i*this.m_map.m_width+t_j];
 				}
 			}
@@ -7098,6 +7099,47 @@ function bb_random_Rnd2(t_low,t_high){
 function bb_random_Rnd3(t_range){
 	return bb_random_Rnd()*t_range;
 }
+function bb_input2_MouseDown(t_button){
+	return ((bb_input2_device.p_KeyDown(1+t_button))?1:0);
+}
+var bb_input_MouseDownLeft=0;
+var bb_input_MouseDownRight=0;
+var bb_input_MouseHitLeft=0;
+var bb_input_MouseHitLeftUp=0;
+var bb_input_MouseHitRight=0;
+var bb_input_MouseHitRightUp=0;
+function bb_input_UpdateMouse(){
+	bb_input_MouseDownLeft=bb_input2_MouseDown(0);
+	bb_input_MouseDownRight=bb_input2_MouseDown(1);
+	if((bb_input_MouseHitLeft)!=0){
+		bb_input_MouseHitLeft=0;
+	}else{
+		if(!((bb_input_MouseHitLeftUp)!=0)){
+			if(!((bb_input_MouseDownLeft)!=0)){
+				bb_input_MouseHitLeftUp=1;
+			}
+		}else{
+			if((bb_input_MouseDownLeft)!=0){
+				bb_input_MouseHitLeft=1;
+				bb_input_MouseHitLeftUp=0;
+			}
+		}
+	}
+	if((bb_input_MouseHitRight)!=0){
+		bb_input_MouseHitRight=0;
+	}else{
+		if(!((bb_input_MouseHitRightUp)!=0)){
+			if(!((bb_input_MouseDownRight)!=0)){
+				bb_input_MouseHitRightUp=1;
+			}
+		}else{
+			if((bb_input_MouseDownRight)!=0){
+				bb_input_MouseHitRight=1;
+				bb_input_MouseHitRightUp=0;
+			}
+		}
+	}
+}
 function bb_filepath_ExtractExt(t_path){
 	var t_i=t_path.lastIndexOf(".");
 	if(t_i!=-1 && t_path.indexOf("/",t_i+1)==-1 && t_path.indexOf("\\",t_i+1)==-1){
@@ -7145,12 +7187,6 @@ function bb_input2_MouseY(){
 }
 function bb_input_TMouseY(){
 	return bb_input2_MouseY()*64.0/640.0;
-}
-function bb_input2_MouseHit(t_button){
-	return bb_input2_device.p_KeyHit(1+t_button);
-}
-function bb_input2_MouseDown(t_button){
-	return ((bb_input2_device.p_KeyDown(1+t_button))?1:0);
 }
 function bb_input2_KeyHit(t_key){
 	return bb_input2_device.p_KeyHit(t_key);
@@ -7213,6 +7249,12 @@ function bbInit(){
 	c_Tileset.m_Tiles=[];
 	c_Animator.m_anims=new_array_array(2);
 	bb_random_Seed=1234;
+	bb_input_MouseDownLeft=0;
+	bb_input_MouseDownRight=0;
+	bb_input_MouseHitLeft=0;
+	bb_input_MouseHitLeftUp=0;
+	bb_input_MouseHitRight=0;
+	bb_input_MouseHitRightUp=0;
 	c_Texture.m__black=null;
 	c_Texture.m__flat=null;
 }
