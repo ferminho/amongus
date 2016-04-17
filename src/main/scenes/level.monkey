@@ -10,11 +10,15 @@ Import actors.camera
 Import actors.cameraeditor
 Import actors.character
 Import actors.dummycharacter
+Import actors.pedestrian
 Import maps.gamemap
 Import maps.testmap
 Import scenes.scene
 
 Class Level Implements Scene
+
+	Const MinPedestrians:Int = 30
+	Const MaxPedestrians:Int = 50
 
 	Field camera:Camera
 	Field map:GameMap
@@ -36,6 +40,12 @@ Class Level Implements Scene
 		chr.y = Int(((map.height * TileSize) / 2.0) + 0.5)
 		camera.x = chr.x
 		camera.y = chr.y 
+		
+		Local nPedestrians:Int = Rnd(MinPedestrians, MaxPedestrians + 1)
+		For Local i:Int = 1 To nPedestrians
+			Local ped:Pedestrian = New Pedestrian(Self)
+			world.AddLast(ped)
+		End For
 	End Method
 	
 	Method Start:Void()
@@ -54,7 +64,7 @@ Class Level Implements Scene
 		canvas.SetColor(1.0, 1.0, 1.0, 1.0)
 		
 		map.Draw(canvas, camera)
-		world.Sort(False)
+		world.Sort()
 		For Local actor:Actor = EachIn world
 			actor.Draw(canvas, camera)
 		End For

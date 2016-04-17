@@ -28,7 +28,7 @@ End Class
 Class Animator
 Public
 
-	Global anims:AnimStep[6][]
+	Global anims:AnimStep[7][]
 	Function Initialize:Void()
 		anims[Character.Idle] = [ New AnimStep(0, 500) ]
 		anims[Character.Running] = [ New AnimStep(1, 120), New AnimStep(2, 90), New AnimStep(3, 120), New AnimStep(2, 90) ]
@@ -36,6 +36,7 @@ Public
 		anims[Character.Jumping] = [ New AnimStep(5, 500) ]
 		anims[Character.Shooting] = [ New AnimStep(6, 300) ]
 		anims[Character.Falling] = [ New AnimStep(7, 80), New AnimStep(8, 80), New AnimStep(9, 80), New AnimStep(10, 80) ]
+		anims[Character.Walking] = [ New AnimStep(11, 180), New AnimStep(12, 130) ]
 	End Function
 
 	Field stepEnd:Float

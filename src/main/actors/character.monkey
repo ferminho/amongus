@@ -20,8 +20,8 @@ Public
 	Const RunningSpeedDiagonal:Float = 31.82
 	Const JumpingSpeed:Float = 20.0
 	Const JumpingSpeedDiagonal:Float = 16.0
-	Const FallingSpeed:Float = 15.0
-	Const FallingSpeedDiagonal:Float = 15.0
+	Const WalkingSpeed:Float = 15.0
+	Const WalkingSpeedDiagonal:Float = 15.0
 	Const DriftDecel:Float = 0.002
 	Const SpacePressShootTime:Int = 400
 	Const JumpDistance:Float = 21.0
@@ -33,6 +33,7 @@ Public
 	Const Jumping:Int = 3
 	Const Shooting:Int = 4
 	Const Falling:Int = 5
+	Const Walking:Int = 6
 	
 	Field map:GameMap
 	Field level:Level
@@ -50,15 +51,16 @@ Public
 	Field inputMoveDown:Bool
 	Field inputMoveLeft:Bool
 	Field inputMoveRight:Bool
+	Field inputRun:Bool
 	Field inputSlide:Bool
 	Field inputShoot:Bool
 	Field inputJump:Bool
 	Field collisionX:Int
 	Field collisionY:Int
 
-	Method New(level:Level)
+	Method New(level:Level, atlas:Image[] = AssetBox.GfxCharacter)
 		Self.level = level
-		atlas = AssetBox.GfxCharacter
+		Self.atlas = atlas
 		animator.Animate(Idle, 0.0, 1.0)
 		map = level.map
 		directionY = 1.0
@@ -76,16 +78,20 @@ Public
 			End If
 		#End
 		
-		IA()
+		AI()
 		collisionX = 0
 		collisionY = 0
 		Select (status)
-			Case Idle, Running
+			Case Idle, Running, Walking
 				If (inputSlide)
 					status = Sliding
 					DoDrift(delta)
 				Else If (inputMoveDown Or inputMoveLeft Or inputMoveRight Or inputMoveUp)
-					DoRun(delta)
+					If (inputRun)
+						DoMove(delta, Running)
+					Else
+						DoMove(delta, Walking)
+					EndIf
 				Else
 					velx = 0.0
 					vely = 0.0
@@ -154,7 +160,7 @@ Public
 		canvas.DrawImage(atlas[img], x - camera.x0, y - camera.y0)
 	End Method
 	
-	Method IA:Void()
+	Method AI:Void()
 		inputMoveDown = False
 		inputMoveLeft = False
 		inputMoveRight = False
@@ -162,7 +168,8 @@ Public
 		inputSlide = False
 		inputShoot = False
 		inputJump = False
-		If (KeyDown(KEY_SPACE) And (status = Idle Or status = Running) And timeToShoot = -1)
+		inputRun = True ' always run
+		If (KeyDown(KEY_SPACE) And (status = Idle Or status = Running Or status = Walking) And timeToShoot = -1)
 			timeToShoot = Time.instance.realActTime + SpacePressShootTime
 			inputSlide = True
 		Else If (KeyDown(KEY_SPACE) And status = Sliding)
@@ -191,30 +198,39 @@ Public
 		End If
 	End Method
 	
-	Method DoRun:Void(delta:Float)
+	Method DoMove:Void(delta:Float, newStatus:Int)
 		Local tile:Int
 		Local increase:Float
 		Local vel:Float
-		status = Running
+		Local speed:Float 
+		Local speedDiag:Float
+		status = newStatus
+		If (status = Walking)
+			speed = WalkingSpeed
+			speedDiag = WalkingSpeedDiagonal
+		Else
+			speed = RunningSpeed
+			speedDiag = RunningSpeedDiagonal
+		End If
 		directionX = 0.0
 		directionY = 0.0
 		velx = 0.0
 		vely = 0.0
 		If (inputMoveUp)
-			vel = RunningSpeed
+			vel = speed
 			vely = -1.0
 			directionY = -1.0
 		Else If (inputMoveDown)
-			vel = RunningSpeed
+			vel = speed
 			vely = 1.0
 			directionY = 1.0
 		End If
 		If (inputMoveLeft)
-			If (vel > 0) Then vel = RunningSpeedDiagonal Else vel = RunningSpeed
+			If (vel > 0) Then vel = speedDiag Else vel = speed
 			velx = -1.0
 			directionX = -1.0
 		Else If (inputMoveRight)
-			If (vel > 0) Then vel = RunningSpeedDiagonal Else vel = RunningSpeed
+			If (vel > 0) Then vel = speedDiag Else vel = speed
 			velx = 1.0
 			directionX = 1.0
 		End If
@@ -311,11 +327,11 @@ Public
 	Method StopJump:Void()
 		If (map.GetTileTypeAt(x, y) = Tileset.TileJump)
 			If (velx <> 0.0 And vely <> 0.0)
-				velx = Sgn(velx) * FallingSpeedDiagonal
-				vely = Sgn(vely) * FallingSpeedDiagonal
+				velx = Sgn(velx) * WalkingSpeedDiagonal
+				vely = Sgn(vely) * WalkingSpeedDiagonal
 			Else
-				velx = Sgn(velx) * FallingSpeed
-				vely = Sgn(vely) * FallingSpeed
+				velx = Sgn(velx) * WalkingSpeed
+				vely = Sgn(vely) * WalkingSpeed
 			End If
 			PlaySound(AssetBox.SfxTrip, 0)
 			status = Falling
