@@ -12,4 +12,4 @@ Const CanvasHalfHeight:Float = CanvasHeight / 2.0
 
 Const TileSize:Float = 8.0
 
-Const Editing:Bool = false
+Const Editing:Bool = true

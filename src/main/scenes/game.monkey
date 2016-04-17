@@ -4,6 +4,7 @@ Public
 
 Import mojo2
 
+Import actors.animator
 Import assetbox
 Import maps.testmap
 Import scenes.level
@@ -17,6 +18,7 @@ Class Game Implements Scene
 	Method New()
 		AssetBox.Initialize()
 		Tileset.Initialize()
+		Animator.Initialize()
 		levels = New Scene[1]
 		levels[0] = New Level(New TestMap)
 	End Method

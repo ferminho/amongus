@@ -6640,6 +6640,7 @@ function c_Game(){
 c_Game.m_new=function(){
 	c_AssetBox.m_Initialize();
 	c_Tileset.m_Initialize();
+	c_Animator.m_Initialize();
 	this.m_levels=new_object_array(1);
 	this.m_levels[0]=(c_Level.m_new.call(new c_Level,(c_TestMap.m_new.call(new c_TestMap))));
 	return this;
@@ -6675,6 +6676,167 @@ function c_Tileset(){
 c_Tileset.m_Tiles=[];
 c_Tileset.m_Initialize=function(){
 	c_Tileset.m_Tiles=c_Image2.m_LoadFrames("monkey://data/tileset.png",64,false,.0,.0,0,null);
+}
+function c_Animator(){
+	Object.call(this);
+	this.m_status=0;
+	this.m_currentStep=0;
+	this.m_stepEnd=.0;
+}
+c_Animator.m_anims=[];
+c_Animator.m_Initialize=function(){
+	c_Animator.m_anims[0]=[c_AnimStep.m_new.call(new c_AnimStep,0,500)];
+	c_Animator.m_anims[1]=[c_AnimStep.m_new.call(new c_AnimStep,1,120),c_AnimStep.m_new.call(new c_AnimStep,2,90),c_AnimStep.m_new.call(new c_AnimStep,3,120),c_AnimStep.m_new.call(new c_AnimStep,2,90)];
+}
+c_Animator.m_new=function(){
+	return this;
+}
+c_Animator.prototype.p_Animate=function(t_currentStatus,t_directionX,t_directionY){
+	var t_time=c_Time.m_instance.m_actTime;
+	var t_ended=false;
+	if(this.m_status!=t_currentStatus){
+		this.m_currentStep=0;
+		this.m_status=t_currentStatus;
+		this.m_stepEnd=t_time+(c_Animator.m_anims[this.m_status][this.m_currentStep].m_timeMs)*bb_random_Rnd2(70.0,130.0)/100.0;
+	}else{
+		if(t_time>=this.m_stepEnd){
+			if(this.m_currentStep==c_Animator.m_anims[this.m_status].length-1){
+				this.m_currentStep=0;
+				t_ended=true;
+			}else{
+				this.m_currentStep+=1;
+			}
+			this.m_stepEnd=t_time+(c_Animator.m_anims[this.m_status][this.m_currentStep].m_timeMs)*bb_random_Rnd2(70.0,130.0)/100.0;
+		}
+	}
+	var t_graph=c_Animator.m_anims[this.m_status][this.m_currentStep].m_graph;
+	if(t_directionX<0.0){
+		t_graph+=32;
+	}else{
+		if(t_directionX>0.0){
+			t_graph+=48;
+		}else{
+			if(t_directionY<0.0){
+				t_graph+=16;
+			}
+		}
+	}
+	return c_AnimResult.m_new.call(new c_AnimResult,t_graph,t_ended);
+}
+function c_AnimStep(){
+	Object.call(this);
+	this.m_graph=0;
+	this.m_timeMs=0;
+}
+c_AnimStep.m_new=function(t_graph,t_timeMs){
+	this.m_graph=t_graph;
+	this.m_timeMs=t_timeMs;
+	return this;
+}
+c_AnimStep.m_new2=function(){
+	return this;
+}
+function c_Actor(){
+	Object.call(this);
+	this.m_x=.0;
+	this.m_y=.0;
+	this.m_directionX=.0;
+	this.m_directionY=.0;
+}
+c_Actor.m_new=function(){
+	return this;
+}
+c_Actor.prototype.p_Update=function(){
+}
+c_Actor.prototype.p_Draw2=function(t_canvas,t_camera){
+}
+function c_Character(){
+	c_Actor.call(this);
+	this.m_atlas=[];
+	this.m_animator=c_Animator.m_new.call(new c_Animator);
+	this.m_inputMoveDown=false;
+	this.m_inputMoveLeft=false;
+	this.m_inputMoveRight=false;
+	this.m_inputMoveUp=false;
+	this.m_inputShoot=false;
+	this.m_status=0;
+	this.m_img=0;
+}
+c_Character.prototype=extend_class(c_Actor);
+c_Character.m_new=function(){
+	c_Actor.m_new.call(this);
+	this.m_atlas=c_AssetBox.m_GfxCharacter;
+	this.m_animator.p_Animate(0,0.0,1.0);
+	return this;
+}
+c_Character.prototype.p_IA=function(){
+	this.m_inputMoveDown=false;
+	this.m_inputMoveLeft=false;
+	this.m_inputMoveRight=false;
+	this.m_inputMoveUp=false;
+	this.m_inputShoot=false;
+	if((bb_input2_KeyDown(38))!=0){
+		this.m_inputMoveUp=true;
+	}else{
+		if((bb_input2_KeyDown(40))!=0){
+			this.m_inputMoveDown=true;
+		}
+	}
+	if((bb_input2_KeyDown(37))!=0){
+		this.m_inputMoveLeft=true;
+	}else{
+		if((bb_input2_KeyDown(39))!=0){
+			this.m_inputMoveRight=true;
+		}
+	}
+	if((bb_input2_KeyDown(32))!=0){
+		this.m_inputShoot=true;
+	}
+}
+c_Character.prototype.p_Update=function(){
+	var t_delta=c_Time.m_instance.m_lastFrame;
+	var t_vel=30.0*t_delta/1000.0;
+	var t_animResult=null;
+	this.p_IA();
+	var t_1=this.m_status;
+	if(t_1==0 || t_1==1){
+		if(this.m_inputMoveDown || this.m_inputMoveLeft || this.m_inputMoveRight || this.m_inputMoveUp){
+			this.m_status=1;
+			this.m_directionX=0.0;
+			this.m_directionY=0.0;
+			if((bb_input2_KeyDown(38))!=0){
+				this.m_y-=t_vel;
+				this.m_directionY=-1.0;
+			}else{
+				if((bb_input2_KeyDown(40))!=0){
+					this.m_y+=t_vel;
+					this.m_directionY=1.0;
+				}
+			}
+			if((bb_input2_KeyDown(37))!=0){
+				this.m_x-=t_vel;
+				this.m_directionX=-1.0;
+			}else{
+				if((bb_input2_KeyDown(39))!=0){
+					this.m_x+=t_vel;
+					this.m_directionX=1.0;
+				}
+			}
+		}else{
+			this.m_status=0;
+		}
+	}
+	this.m_x=((Math.floor(this.m_x+0.5))|0);
+	this.m_y=((Math.floor(this.m_y+0.5))|0);
+	t_animResult=this.m_animator.p_Animate(this.m_status,this.m_directionX,this.m_directionY);
+	if(t_animResult.m_ended){
+	}
+	this.m_img=t_animResult.m_graph;
+}
+c_Character.prototype.p_Draw2=function(t_canvas,t_camera){
+	t_canvas.p_SetBlendMode(1);
+	t_canvas.p_SetColor2(1.0,1.0,1.0,1.0);
+	t_canvas.p_DrawImage4(this.m_atlas[this.m_img],this.m_x-(t_camera.m_x0),this.m_y-(t_camera.m_y0));
 }
 function c_Level(){
 	Object.call(this);
@@ -6755,68 +6917,29 @@ c_TestMap.m_new=function(){
 	this.m_tiles=[1,1,1,1,0,0,0,0,0,0,8,7,0,0,0,0,16,16,16,16,16,16,16,20,20,20,20,5,0,0,0,0,16,16,16,16,16,16,48,49,20,20,20,0,0,0,0,0,0,0,6,16,5,2,34,34,6,20,20,0,0,0,0,0,0,0,0,22,0,9,33,35,0,20,20,0,0,0,0,0,0,0,8,16,7,0,0,0,8,20,20,0,0,0,0,0,16,21,23,16,23,21,16,20,20,20,20,0,0,0,0,0,16,21,23,16,23,21,16,20,20,20,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 	return this;
 }
-function c_Actor(){
+function c_AnimResult(){
 	Object.call(this);
-	this.m_x=.0;
-	this.m_y=.0;
-	this.m_directionX=.0;
-	this.m_directionY=.0;
+	this.m_graph=0;
+	this.m_ended=false;
 }
-c_Actor.m_new=function(){
+c_AnimResult.m_new=function(t_graph,t_ended){
+	this.m_graph=t_graph;
+	this.m_ended=t_ended;
 	return this;
 }
-c_Actor.prototype.p_Update=function(){
-}
-c_Actor.prototype.p_Draw2=function(t_canvas,t_camera){
-}
-function c_Character(){
-	c_Actor.call(this);
-	this.m_atlas=[];
-}
-c_Character.prototype=extend_class(c_Actor);
-c_Character.m_new=function(){
-	c_Actor.m_new.call(this);
-	this.m_atlas=c_AssetBox.m_GfxCharacter;
+c_AnimResult.m_new2=function(){
 	return this;
 }
-c_Character.prototype.p_Update=function(){
-	var t_delta=c_Time.m_instance.m_lastFrame;
-	var t_vel=30.0*t_delta/1000.0;
-	if((bb_input2_KeyDown(16))!=0){
-		t_vel*=2.0;
-	}
-	if((bb_input2_KeyDown(17))!=0){
-		t_vel*=4.0;
-	}
-	if(((bb_input2_KeyDown(38))!=0) || ((bb_input2_KeyDown(40))!=0) || ((bb_input2_KeyDown(37))!=0) || ((bb_input2_KeyDown(39))!=0)){
-		this.m_directionX=0.0;
-		this.m_directionY=0.0;
-		if((bb_input2_KeyDown(38))!=0){
-			this.m_y-=t_vel;
-			this.m_directionY=-1.0;
-		}else{
-			if((bb_input2_KeyDown(40))!=0){
-				this.m_y+=t_vel;
-				this.m_directionY=1.0;
-			}
-		}
-		if((bb_input2_KeyDown(37))!=0){
-			this.m_x-=t_vel;
-			this.m_directionX=-1.0;
-		}else{
-			if((bb_input2_KeyDown(39))!=0){
-				this.m_x+=t_vel;
-				this.m_directionX=1.0;
-			}
-		}
-	}
-	this.m_x=((Math.floor(this.m_x+0.5))|0);
-	this.m_y=((Math.floor(this.m_y+0.5))|0);
+var bb_random_Seed=0;
+function bb_random_Rnd(){
+	bb_random_Seed=bb_random_Seed*1664525+1013904223|0;
+	return (bb_random_Seed>>8&16777215)/16777216.0;
 }
-c_Character.prototype.p_Draw2=function(t_canvas,t_camera){
-	t_canvas.p_SetBlendMode(1);
-	t_canvas.p_SetColor2(1.0,1.0,1.0,1.0);
-	t_canvas.p_DrawImage4(this.m_atlas[0],this.m_x-(t_camera.m_x0),this.m_y-(t_camera.m_y0));
+function bb_random_Rnd2(t_low,t_high){
+	return bb_random_Rnd3(t_high-t_low)+t_low;
+}
+function bb_random_Rnd3(t_range){
+	return bb_random_Rnd()*t_range;
 }
 function c_Camera(){
 	c_Actor.call(this);
@@ -7072,6 +7195,8 @@ function bbInit(){
 	bb_graphics2_rs_projMatrix=bb_math3d_Mat4New();
 	c_AssetBox.m_GfxCharacter=[];
 	c_Tileset.m_Tiles=[];
+	c_Animator.m_anims=new_array_array(2);
+	bb_random_Seed=1234;
 	c_Texture.m__black=null;
 	c_Texture.m__flat=null;
 }
