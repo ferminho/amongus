@@ -63,6 +63,15 @@ Public
 				Else If (MouseDownRight)
 					currentTile = map.tiles[i * map.width + j]
 				End If
+				If (KeyDown(KEY_NUM0))
+					Local tile:Int = map.tiles[i * map.width + j]
+					If (tile >= 0 And tile <= 4)
+						tile = Int(Rnd(0.0, 5.0))
+					Else If (tile >= 16 And tile <= 20)
+						tile = Int(Rnd(16.0, 21.0))
+					End If
+					map.tiles[i * map.width + j] = tile
+				End If
 			End If
 		End If
 		
