@@ -19,12 +19,13 @@ Public
 	Const RunningSpeed:Float = 45.0
 	Const RunningSpeedDiagonal:Float = 31.82
 	Const JumpingSpeed:Float = 20.0
-	Const JumpingSpeedDiagonal:Float = 15
-	Const FallingSpeed:Float = 10.0
-	Const FallingSpeedDiagonal:Float = 7.07
+	Const JumpingSpeedDiagonal:Float = 16.0
+	Const FallingSpeed:Float = 15.0
+	Const FallingSpeedDiagonal:Float = 15.0
 	Const DriftDecel:Float = 0.002
 	Const SpacePressShootTime:Int = 400
 	Const JumpDistance:Float = 21.0
+	Const FallPenaltyTime:Int = 700
 	
 	Const Idle:Int = 0
 	Const Running:Int = 1
@@ -44,6 +45,7 @@ Public
 	Field jumpDistanceAcum:Float 
 	
 	Field timeToShoot:Int = -1
+	Field timeToRecover:Int = -1
 	Field inputMoveUp:Bool
 	Field inputMoveDown:Bool
 	Field inputMoveLeft:Bool
@@ -119,6 +121,8 @@ Public
 				End If
 			Case Jumping
 				DoJump(delta)
+			Case Falling
+				DoFall(delta)
 		End Select	
 		
 		x = Int(Floor(x + 0.5))
@@ -303,7 +307,6 @@ Public
 		Local yi:Int = Int(Floor(((vely * delta) / 1000.0) + 0.5))
 		jumpDistanceAcum += Int(Floor(Sqrt(xi * xi + yi * yi) + 0.5))
 		If (collisionX Or collisionY Or jumpDistanceAcum >= JumpDistance) Then StopJump()
-		
 	End Method
 
 	Method StopJump:Void()
@@ -320,5 +323,43 @@ Public
 			status = Idle
 		End If
 	End Method
+
+	Method DoFall:Void(delta:Float)
+		Local tile:Int
+		Local increase:Float
+
+		Print(velx + " " + vely)		
+		'movement & colision
+		x += (velx * delta) / 1000.0
+		increase = Sgn(velx)
+		tile = map.GetTileTypeAt(x + increase * CollisionRadius, y)
+		While (tile = Tileset.TileBlock)
+			x -= increase
+			tile = map.GetTileTypeAt(x + increase * CollisionRadius, y)
+			collisionX = increase
+		End While
+		y += (vely * delta) / 1000.0
+		increase = Sgn(vely)
+		tile = map.GetTileTypeAt(x, y + increase * CollisionRadius)
+		While (tile = Tileset.TileBlock)
+			y -= increase
+			tile = map.GetTileTypeAt(x, y + increase * CollisionRadius)
+			collisionY = increase
+		End While
 		
+		If (collisionX <> 0) Then velx = -velx
+		If (collisionY <> 0) Then vely = -vely
+		
+		tile = map.GetTileTypeAt(x, y)
+		If (tile <> Tileset.TileBlock And tile <> Tileset.TileJump)
+			velx = 0.0
+			vely = 0.0
+			If (timeToRecover = -1)
+				timeToRecover = Time.instance.actTime + FallPenaltyTime
+			Else If (Time.instance.actTime > timeToRecover)
+				timeToRecover = -1
+				status = Idle
+			End If
+		End If
+	End Method			
 End Class

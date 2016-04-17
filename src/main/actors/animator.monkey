@@ -35,7 +35,7 @@ Public
 		anims[Character.Sliding] = [ New AnimStep(4, 500) ]
 		anims[Character.Jumping] = [ New AnimStep(5, 500) ]
 		anims[Character.Shooting] = [ New AnimStep(6, 300) ]
-		anims[Character.Falling] = [ New AnimStep(7, 90), New AnimStep(8, 90), New AnimStep(9, 90), New AnimStep(10, 90) ]
+		anims[Character.Falling] = [ New AnimStep(7, 80), New AnimStep(8, 80), New AnimStep(9, 80), New AnimStep(10, 80) ]
 	End Function
 
 	Field stepEnd:Float
