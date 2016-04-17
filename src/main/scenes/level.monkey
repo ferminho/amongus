@@ -26,7 +26,7 @@ Class Level Implements Scene
 			camera = New CameraEditor(map)
 			chr = New DummyCharacter()
 		Else
-			chr = New Character()
+			chr = New Character(map)
 			camera = New Camera(chr)
 		End If
 		chr.x = Int(((map.width * TileSize) / 2.0) + 0.5)
