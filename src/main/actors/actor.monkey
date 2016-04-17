@@ -9,8 +9,8 @@ Class Actor
 Public
 
 	Field x:Float, y:Float, z:Float
-	Field directionX:Int
-	Field directionY:Int
+	Field directionX:Float
+	Field directionY:Float
 	
 	Method Update:Void()
 	End Method

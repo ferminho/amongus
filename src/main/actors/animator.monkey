@@ -42,7 +42,7 @@ Public
 	Field currentStep:Int = 0
 	Field status:Int = Character.Idle
 	
-	Method Animate:AnimResult(currentStatus:Int, directionX:Int, directionY:Int)	
+	Method Animate:AnimResult(currentStatus:Int, directionX:Float, directionY:Float)	
 		Local time:Float = Time.instance.actTime
 		Local ended:Bool = False
 		If (status <> currentStatus)
@@ -60,11 +60,11 @@ Public
 		End If
 		
 		Local graph:Int = anims[status][currentStep].graph
-		If (directionX < 0) 
+		If (directionX < 0.0) 
 			graph += 32
-		Else If (directionX > 0)
+		Else If (directionX > 0.0)
 			graph += 48
-		Else If (directionY < 0)
+		Else If (directionY < 0.0)
 			graph += 16
 		End If
 		

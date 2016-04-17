@@ -6,6 +6,7 @@ Import mojo2
 Import actors.actor
 Import actors.animator
 Import actors.shine
+Import actors.shot 
 Import assetbox
 Import maps.gamemap
 Import scenes.level
@@ -102,7 +103,11 @@ Public
 					Local shine:Shine = New Shine(level)
 					shine.x = x + (directionX * 6.0 + directionY * 2.0)
 					shine.y = y - 5.0 + (directionY * 6.0)
+					Local shot:Shot = New Shot(level, directionX, directionY)
+					shot.x = shine.x
+					shot.y = shine.y
 					level.AddActor(shine)
+					level.AddActor(shot)
 					level.camera.Shake(4.0)
 				Else If (inputDrift)
 					DoDrift(delta)
@@ -189,27 +194,27 @@ Public
 		Local increase:Float
 		Local vel:Float
 		status = Running
-		directionX = 0
-		directionY = 0
+		directionX = 0.0
+		directionY = 0.0
 		velx = 0.0
 		vely = 0.0
 		If (inputMoveUp)
 			vel = RunningSpeed
 			vely = -1.0
-			directionY = -1
+			directionY = -1.0
 		Else If (inputMoveDown)
 			vel = RunningSpeed
 			vely = 1.0
-			directionY = 1
+			directionY = 1.0
 		End If
 		If (inputMoveLeft)
 			If (vel > 0) Then vel = RunningSpeedDiagonal Else vel = RunningSpeed
 			velx = -1.0
-			directionX = -1
+			directionX = -1.0
 		Else If (inputMoveRight)
 			If (vel > 0) Then vel = RunningSpeedDiagonal Else vel = RunningSpeed
 			velx = 1.0
-			directionX = 1
+			directionX = 1.0
 		End If
 		velx *= vel
 		vely *= vel
