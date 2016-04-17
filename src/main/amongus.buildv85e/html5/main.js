@@ -7672,9 +7672,6 @@ c_Pedestrian.prototype.p_RandomizeDirection=function(t_avoidCurrentX,t_avoidCurr
 		this.m_directionX=Math.floor(bb_random_Rnd2(-1.0,1.99));
 		this.m_directionY=Math.floor(bb_random_Rnd2(-1.0,1.99));
 	}
-	if(t_avoidCurrentX){
-		print(String(t_oldX)+" > "+String(this.m_directionX));
-	}
 }
 c_Pedestrian.prototype.p_Stop=function(){
 	this.m_inputMoveDown=false;
@@ -7706,7 +7703,7 @@ c_Pedestrian.prototype.p_SuddenChange=function(){
 	}else{
 		this.m_pedStatus=1;
 	}
-	this.m_nextMoodChange=((c_Time.m_instance.m_actTime+bb_random_Rnd2(4000.0,11000.0))|0);
+	this.m_nextMoodChange=((c_Time.m_instance.m_actTime+bb_random_Rnd2(4000.0,10000.0))|0);
 }
 c_Pedestrian.m_new=function(t_level){
 	c_Character.m_new.call(this,t_level,c_AssetBox.m_GfxPedestrian1);
