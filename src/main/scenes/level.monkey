@@ -46,14 +46,12 @@ Class Level Implements Scene
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)	
-		canvas.Clear()
 		canvas.SetBlendMode(BlendMode.Alpha)
 		canvas.SetColor(1.0, 1.0, 1.0, 1.0)
 		
 		map.Draw(canvas, camera)
 		chr.Draw(canvas, camera)
 		camera.Draw(canvas, camera) ' usually doesn't draw but who knows?
-		canvas.Flush()
 	End Method
 		
 End Class

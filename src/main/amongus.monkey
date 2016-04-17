@@ -56,7 +56,9 @@ Private
 	End Method
 	
 	Method OnRender:Int()
+		canvas.Clear()
 		scenes[currentScene].Draw(canvas)
+		canvas.Flush()
 		Return 0
 	End Method
 
