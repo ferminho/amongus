@@ -28,7 +28,7 @@ Public
 	
 	Const Idle:Int = 0
 	Const Running:Int = 1
-	Const Drifting:Int = 2
+	Const Sliding:Int = 2
 	Const Jumping:Int = 3
 	Const Shooting:Int = 4
 	Const Falling:Int = 5
@@ -48,7 +48,7 @@ Public
 	Field inputMoveDown:Bool
 	Field inputMoveLeft:Bool
 	Field inputMoveRight:Bool
-	Field inputDrift:Bool
+	Field inputSlide:Bool
 	Field inputShoot:Bool
 	Field inputJump:Bool
 	Field collisionX:Int
@@ -59,6 +59,7 @@ Public
 		atlas = AssetBox.GfxCharacter
 		animator.Animate(Idle, 0.0, 1.0)
 		map = level.map
+		directionY = 1.0
 	End Method
 	
 	Method Update:Void()
@@ -78,15 +79,17 @@ Public
 		collisionY = 0
 		Select (status)
 			Case Idle, Running
-				If (inputDrift)
-					status = Drifting
+				If (inputSlide)
+					status = Sliding
 					DoDrift(delta)
 				Else If (inputMoveDown Or inputMoveLeft Or inputMoveRight Or inputMoveUp)
 					DoRun(delta)
 				Else
+					velx = 0.0
+					vely = 0.0
 					status = Idle
 				End If
-			Case Drifting
+			Case Sliding
 				If (inputJump)
 					jumpDistanceAcum = 0.0
 					status = Jumping
@@ -109,7 +112,7 @@ Public
 					level.AddActor(shine)
 					level.AddActor(shot)
 					level.camera.Shake(4.0)
-				Else If (inputDrift)
+				Else If (inputSlide)
 					DoDrift(delta)
 				Else
 					status = Idle
@@ -157,24 +160,24 @@ Public
 		inputMoveLeft = False
 		inputMoveRight = False
 		inputMoveUp = False
-		inputDrift = False
+		inputSlide = False
 		inputShoot = False
 		inputJump = False
 		If (KeyDown(KEY_SPACE) And (status = Idle Or status = Running) And timeToShoot = -1)
 			timeToShoot = Time.instance.realActTime + SpacePressShootTime
-			inputDrift = True
-		Else If (KeyDown(KEY_SPACE) And status = Drifting)
+			inputSlide = True
+		Else If (KeyDown(KEY_SPACE) And status = Sliding)
 			If (Time.instance.realActTime >= timeToShoot)
 				inputShoot = True
 			Else
-				inputDrift = True
+				inputSlide = True
 			End If
 		Else
-			If (timeToShoot <> -1 And (status = Drifting))
+			If (timeToShoot <> -1 And (status = Sliding))
 				inputJump = True
 				timeToShoot = -1
 			Else
-				If (Not KeyDown(KEY_SPACE)) Then timeToShoot = -1 ' able to shoot/drift again
+				If (Not KeyDown(KEY_SPACE)) Then timeToShoot = -1 ' able to shoot/slide again
 				If (KeyDown(KEY_UP))
 					inputMoveUp = True
 				Else If (KeyDown(KEY_DOWN))
@@ -256,7 +259,7 @@ Public
 		Else
 			vely -= decel * Sgn(vely)
 		End If
-		
+
 		'movement & colision
 		x += (velx * delta) / 1000.0
 		increase = Sgn(velx)
