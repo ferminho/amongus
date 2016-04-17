@@ -51,16 +51,15 @@ Public
 		End If
 		x += (vx * delta) / 1000.0
 		y += (vy * delta) / 1000.0
-		x+= (Rnd(-PercentVariance, PercentVariance) * 10.0) / 100.0
+		x += (Rnd(-PercentVariance, PercentVariance) * 10.0) / 100.0
 		x = Floor(x + 0.5)
 		y = Floor(y + 0.5)
-		y+= (Rnd(-PercentVariance, PercentVariance) * 10.0) / 100.0
+		y += (Rnd(-PercentVariance, PercentVariance) * 10.0) / 100.0
 		
 		Local xi:Int = Int(Floor(((vx * delta) / 1000.0) + 0.5))
 		Local yi:Int = Int(Floor(((vy * delta) / 1000.0) + 0.5))
 		distanceAcum += Int(Floor(Sqrt(xi * xi + yi * yi) + 0.5))		
-		
-		If (distanceAcum >= targetDistance)
+		If (level.map.GetTileTypeAt(x, y) = Tileset.TileBlock Or distanceAcum >= targetDistance)
 			Explode()
 		End If
 	End Method	

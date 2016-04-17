@@ -41,4 +41,12 @@ Public
 			
 	End Method
 	
+	Method GetTileTypeAt:Int(x:Float, y:Float)
+		Local i:Int = Floor((y - 0.5) / TileSize)
+		Local j:Int = Floor((x + 0.5) / TileSize)
+		if (i < 0 Or i >= height) Then Return Tileset.TileBlock
+		If (j < 0 Or j >= width) Then Return Tileset.TileBlock
+		Return Tileset.TileType[tiles[i * width + j]]
+	End Method
+	
 End Class

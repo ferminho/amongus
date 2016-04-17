@@ -134,13 +134,7 @@ Public
 		End If
 		img = animResult.graph
 	End Method
-	
-	Method GetCurrentTile:Int(dispX:Float, dispY:Float)
-		Local i:Int = Floor((y + dispY - 0.5) / TileSize)
-		Local j:Int = Floor((x + dispX + 0.5) / TileSize)
-		Return map.tiles[i * map.width + j]
-	End Method
-	
+		
 	Method Draw:Void(canvas:Canvas, camera:Camera)
 		canvas.SetColor(1.0, 1.0, 1.0, 1.0)
 		#If CONFIG="debug"
@@ -224,18 +218,18 @@ Public
 		'movement & colision
 		x += (velx * delta) / 1000.0
 		increase = Sgn(velx)
-		tile = GetCurrentTile(increase * CollisionRadius, 0.0)
-		While (Tileset.TileType[tile] = Tileset.TileBlock Or Tileset.TileType[tile] = Tileset.TileJump)
+		tile = map.GetTileTypeAt(x + increase * CollisionRadius, y)
+		While (tile = Tileset.TileBlock Or tile = Tileset.TileJump)
 			x -= increase
-			tile = GetCurrentTile(increase * CollisionRadius, 0.0)
+			tile = map.GetTileTypeAt(x + increase * CollisionRadius, y)
 			collisionX = increase
 		End While
 		y += (vely * delta) / 1000.0
 		increase = Sgn(vely)
-		tile = GetCurrentTile(0.0, increase * CollisionRadius)
-		While (Tileset.TileType[tile] = Tileset.TileBlock Or Tileset.TileType[tile] = Tileset.TileJump)
+		tile = map.GetTileTypeAt(x, y + increase * CollisionRadius)
+		While (tile = Tileset.TileBlock Or tile = Tileset.TileJump)
 			y -= increase
-			tile = GetCurrentTile(0.0, increase * CollisionRadius)
+			tile = map.GetTileTypeAt(x, y + increase * CollisionRadius)
 			collisionY = increase
 		End While
 		If ((velx <> 0.0 And vely <> 0.0 And collisionX And collisionY) Or
@@ -263,19 +257,19 @@ Public
 		'movement & colision
 		x += (velx * delta) / 1000.0
 		increase = Sgn(velx)
-		tile = GetCurrentTile(increase * CollisionRadius, 0.0)
-		While (Tileset.TileType[tile] = Tileset.TileBlock Or Tileset.TileType[tile] = Tileset.TileJump)
+		tile = map.GetTileTypeAt(x + increase * CollisionRadius, y)
+		While (tile = Tileset.TileBlock Or tile = Tileset.TileJump)
 			x -= increase
-			tile = GetCurrentTile(increase * CollisionRadius, 0.0)
+			tile = map.GetTileTypeAt(x + increase * CollisionRadius, y)
 			collisionX = increase
 			status = Idle
 		End While
 		y += (vely * delta) / 1000.0
 		increase = Sgn(vely)
-		tile = GetCurrentTile(0.0, increase * CollisionRadius)
-		While (Tileset.TileType[tile] = Tileset.TileBlock Or Tileset.TileType[tile] = Tileset.TileJump)
+		tile = map.GetTileTypeAt(x, y + increase * CollisionRadius)
+		While (tile = Tileset.TileBlock Or tile = Tileset.TileJump)
 			y -= increase
-			tile = GetCurrentTile(0.0, increase * CollisionRadius)
+			tile = map.GetTileTypeAt(x, y + increase * CollisionRadius)
 			collisionY = increase
 			status = Idle
 		End While
@@ -288,19 +282,19 @@ Public
 		'movement & colision
 		x += (velx * delta) / 1000.0
 		increase = Sgn(velx)
-		tile = GetCurrentTile(increase * CollisionRadius, 0.0)
-		While (Tileset.TileType[tile] = Tileset.TileBlock)
+		tile = map.GetTileTypeAt(x + increase * CollisionRadius, y)
+		While (tile = Tileset.TileBlock)
 			x -= increase
-			tile = GetCurrentTile(increase * CollisionRadius, 0.0)
+			tile = map.GetTileTypeAt(x + increase * CollisionRadius, y)
 			collisionX = increase
 			status = Idle
 		End While
 		y += (vely * delta) / 1000.0
 		increase = Sgn(vely)
-		tile = GetCurrentTile(0.0, increase * CollisionRadius)
-		While (Tileset.TileType[tile] = Tileset.TileBlock)
+		tile = map.GetTileTypeAt(x, y + increase * CollisionRadius)
+		While (tile = Tileset.TileBlock)
 			y -= increase
-			tile = GetCurrentTile(0.0, increase * CollisionRadius)
+			tile = map.GetTileTypeAt(x, y + increase * CollisionRadius)
 			collisionY = increase
 			status = Idle
 		End While
@@ -313,7 +307,7 @@ Public
 	End Method
 
 	Method StopJump:Void()
-		If (Tileset.TileType[GetCurrentTile(0.0, 0.0)] = Tileset.TileJump)
+		If (map.GetTileTypeAt(x, y) = Tileset.TileJump)
 			If (velx <> 0.0 And vely <> 0.0)
 				velx = Sgn(velx) * FallingSpeedDiagonal
 				vely = Sgn(vely) * FallingSpeedDiagonal
