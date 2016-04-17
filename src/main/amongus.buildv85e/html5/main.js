@@ -10322,7 +10322,7 @@ c_Character.prototype.p_Update=function(){
 					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<102>";
 					this.m_status=4;
 					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<103>";
-					var t_shine=c_Shine.m_new.call(new c_Shine,this.m_level);
+					var t_shine=c_Shine.m_new.call(new c_Shine,this.m_level,45);
 					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<104>";
 					dbg_object(t_shine).m_x=this.m_x+(this.m_directionX*6.0+this.m_directionY*2.0);
 					err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/character.monkey<105>";
@@ -11474,21 +11474,24 @@ function c_Shine(){
 	c_Actor.call(this);
 	this.m_atlas=[];
 	this.m_nextTime=0;
+	this.m_frameTime=0;
 	this.m_level=null;
 	this.m_img=0;
 }
 c_Shine.prototype=extend_class(c_Actor);
-c_Shine.m_new=function(t_level){
+c_Shine.m_new=function(t_level,t_frameTime){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<20>";
-	c_Actor.m_new.call(this);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<21>";
-	this.m_atlas=c_AssetBox.m_GfxMisc;
+	c_Actor.m_new.call(this);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<22>";
-	this.m_nextTime=((dbg_object(c_Time.m_instance).m_actTime+45.0)|0);
+	this.m_atlas=c_AssetBox.m_GfxMisc;
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<23>";
-	dbg_object(this).m_level=t_level;
+	this.m_nextTime=((dbg_object(c_Time.m_instance).m_actTime+(t_frameTime))|0);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<24>";
+	dbg_object(this).m_frameTime=t_frameTime;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<25>";
+	dbg_object(this).m_level=t_level;
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<26>";
 	this.m_z=-5.0;
 	pop_err();
 	return this;
@@ -11503,32 +11506,32 @@ c_Shine.m_new2=function(){
 }
 c_Shine.prototype.p_Update=function(){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<28>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<30>";
 	if(dbg_object(c_Time.m_instance).m_actTime>=(this.m_nextTime)){
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<29>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<31>";
 		this.m_img+=1;
-		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<30>";
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<32>";
 		if(this.m_img>3){
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<31>";
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<33>";
 			this.m_level.p_RemoveActor(this);
 		}else{
-			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<33>";
-			this.m_nextTime=((dbg_object(c_Time.m_instance).m_actTime+45.0)|0);
+			err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<35>";
+			this.m_nextTime=((dbg_object(c_Time.m_instance).m_actTime+(this.m_frameTime))|0);
 		}
 	}
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<36>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<38>";
 	this.m_x=Math.floor(this.m_x+0.5);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<37>";
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<39>";
 	this.m_y=Math.floor(this.m_y+0.5);
 	pop_err();
 }
 c_Shine.prototype.p_Draw2=function(t_canvas,t_camera){
 	push_err();
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<41>";
-	t_canvas.p_SetColor2(1.0,1.0,1.0,0.75);
-	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<42>";
-	t_canvas.p_SetBlendMode(2);
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<43>";
+	t_canvas.p_SetColor2(1.0,1.0,1.0,0.75);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<44>";
+	t_canvas.p_SetBlendMode(2);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shine.monkey<45>";
 	t_canvas.p_DrawImage4(dbg_array(this.m_atlas,this.m_img)[dbg_index],this.m_x-(dbg_object(t_camera).m_x0),this.m_y-(dbg_object(t_camera).m_y0));
 	pop_err();
 }
@@ -11581,6 +11584,27 @@ c_Shot.m_new2=function(){
 	pop_err();
 	return this;
 }
+c_Shot.prototype.p_Explode=function(){
+	push_err();
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shot.monkey<75>";
+	this.m_level.p_RemoveActor(this);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shot.monkey<76>";
+	var t_explosions=((bb_random_Rnd2(5.0,8.0))|0);
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shot.monkey<77>";
+	for(var t_i=1;t_i<=t_explosions;t_i=t_i+1){
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shot.monkey<79>";
+		var t_explo=c_Shine.m_new.call(new c_Shine,this.m_level,((45.0*bb_random_Rnd2(80.0,120.0)/100.0)|0));
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shot.monkey<80>";
+		dbg_object(t_explo).m_x=this.m_x+bb_random_Rnd2(-5.0,5.0);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shot.monkey<81>";
+		dbg_object(t_explo).m_y=this.m_y+bb_random_Rnd2(-5.0,5.0);
+		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shot.monkey<82>";
+		this.m_level.p_AddActor(t_explo);
+	}
+	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shot.monkey<84>";
+	dbg_object(this.m_level).m_camera.p_Shake(7.0);
+	pop_err();
+}
 c_Shot.prototype.p_Update=function(){
 	push_err();
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shot.monkey<44>";
@@ -11618,7 +11642,7 @@ c_Shot.prototype.p_Update=function(){
 	err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shot.monkey<63>";
 	if(this.m_distanceAcum>=this.m_targetDistance){
 		err_info="F:/F/Dropbox/UNIF/Monkey/ludumdare35/src/main/actors/shot.monkey<64>";
-		this.m_level.p_RemoveActor(this);
+		this.p_Explode();
 	}
 	pop_err();
 }

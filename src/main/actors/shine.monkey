@@ -10,16 +10,18 @@ Import time
 Class Shine Extends Actor
 Public
 
-	Const FrameTime:Int = 45
+	Const BaseFrameTime:Int = 45
 
 	Field atlas:Image[]
 	Field img:Int = 0
 	Field nextTime:Int = 0
 	Field level:Level
+	Field frameTime:Int
 	
-	Method New(level:Level)
+	Method New(level:Level, frameTime:Int = BaseFrameTime)
 		atlas = AssetBox.GfxMisc
-		nextTime = Time.instance.actTime + FrameTime
+		nextTime = Time.instance.actTime + frameTime
+		Self.frameTime = frameTime
 		Self.level = level
 		z = -5.0
 	End Method
@@ -30,7 +32,7 @@ Public
 			If (img > 3)
 				level.RemoveActor(Self)	
 			Else
-				nextTime = Time.instance.actTime + FrameTime
+				nextTime = Time.instance.actTime + frameTime
 			End If
 		End If
 		x = Floor(x + 0.5)

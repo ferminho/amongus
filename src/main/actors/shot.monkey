@@ -61,7 +61,7 @@ Public
 		distanceAcum += Int(Floor(Sqrt(xi * xi + yi * yi) + 0.5))		
 		
 		If (distanceAcum >= targetDistance)
-			level.RemoveActor(Self)
+			Explode()
 		End If
 	End Method	
 	
@@ -69,5 +69,18 @@ Public
 		canvas.SetColor(1.0, 1.0, 1.0, 0.75)
 		canvas.SetBlendMode(BlendMode.Additive)
 		canvas.DrawImage(atlas[img], x - camera.x0, y - camera.y0)
+	End Method
+	
+	Method Explode:Void()
+		level.RemoveActor(Self)
+		Local explosions:Int = Rnd(5, 8)
+		For Local i:Int = 1 To explosions
+			
+			Local explo:Shine = New Shine(level, (Shine.BaseFrameTime * Rnd(80.0, 120.0)) / 100.0)
+			explo.x = x + Rnd(-5.0, 5.0)
+			explo.y = y + Rnd(-5.0, 5.0)
+			level.AddActor(explo)
+		End For
+		level.camera.Shake(7.0)
 	End Method
 End Class
