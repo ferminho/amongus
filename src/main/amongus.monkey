@@ -46,9 +46,9 @@ Private
 			If (Not KeyDown(KEY_SPACE)) Then transitioning = False 
 		Else
 			If (time >= nextExpectedFrame)
-				UpdateMouse()
-				nextExpectedFrame = time + FrameTime
 				Time.instance.Update()
+				Dj.instance.Update()
+				UpdateMouse()
 				Local status:Int = scenes[currentScene].Update()
 				If (status = Scene.SkipToNextScene)
 					currentScene+= 1
@@ -59,6 +59,7 @@ Private
 					If (currentScene < 0) Then EndApp()
 					scenes[currentScene].Start()
 				End If
+				nextExpectedFrame = time + FrameTime
 			End If
 		End If
 		Return 0

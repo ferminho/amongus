@@ -7,6 +7,7 @@ Import actors.actor
 Import actors.animator
 Import actors.shine
 Import actors.shot 
+Import audio.dj
 Import assetbox
 Import maps.gamemap
 Import scenes.level
@@ -120,7 +121,7 @@ Public
 					level.AddActor(shine)
 					level.AddActor(shot)
 					level.camera.Shake(4.0)
-					PlaySound(AssetBox.SfxShoot)
+					Dj.instance.Play(AssetBox.SfxShoot)
 				Else If (inputSlide)
 					DoDrift(delta)
 				Else
@@ -333,7 +334,7 @@ Public
 				velx = Sgn(velx) * WalkingSpeed
 				vely = Sgn(vely) * WalkingSpeed
 			End If
-			PlaySound(AssetBox.SfxTrip, 0)
+			Dj.instance.Play(AssetBox.SfxTrip)
 			status = Falling
 		Else 
 			status = Idle

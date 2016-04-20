@@ -4,6 +4,7 @@ Public
 
 Import actors.actor
 Import assetbox
+Import audio.dj
 Import scenes.level
 Import time
 
@@ -71,9 +72,9 @@ Public
 	End Method
 	
 	Method Explode:Void()
-		PlaySound(AssetBox.SfxExplo1, 1)
-		PlaySound(AssetBox.SfxExplo2, 2)
-		PlaySound(AssetBox.SfxExplo3, 3)
+		Dj.instance.PlayDelayed(AssetBox.SfxExplo1, MinExplo1SoundDelay, MaxExplo1SoundDelay)
+		Dj.instance.PlayDelayed(AssetBox.SfxExplo2, MinExplo2SoundDelay, MaxExplo2SoundDelay)
+		Dj.instance.PlayDelayed(AssetBox.SfxExplo3, MinExplo3SoundDelay, MaxExplo3SoundDelay)
 		level.RemoveActor(Self)
 		Local explosions:Int = Rnd(5, 8)
 		For Local i:Int = 1 To explosions
@@ -85,4 +86,13 @@ Public
 		End For
 		level.camera.Shake(7.0)
 	End Method
+	
+Private
+
+	Const MinExplo1SoundDelay:Int = 0
+	Const MaxExplo1SoundDelay:Int = 50
+	Const MinExplo2SoundDelay:Int = 110
+	Const MaxExplo2SoundDelay:Int = 175
+	Const MinExplo3SoundDelay:Int = 210
+	Const MaxExplo3SoundDelay:Int = 275
 End Class
