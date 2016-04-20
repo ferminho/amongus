@@ -2635,6 +2635,9 @@ c_AmongUs.m_new=function(){
 }
 c_AmongUs.prototype.p_OnCreate=function(){
 	c_Time.m_instance.p_Update();
+	for(var t_i=0;t_i<=31;t_i=t_i+1){
+		bb_audio_SetChannelVolume(t_i,0.35);
+	}
 	this.m_canvas=c_Canvas.m_new.call(new c_Canvas,null);
 	this.m_canvas.p_SetProjection2d(0.0,64.0,0.0,64.0,-1.0,1.0);
 	this.m_scenes[0]=(c_Menu.m_new.call(new c_Menu));
@@ -3487,6 +3490,10 @@ c_Time.prototype.p_Update=function(){
 }
 function bb_app_Millisecs(){
 	return bb_app__game.Millisecs();
+}
+function bb_audio_SetChannelVolume(t_channel,t_volume){
+	bb_audio_device.SetVolume(t_channel,t_volume);
+	return 0;
 }
 function c_DrawList(){
 	Object.call(this);

@@ -13,6 +13,7 @@ Class AmongUs Extends App
 Private
 	Const DesiredFps:Float = 40.0
 	Const FrameTime:Int = 1000.0 / DesiredFps
+	Const InitialVolume:Float = 0.5
 
 	Field canvas:Canvas
 	Field scenes:Scene[] = New Scene[2]
@@ -23,7 +24,9 @@ Private
 
 	Method OnCreate:Int()
 		Time.instance.Update()
-	
+		For Local i:Int = 0 To 31
+			SetChannelVolume(i, InitialVolume)
+		End For 
 		canvas = New Canvas()
 		canvas.SetProjection2d(0.0, CanvasWidth, 0.0, CanvasHeight)
 		
