@@ -9,9 +9,9 @@ Import time
 Class Camera Extends Actor
 Public 
 
-	Const ShiftX:Float = CanvasHeight / 3.5
-	Const ShiftY:Float = CanvasWidth / 3.5
-	Const Speed:Float = 80.0
+	Const ShiftX:Float = CanvasHeight / 7
+	Const ShiftY:Float = CanvasWidth / 7
+	Const Speed:Float = 60.0
 	
 	Field x0:Int	' screen origin
 	Field y0:Int
@@ -22,14 +22,44 @@ Public
 	Field destY:Int
 	
 	Field shaking:Float
+	Field lastDirection:Int = 0 ' 1 horizontal, 2 vertical
 
 	Method New(cameraOwner:Actor)
 		owner = cameraOwner
 	End Method
 	
 	Method Update:Void()
-		destX = Int(Floor(owner.x + (ShiftX * owner.directionX) + 0.5))
-		destY = Int(Floor(owner.y + (ShiftY * owner.directionY) + 0.5))
+		destX = owner.x
+		destY = owner.y
+		' this avoids the camera running in two directions at once on diagonals - it remembers the first pressed direction (up/down vs left/right)
+		' it helps avoid the shaky camera effect
+		If (lastDirection = 1)
+			If (owner.directionX <> 0.0)
+				destX = Int(Floor(owner.x + (ShiftX * owner.directionX) + 0.5))		
+			ElseIf (owner.directionY <> 0.0)
+				lastDirection = 2
+				destY = Int(Floor(owner.y + (ShiftY * owner.directionY) + 0.5))
+			Else
+				lastDirection = 0
+			End If
+		Else If (lastDirection = 2)
+			If (owner.directionY <> 0.0)
+				destY = Int(Floor(owner.y + (ShiftY * owner.directionY) + 0.5))
+			ElseIf (owner.directionX <> 0.0)
+				lastDirection = 1
+				destX = Int(Floor(owner.x + (ShiftX * owner.directionX) + 0.5))		
+			Else
+				lastDirection = 0
+			End If
+		Else
+			If (owner.directionX <> 0.0)
+				lastDirection = 1
+				destX = Int(Floor(owner.x + (ShiftX * owner.directionX) + 0.5))		
+			ElseIf (owner.directionY <> 0.0)
+				lastDirection = 2
+				destY = Int(Floor(owner.y + (ShiftY * owner.directionY) + 0.5))
+			End If
+		End If
 		
 		If (x <> destX Or y <> destY)
 			Local vel:Float = (Speed * Time.instance.lastFrame) / 1000.0

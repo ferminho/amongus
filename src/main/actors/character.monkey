@@ -23,10 +23,11 @@ Public
 	Const JumpingSpeedDiagonal:Float = 16.0
 	Const WalkingSpeed:Float = 15.0
 	Const WalkingSpeedDiagonal:Float = 15.0
-	Const DriftDecel:Float = 0.002
-	Const SpacePressShootTime:Int = 400
+	Const DriftDecel:Float = 0.003
 	Const JumpDistance:Float = 21.0
-	Const FallPenaltyTime:Int = 700
+	Const FallPenaltyTime:Int = 500
+	Const SlideShootTime:Int = 400
+	Const SlideLandTime:Int = 150
 	
 	Const Idle:Int = 0
 	Const Running:Int = 1
@@ -35,6 +36,7 @@ Public
 	Const Shooting:Int = 4
 	Const Falling:Int = 5
 	Const Walking:Int = 6
+	Const SlidingAfterJump:Int = 7
 	
 	Field map:GameMap
 	Field level:Level
@@ -44,9 +46,9 @@ Public
 	Field status:Int = Idle
 
 	Field velx:Float, vely:Float
-	Field jumpDistanceAcum:Float 
+	Field jumpDistanceAcum:Float = -1.0
 	
-	Field timeToShoot:Int = -1
+	Field slideShootTimer:Int = -1
 	Field timeToRecover:Int = -1
 	Field inputMoveUp:Bool
 	Field inputMoveDown:Bool
@@ -85,8 +87,20 @@ Public
 		Select (status)
 			Case Idle, Running, Walking
 				If (inputSlide)
+					DoUpdateDirection()
 					status = Sliding
 					DoDrift(delta)
+				Else If (inputJump)
+					jumpDistanceAcum = 0.0
+					status = Jumping
+					If (velx <> 0.0 And vely <> 0.0)
+						velx = Sgn(velx) * JumpingSpeedDiagonal
+						vely = Sgn(vely) * JumpingSpeedDiagonal
+					Else
+						velx = Sgn(velx) * JumpingSpeed
+						vely = Sgn(vely) * JumpingSpeed
+					End If
+					DoJump(delta)
 				Else If (inputMoveDown Or inputMoveLeft Or inputMoveRight Or inputMoveUp)
 					If (inputRun)
 						DoMove(delta, Running)
@@ -98,19 +112,8 @@ Public
 					vely = 0.0
 					status = Idle
 				End If
-			Case Sliding
-				If (inputJump)
-					jumpDistanceAcum = 0.0
-					status = Jumping
-					If (velx <> 0.0 And vely <> 0.0)
-						velx = Sgn(velx) * JumpingSpeedDiagonal
-						vely = Sgn(vely) * JumpingSpeedDiagonal
-					Else
-						velx = Sgn(velx) * JumpingSpeed
-						vely = Sgn(vely) * JumpingSpeed
-					End If
-					DoJump(delta)
-				Else If (inputShoot)
+			Case Sliding, SlidingAfterJump
+				If (inputShoot)
 					status = Shooting
 					Local shine:Shine = New Shine(level)
 					shine.x = x + (directionX * 6.0 + directionY * 2.0)
@@ -170,32 +173,44 @@ Public
 		inputShoot = False
 		inputJump = False
 		inputRun = True ' always run
-		If (KeyDown(KEY_SPACE) And (status = Idle Or status = Running Or status = Walking) And timeToShoot = -1)
-			timeToShoot = Time.instance.realActTime + SpacePressShootTime
-			inputSlide = True
-		Else If (KeyDown(KEY_SPACE) And status = Sliding)
-			If (Time.instance.realActTime >= timeToShoot)
+		
+		If (KeyDown(KEY_UP))
+			inputMoveUp = True
+		Else If (KeyDown(KEY_DOWN))
+			inputMoveDown = True
+		End If
+		If (KeyDown(KEY_LEFT))
+			inputMoveLeft = True
+		Else If (KeyDown(KEY_RIGHT))
+			inputMoveRight = True
+		End If
+		
+		If (status = Idle Or status = Running Or status = Walking)
+			If (KeyDown(KEY_X))
+				slideShootTimer = Time.instance.realActTime + SlideShootTime
+				inputSlide = True
+			Else If (KeyDown(KEY_Z))
+				If (jumpDistanceAcum = -1.0) Then inputJump = True
+			Else 
+				jumpDistanceAcum = -1.0 ' able to jump again
+			End If
+		Else If (status = Sliding)
+			If (Time.instance.realActTime >= slideShootTimer)
 				inputShoot = True
+				velx = 0.0
+				vely = 0.0
 			Else
 				inputSlide = True
 			End If
-		Else
-			If (timeToShoot <> -1 And (status = Sliding) And (velx <> 0.0 Or vely <> 0.0))
-				inputJump = True
-				timeToShoot = -1
+		Else If (status = SlidingAfterJump)
+			If (Time.instance.realActTime >= slideShootTimer)
+				status = Idle
+				velx = 0.0
+				vely = 0.0
 			Else
-				If (Not KeyDown(KEY_SPACE)) Then timeToShoot = -1 ' able to shoot/slide again
-				If (KeyDown(KEY_UP))
-					inputMoveUp = True
-				Else If (KeyDown(KEY_DOWN))
-					inputMoveDown = True
-				End If
-				If (KeyDown(KEY_LEFT))
-					inputMoveLeft = True
-				Else If (KeyDown(KEY_RIGHT))
-					inputMoveRight = True
-				End If
+				inputSlide = True
 			End If
+		Else If (status = Idle Or status = Running Or status = Walking)
 		End If
 	End Method
 	
@@ -258,6 +273,24 @@ Public
 			(velx <> 0.0 And vely = 0.0 And collisionX) Or 
 			(velx = 0.0 And vely <> 0.0 And collisionY))
 			status = Idle
+		End If
+	End Method
+	
+	Method DoUpdateDirection:Void()
+		If (inputMoveUp Or inputMoveDown Or inputMoveLeft Or inputMoveRight)
+			' if any pressed, change direction, if not keep previous one
+			directionX = 0.0
+			directionY = 0.0
+			If (inputMoveUp)
+				directionY = -1.0
+			Else If (inputMoveDown)
+				directionY = 1.0
+			End If
+			If (inputMoveLeft)
+				directionX = -1.0
+			Else If (inputMoveRight)
+				directionX = 1.0
+			End If
 		End If
 	End Method
 
@@ -336,8 +369,11 @@ Public
 			End If
 			Dj.instance.Play(AssetBox.SfxTrip)
 			status = Falling
-		Else 
-			status = Idle
+		Else
+			slideShootTimer = Time.instance.realActTime + SlideLandTime
+			status = SlidingAfterJump 
+			velx = 0.0
+			vely = 0.0
 		End If
 	End Method
 

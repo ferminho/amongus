@@ -6776,6 +6776,7 @@ c_Animator.m_Initialize=function(){
 	c_Animator.m_anims[4]=[c_AnimStep.m_new.call(new c_AnimStep,6,300)];
 	c_Animator.m_anims[5]=[c_AnimStep.m_new.call(new c_AnimStep,7,80),c_AnimStep.m_new.call(new c_AnimStep,8,80),c_AnimStep.m_new.call(new c_AnimStep,9,80),c_AnimStep.m_new.call(new c_AnimStep,10,80)];
 	c_Animator.m_anims[6]=[c_AnimStep.m_new.call(new c_AnimStep,11,180),c_AnimStep.m_new.call(new c_AnimStep,12,130)];
+	c_Animator.m_anims[7]=c_Animator.m_anims[2];
 }
 c_Animator.m_new=function(){
 	return this;
@@ -6855,12 +6856,12 @@ function c_Character(){
 	this.m_inputShoot=false;
 	this.m_inputJump=false;
 	this.m_status=0;
-	this.m_timeToShoot=-1;
+	this.m_slideShootTimer=-1;
+	this.m_jumpDistanceAcum=-1.0;
 	this.m_velx=.0;
 	this.m_vely=.0;
 	this.m_collisionX=0;
 	this.m_collisionY=0;
-	this.m_jumpDistanceAcum=.0;
 	this.m_timeToRecover=-1;
 	this.m_img=0;
 }
@@ -6887,44 +6888,80 @@ c_Character.prototype.p_AI=function(){
 	this.m_inputShoot=false;
 	this.m_inputJump=false;
 	this.m_inputRun=true;
-	if(((bb_input2_KeyDown(32))!=0) && (this.m_status==0 || this.m_status==1 || this.m_status==6) && this.m_timeToShoot==-1){
-		this.m_timeToShoot=c_Time.m_instance.m_realActTime+400;
-		this.m_inputSlide=true;
+	if((bb_input2_KeyDown(38))!=0){
+		this.m_inputMoveUp=true;
 	}else{
-		if(((bb_input2_KeyDown(32))!=0) && this.m_status==2){
-			if(c_Time.m_instance.m_realActTime>=this.m_timeToShoot){
+		if((bb_input2_KeyDown(40))!=0){
+			this.m_inputMoveDown=true;
+		}
+	}
+	if((bb_input2_KeyDown(37))!=0){
+		this.m_inputMoveLeft=true;
+	}else{
+		if((bb_input2_KeyDown(39))!=0){
+			this.m_inputMoveRight=true;
+		}
+	}
+	if(this.m_status==0 || this.m_status==1 || this.m_status==6){
+		if((bb_input2_KeyDown(88))!=0){
+			this.m_slideShootTimer=c_Time.m_instance.m_realActTime+400;
+			this.m_inputSlide=true;
+		}else{
+			if((bb_input2_KeyDown(90))!=0){
+				if(this.m_jumpDistanceAcum==-1.0){
+					this.m_inputJump=true;
+				}
+			}else{
+				this.m_jumpDistanceAcum=-1.0;
+			}
+		}
+	}else{
+		if(this.m_status==2){
+			if(c_Time.m_instance.m_realActTime>=this.m_slideShootTimer){
 				this.m_inputShoot=true;
+				this.m_velx=0.0;
+				this.m_vely=0.0;
 			}else{
 				this.m_inputSlide=true;
 			}
 		}else{
-			if(this.m_timeToShoot!=-1 && this.m_status==2 && (this.m_velx!=0.0 || this.m_vely!=0.0)){
-				this.m_inputJump=true;
-				this.m_timeToShoot=-1;
+			if(this.m_status==7){
+				if(c_Time.m_instance.m_realActTime>=this.m_slideShootTimer){
+					this.m_status=0;
+					this.m_velx=0.0;
+					this.m_vely=0.0;
+				}else{
+					this.m_inputSlide=true;
+				}
 			}else{
-				if(!((bb_input2_KeyDown(32))!=0)){
-					this.m_timeToShoot=-1;
-				}
-				if((bb_input2_KeyDown(38))!=0){
-					this.m_inputMoveUp=true;
-				}else{
-					if((bb_input2_KeyDown(40))!=0){
-						this.m_inputMoveDown=true;
-					}
-				}
-				if((bb_input2_KeyDown(37))!=0){
-					this.m_inputMoveLeft=true;
-				}else{
-					if((bb_input2_KeyDown(39))!=0){
-						this.m_inputMoveRight=true;
-					}
+				if(this.m_status==0 || this.m_status==1 || this.m_status==6){
 				}
 			}
 		}
 	}
 }
+c_Character.prototype.p_DoUpdateDirection=function(){
+	if(this.m_inputMoveUp || this.m_inputMoveDown || this.m_inputMoveLeft || this.m_inputMoveRight){
+		this.m_directionX=0.0;
+		this.m_directionY=0.0;
+		if(this.m_inputMoveUp){
+			this.m_directionY=-1.0;
+		}else{
+			if(this.m_inputMoveDown){
+				this.m_directionY=1.0;
+			}
+		}
+		if(this.m_inputMoveLeft){
+			this.m_directionX=-1.0;
+		}else{
+			if(this.m_inputMoveRight){
+				this.m_directionX=1.0;
+			}
+		}
+	}
+}
 c_Character.prototype.p_DoDrift=function(t_delta){
-	var t_decel=t_delta*0.002;
+	var t_decel=t_delta*0.003;
 	var t_tile=0;
 	var t_increase=.0;
 	if(bb_math_Abs2(this.m_velx)<t_decel){
@@ -6952,6 +6989,52 @@ c_Character.prototype.p_DoDrift=function(t_delta){
 		this.m_y-=t_increase;
 		t_tile=this.m_map.p_GetTileTypeAt(this.m_x,this.m_y+t_increase*2.0);
 		this.m_collisionY=((t_increase)|0);
+	}
+}
+c_Character.prototype.p_StopJump=function(){
+	if(this.m_map.p_GetTileTypeAt(this.m_x,this.m_y)==4){
+		if(this.m_velx!=0.0 && this.m_vely!=0.0){
+			this.m_velx=bb_math_Sgn2(this.m_velx)*15.0;
+			this.m_vely=bb_math_Sgn2(this.m_vely)*15.0;
+		}else{
+			this.m_velx=bb_math_Sgn2(this.m_velx)*15.0;
+			this.m_vely=bb_math_Sgn2(this.m_vely)*15.0;
+		}
+		c_Dj.m_instance.p_Play(c_AssetBox.m_SfxTrip,false);
+		this.m_status=5;
+	}else{
+		this.m_slideShootTimer=c_Time.m_instance.m_realActTime+150;
+		this.m_status=7;
+		this.m_velx=0.0;
+		this.m_vely=0.0;
+	}
+}
+c_Character.prototype.p_DoJump=function(t_delta){
+	var t_tile=0;
+	var t_increase=.0;
+	this.m_x+=this.m_velx*t_delta/1000.0;
+	t_increase=bb_math_Sgn2(this.m_velx);
+	t_tile=this.m_map.p_GetTileTypeAt(this.m_x+t_increase*2.0,this.m_y);
+	while(t_tile==2){
+		this.m_x-=t_increase;
+		t_tile=this.m_map.p_GetTileTypeAt(this.m_x+t_increase*2.0,this.m_y);
+		this.m_collisionX=((t_increase)|0);
+		this.m_status=0;
+	}
+	this.m_y+=this.m_vely*t_delta/1000.0;
+	t_increase=bb_math_Sgn2(this.m_vely);
+	t_tile=this.m_map.p_GetTileTypeAt(this.m_x,this.m_y+t_increase*2.0);
+	while(t_tile==2){
+		this.m_y-=t_increase;
+		t_tile=this.m_map.p_GetTileTypeAt(this.m_x,this.m_y+t_increase*2.0);
+		this.m_collisionY=((t_increase)|0);
+		this.m_status=0;
+	}
+	var t_xi=((Math.floor(this.m_velx*t_delta/1000.0+0.5))|0);
+	var t_yi=((Math.floor(this.m_vely*t_delta/1000.0+0.5))|0);
+	this.m_jumpDistanceAcum=this.m_jumpDistanceAcum+((Math.floor(Math.sqrt(t_xi*t_xi+t_yi*t_yi)+0.5))|0);
+	if(((this.m_collisionX)!=0) || ((this.m_collisionY)!=0) || this.m_jumpDistanceAcum>=21.0){
+		this.p_StopJump();
 	}
 }
 c_Character.prototype.p_DoMove=function(t_delta,t_newStatus){
@@ -7024,49 +7107,6 @@ c_Character.prototype.p_DoMove=function(t_delta,t_newStatus){
 		this.m_status=0;
 	}
 }
-c_Character.prototype.p_StopJump=function(){
-	if(this.m_map.p_GetTileTypeAt(this.m_x,this.m_y)==4){
-		if(this.m_velx!=0.0 && this.m_vely!=0.0){
-			this.m_velx=bb_math_Sgn2(this.m_velx)*15.0;
-			this.m_vely=bb_math_Sgn2(this.m_vely)*15.0;
-		}else{
-			this.m_velx=bb_math_Sgn2(this.m_velx)*15.0;
-			this.m_vely=bb_math_Sgn2(this.m_vely)*15.0;
-		}
-		c_Dj.m_instance.p_Play(c_AssetBox.m_SfxTrip,false);
-		this.m_status=5;
-	}else{
-		this.m_status=0;
-	}
-}
-c_Character.prototype.p_DoJump=function(t_delta){
-	var t_tile=0;
-	var t_increase=.0;
-	this.m_x+=this.m_velx*t_delta/1000.0;
-	t_increase=bb_math_Sgn2(this.m_velx);
-	t_tile=this.m_map.p_GetTileTypeAt(this.m_x+t_increase*2.0,this.m_y);
-	while(t_tile==2){
-		this.m_x-=t_increase;
-		t_tile=this.m_map.p_GetTileTypeAt(this.m_x+t_increase*2.0,this.m_y);
-		this.m_collisionX=((t_increase)|0);
-		this.m_status=0;
-	}
-	this.m_y+=this.m_vely*t_delta/1000.0;
-	t_increase=bb_math_Sgn2(this.m_vely);
-	t_tile=this.m_map.p_GetTileTypeAt(this.m_x,this.m_y+t_increase*2.0);
-	while(t_tile==2){
-		this.m_y-=t_increase;
-		t_tile=this.m_map.p_GetTileTypeAt(this.m_x,this.m_y+t_increase*2.0);
-		this.m_collisionY=((t_increase)|0);
-		this.m_status=0;
-	}
-	var t_xi=((Math.floor(this.m_velx*t_delta/1000.0+0.5))|0);
-	var t_yi=((Math.floor(this.m_vely*t_delta/1000.0+0.5))|0);
-	this.m_jumpDistanceAcum=this.m_jumpDistanceAcum+((Math.floor(Math.sqrt(t_xi*t_xi+t_yi*t_yi)+0.5))|0);
-	if(((this.m_collisionX)!=0) || ((this.m_collisionY)!=0) || this.m_jumpDistanceAcum>=21.0){
-		this.p_StopJump();
-	}
-}
 c_Character.prototype.p_DoFall=function(t_delta){
 	var t_tile=0;
 	var t_increase=.0;
@@ -7097,7 +7137,7 @@ c_Character.prototype.p_DoFall=function(t_delta){
 		this.m_velx=0.0;
 		this.m_vely=0.0;
 		if(this.m_timeToRecover==-1){
-			this.m_timeToRecover=((c_Time.m_instance.m_actTime+700.0)|0);
+			this.m_timeToRecover=((c_Time.m_instance.m_actTime+500.0)|0);
 		}else{
 			if(c_Time.m_instance.m_actTime>(this.m_timeToRecover)){
 				this.m_timeToRecover=-1;
@@ -7115,23 +7155,10 @@ c_Character.prototype.p_Update=function(){
 	var t_1=this.m_status;
 	if(t_1==0 || t_1==1 || t_1==6){
 		if(this.m_inputSlide){
+			this.p_DoUpdateDirection();
 			this.m_status=2;
 			this.p_DoDrift(t_delta);
 		}else{
-			if(this.m_inputMoveDown || this.m_inputMoveLeft || this.m_inputMoveRight || this.m_inputMoveUp){
-				if(this.m_inputRun){
-					this.p_DoMove(t_delta,1);
-				}else{
-					this.p_DoMove(t_delta,6);
-				}
-			}else{
-				this.m_velx=0.0;
-				this.m_vely=0.0;
-				this.m_status=0;
-			}
-		}
-	}else{
-		if(t_1==2){
 			if(this.m_inputJump){
 				this.m_jumpDistanceAcum=0.0;
 				this.m_status=3;
@@ -7144,24 +7171,38 @@ c_Character.prototype.p_Update=function(){
 				}
 				this.p_DoJump(t_delta);
 			}else{
-				if(this.m_inputShoot){
-					this.m_status=4;
-					var t_shine=c_Shine.m_new.call(new c_Shine,this.m_level,45);
-					t_shine.m_x=this.m_x+(this.m_directionX*6.0+this.m_directionY*2.0);
-					t_shine.m_y=this.m_y-5.0+this.m_directionY*6.0;
-					var t_shot=c_Shot.m_new.call(new c_Shot,this.m_level,this.m_directionX,this.m_directionY);
-					t_shot.m_x=t_shine.m_x;
-					t_shot.m_y=t_shine.m_y;
-					this.m_level.p_AddActor(t_shine);
-					this.m_level.p_AddActor(t_shot);
-					this.m_level.m_camera.p_Shake(4.0);
-					c_Dj.m_instance.p_Play(c_AssetBox.m_SfxShoot,false);
-				}else{
-					if(this.m_inputSlide){
-						this.p_DoDrift(t_delta);
+				if(this.m_inputMoveDown || this.m_inputMoveLeft || this.m_inputMoveRight || this.m_inputMoveUp){
+					if(this.m_inputRun){
+						this.p_DoMove(t_delta,1);
 					}else{
-						this.m_status=0;
+						this.p_DoMove(t_delta,6);
 					}
+				}else{
+					this.m_velx=0.0;
+					this.m_vely=0.0;
+					this.m_status=0;
+				}
+			}
+		}
+	}else{
+		if(t_1==2 || t_1==7){
+			if(this.m_inputShoot){
+				this.m_status=4;
+				var t_shine=c_Shine.m_new.call(new c_Shine,this.m_level,45);
+				t_shine.m_x=this.m_x+(this.m_directionX*6.0+this.m_directionY*2.0);
+				t_shine.m_y=this.m_y-5.0+this.m_directionY*6.0;
+				var t_shot=c_Shot.m_new.call(new c_Shot,this.m_level,this.m_directionX,this.m_directionY);
+				t_shot.m_x=t_shine.m_x;
+				t_shot.m_y=t_shine.m_y;
+				this.m_level.p_AddActor(t_shine);
+				this.m_level.p_AddActor(t_shot);
+				this.m_level.m_camera.p_Shake(4.0);
+				c_Dj.m_instance.p_Play(c_AssetBox.m_SfxShoot,false);
+			}else{
+				if(this.m_inputSlide){
+					this.p_DoDrift(t_delta);
+				}else{
+					this.m_status=0;
 				}
 			}
 		}else{
@@ -7307,6 +7348,7 @@ function c_Camera(){
 	this.m_owner=null;
 	this.m_destX=0;
 	this.m_destY=0;
+	this.m_lastDirection=0;
 	this.m_shaking=.0;
 	this.m_x0=0;
 	this.m_y0=0;
@@ -7322,10 +7364,45 @@ c_Camera.m_new2=function(){
 	return this;
 }
 c_Camera.prototype.p_Update=function(){
-	this.m_destX=((Math.floor(this.m_owner.m_x+18.285714285714285*this.m_owner.m_directionX+0.5))|0);
-	this.m_destY=((Math.floor(this.m_owner.m_y+18.285714285714285*this.m_owner.m_directionY+0.5))|0);
+	this.m_destX=((this.m_owner.m_x)|0);
+	this.m_destY=((this.m_owner.m_y)|0);
+	if(this.m_lastDirection==1){
+		if(this.m_owner.m_directionX!=0.0){
+			this.m_destX=((Math.floor(this.m_owner.m_x+9.1428571428571423*this.m_owner.m_directionX+0.5))|0);
+		}else{
+			if(this.m_owner.m_directionY!=0.0){
+				this.m_lastDirection=2;
+				this.m_destY=((Math.floor(this.m_owner.m_y+9.1428571428571423*this.m_owner.m_directionY+0.5))|0);
+			}else{
+				this.m_lastDirection=0;
+			}
+		}
+	}else{
+		if(this.m_lastDirection==2){
+			if(this.m_owner.m_directionY!=0.0){
+				this.m_destY=((Math.floor(this.m_owner.m_y+9.1428571428571423*this.m_owner.m_directionY+0.5))|0);
+			}else{
+				if(this.m_owner.m_directionX!=0.0){
+					this.m_lastDirection=1;
+					this.m_destX=((Math.floor(this.m_owner.m_x+9.1428571428571423*this.m_owner.m_directionX+0.5))|0);
+				}else{
+					this.m_lastDirection=0;
+				}
+			}
+		}else{
+			if(this.m_owner.m_directionX!=0.0){
+				this.m_lastDirection=1;
+				this.m_destX=((Math.floor(this.m_owner.m_x+9.1428571428571423*this.m_owner.m_directionX+0.5))|0);
+			}else{
+				if(this.m_owner.m_directionY!=0.0){
+					this.m_lastDirection=2;
+					this.m_destY=((Math.floor(this.m_owner.m_y+9.1428571428571423*this.m_owner.m_directionY+0.5))|0);
+				}
+			}
+		}
+	}
 	if(this.m_x!=(this.m_destX) || this.m_y!=(this.m_destY)){
-		var t_vel=80.0*c_Time.m_instance.m_lastFrame/1000.0;
+		var t_vel=60.0*c_Time.m_instance.m_lastFrame/1000.0;
 		var t_dist=Math.sqrt(Math.pow((this.m_destX)-this.m_x,2.0)+Math.pow((this.m_destY)-this.m_y,2.0));
 		var t_angle=(Math.atan2((this.m_destY)-this.m_y,(this.m_destX)-this.m_x)*R2D);
 		if(t_dist<t_vel){
@@ -8206,8 +8283,8 @@ c_Shot.m_new2=function(){
 }
 c_Shot.prototype.p_Explode=function(){
 	c_Dj.m_instance.p_PlayDelayed(c_AssetBox.m_SfxExplo1,0,50);
-	c_Dj.m_instance.p_PlayDelayed(c_AssetBox.m_SfxExplo2,100,150);
-	c_Dj.m_instance.p_PlayDelayed(c_AssetBox.m_SfxExplo3,200,250);
+	c_Dj.m_instance.p_PlayDelayed(c_AssetBox.m_SfxExplo2,110,175);
+	c_Dj.m_instance.p_PlayDelayed(c_AssetBox.m_SfxExplo3,210,275);
 	this.m_level.p_RemoveActor(this);
 	var t_explosions=((bb_random_Rnd2(5.0,8.0))|0);
 	for(var t_i=1;t_i<=t_explosions;t_i=t_i+1){
